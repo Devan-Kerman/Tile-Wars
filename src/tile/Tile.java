@@ -18,7 +18,4 @@ public class Tile {
 	public byte gems;
 	public byte wildlife;
 	public byte lumber;
-	public Tile(int x, int y) {
-		
-	}
 }
