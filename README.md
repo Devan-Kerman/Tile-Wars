@@ -1,2 +1,2 @@
 # Tile-Wars
-War on tiles
+An Open World Conquering Adventure For Many Players
