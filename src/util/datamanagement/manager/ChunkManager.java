@@ -1,6 +1,5 @@
 package util.datamanagement.manager;
 
-import java.util.HashMap;
 
 import generators.chunk.Chunk;
 import tile.Tile;
