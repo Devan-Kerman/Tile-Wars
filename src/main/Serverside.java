@@ -40,6 +40,7 @@ public class Serverside {
 			} else
 				System.out.println("invalid command, try \"help\" for a list of avilable commands");
 		}
+		s.close();
 	}
 
 	public static void init() {

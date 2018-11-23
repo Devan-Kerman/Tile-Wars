@@ -7,13 +7,13 @@ public class Generator {
 	public static Simplexor tg = new Simplexor(7, 0.6f, 0.0050f); //Terrain generator
 	public static Simplexor hg = new Simplexor(7, 0.6f, 0.0050f); //Humidity generator
 	
-	public CurveGen irongen = new CurveGen(10,10);
-	public CurveGen bauxgen = new CurveGen(10,100);
-	public CurveGen tingen = new CurveGen(10, -50);
-	public CurveGen coalgen = new CurveGen(10, 150);
-	public CurveGen oilgen = new CurveGen(10, -150);
+	public static CurveGen irongen = new CurveGen(10,10);
+	public static CurveGen bauxgen = new CurveGen(10,100);
+	public static CurveGen tingen = new CurveGen(10, -50);
+	public static CurveGen coalgen = new CurveGen(10, 150);
+	public static CurveGen oilgen = new CurveGen(10, -150);
 	
-	public Tile generate(int x, int y) {
+	public static Tile generate(int x, int y) {
 		Tile t = new Tile();
 		t.elevation = (byte) (tg.genPoint(x, y)*125);
 		t.iron_ore = irongen.calculate(t.elevation);

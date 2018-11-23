@@ -1,6 +1,7 @@
 package tile;
 
 public class Tile {
+	// 23 bytes
 	public int x; // X
 	public int y; // Y
 	public byte elevation; // 'Z' (Elevation)
