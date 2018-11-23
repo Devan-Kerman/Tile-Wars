@@ -16,6 +16,5 @@ public class Visuals {
 		jf.pack();
 		jf.setVisible(true);
 		jf.setSize(new Dimension(Chunk.chunksize, Chunk.chunksize));
-		jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 }
