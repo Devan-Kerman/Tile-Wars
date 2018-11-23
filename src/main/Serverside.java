@@ -4,4 +4,8 @@ public class Serverside {
 	public static void main(String[] args) {
 		System.out.println("Devan Suzk and i cant get this to work");
 	}
+	public static void init()
+	{
+		
+	}
 }
