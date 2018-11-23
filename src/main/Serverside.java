@@ -27,6 +27,7 @@ public class Serverside {
 				try {
 					int x = t.nextInt();
 					int y = t.nextInt();
+					Visuals.visualize(x, y);
 					//insert future code here
 					System.out.println("sucessfully rendered chunk at (" + x + ", " + y + ")");
 				}catch(InputMismatchException e)
@@ -41,6 +42,7 @@ public class Serverside {
 			} else
 				System.out.println("nvalid command, try \"help\" for a list of avilable commands");
 		}
+		t.close();
 		s.close();
 	}
 

@@ -11,26 +11,22 @@ import tile.Tile;
 
 public class VPanel extends JPanel{
 
+	private static final long serialVersionUID = 1064812704658251024L;
 	Tile[][] array;
 	BufferedImage img;
-	public VPanel(Tile[][] arr)
-	{
+	public VPanel(Tile[][] arr) {
 		array = arr;
 		img = new BufferedImage(arr.length *10, arr[0].length*10, BufferedImage.TYPE_INT_ARGB);
 	}
 	@Override
-	public void paintComponent(Graphics g)
-	{
+	public void paintComponent(Graphics g) {
 		drawImage();
 		g.drawImage(img, 0, 0, null);
 	}
-	private void drawImage()
-	{
+	private void drawImage() {
 		Graphics2D g2d = img.createGraphics();
-		for(int i = 0; i < array.length; i++)
-		{
-			for(int j = 0; j < array[i].length; j++)
-			{
+		for(int i = 0; i < array.length; i++) {
+			for(int j = 0; j < array[i].length; j++) {
 				int temp = array[i][j].elevation;
 				g2d.drawRect(i*10, j*10, 10, 10);
 				if(temp >=240)
@@ -47,9 +43,9 @@ public class VPanel extends JPanel{
 					g2d.setColor(new Color(255, 250, 0));
 				else if(temp == 0)
 					g2d.setColor(new Color(0, 242, 255));
-				else if(temp <=-1 && temp > -50)
+				else if(temp <=-1 && temp > -20)
 					g2d.setColor(new Color(0, 199, 255));
-				else if(temp <=-50 && temp > -100)
+				else if(temp <=-20 && temp > -100)
 					g2d.setColor(new Color(0, 148, 255));
 				else if(temp <=-100 && temp > -150)
 					g2d.setColor(new Color(0, 108, 186));
@@ -58,7 +54,7 @@ public class VPanel extends JPanel{
 				else if(temp <=-200 && temp > -240)
 					g2d.setColor(new Color(0, 5, 119));
 				else if(temp <=-240)
-					g2d.setColor(new Color(0, 0, 0)); 
+					g2d.setColor(new Color(0, 0, 0));
 				g2d.fillRect(i*10, j*10, 10, 10);
 			}
 		}
