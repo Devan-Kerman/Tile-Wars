@@ -12,7 +12,7 @@ public class Tile {
 	public byte silver_ore;
 	public byte coal_ore;
 	public byte platinum_ore;
-	public byte nat_gas;
+	public byte natual_gas;
 	public byte coal;
 	public byte oil;
 	public byte gems;
