@@ -10,7 +10,7 @@ import javax.swing.JPanel;
 import tile.Tile;
 
 public class VPanel extends JPanel{
-	
+
 	private static final long serialVersionUID = 1064812704658251024L;
 	Tile[][] array;
 	BufferedImage img;
@@ -28,6 +28,7 @@ public class VPanel extends JPanel{
 		for(int i = 0; i < array.length; i++) {
 			for(int j = 0; j < array[i].length; j++) {
 				int temp = array[i][j].elevation;
+				g2d.drawRect(i*10, j*10, 10, 10);
 				if(temp >=240)
 					g2d.setColor(new Color(255,255,255));
 				else if(temp >=200 && temp < 240)
@@ -53,7 +54,7 @@ public class VPanel extends JPanel{
 				else if(temp <=-200 && temp > -240)
 					g2d.setColor(new Color(0, 5, 119));
 				else if(temp <=-240)
-					g2d.setColor(new Color(0, 0, 0)); 
+					g2d.setColor(new Color(0, 0, 0));
 				g2d.fillRect(i*10, j*10, 10, 10);
 			}
 		}
