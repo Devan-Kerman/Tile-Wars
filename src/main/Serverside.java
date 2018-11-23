@@ -11,8 +11,9 @@ public class Serverside {
 	public static void main(String[] args) {
 		init();
 		Scanner s = new Scanner(System.in);
+		Scanner t;
 		while (true) {
-			Scanner t = new Scanner(s.nextLine());
+			t = new Scanner(s.nextLine());
 			String temp = t.next();
 			if (temp.equals("close")) {
 				break;
@@ -38,7 +39,7 @@ public class Serverside {
 
 				System.out.println();
 			} else
-				System.out.println("invalid command, try \"help\" for a list of avilable commands");
+				System.out.println("nvalid command, try \"help\" for a list of avilable commands");
 		}
 		s.close();
 	}
