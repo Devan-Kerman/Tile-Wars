@@ -15,6 +15,8 @@ public class Generator {
 	
 	public static Tile generate(int x, int y) {
 		Tile t = new Tile();
+		t.x = x;
+		t.y = y;
 		t.elevation = (byte) (tg.genPoint(x, y)*125);
 		t.iron_ore = irongen.calculate(t.elevation);
 		t.bauxite_ore = bauxgen.calculate(t.elevation);
