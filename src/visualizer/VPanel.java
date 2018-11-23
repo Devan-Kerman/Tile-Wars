@@ -29,7 +29,7 @@ public class VPanel extends JPanel{
 		Graphics2D g2d = img.createGraphics();
 		for(int i = 0; i < array.length; i++)
 		{
-			for(int j = 0; j < array[i].length; i++)
+			for(int j = 0; j < array[i].length; j++)
 			{
 				int temp = array[i][j].elevation;
 				if(temp >=240)
