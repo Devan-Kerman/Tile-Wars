@@ -1,8 +1,8 @@
 package tile;
 
 public class Tile {
-	public long x; // X
-	public long y; // Y
+	public int x; // X
+	public int y; // Y
 	public byte elevation; // 'Z' (Elevation)
 	public byte iron_ore;
 	public byte bauxite_ore;
@@ -12,10 +12,10 @@ public class Tile {
 	public byte silver_ore;
 	public byte coal_ore;
 	public byte platinum_ore;
-	public byte natual_gas;
-	public byte coal;
+	public byte nat_gas;
 	public byte oil;
 	public byte gems;
 	public byte wildlife;
 	public byte lumber;
+	public byte humidity;
 }
