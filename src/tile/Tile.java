@@ -1,8 +1,8 @@
 package tile;
 
 public class Tile {
-	public int x; // X
-	public int y; // Y
+	public long x; // X
+	public long y; // Y
 	public byte elevation; // 'Z' (Elevation)
 	public byte iron_ore;
 	public byte bauxite_ore;
