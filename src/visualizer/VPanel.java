@@ -57,7 +57,7 @@ public class VPanel extends JPanel{
 				else if(temp <=-200 && temp > -240)
 					g2d.setColor(new Color(0, 5, 119));
 				else if(temp <=-240)
-					g2d.setColor(new Color(0, 0, 0));
+					g2d.setColor(new Color(0, 0, 0)); 
 				g2d.drawRect(i*10, j*10, 10, 10);
 			}
 		}
