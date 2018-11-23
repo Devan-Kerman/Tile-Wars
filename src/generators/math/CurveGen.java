@@ -10,7 +10,6 @@ public class CurveGen {
 	}
 	
 	public byte calculate(byte input) {
-		int x = input-shift;
 		return (byte) (multiplier*(input));
 	}
 	
