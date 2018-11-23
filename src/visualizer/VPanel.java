@@ -32,6 +32,7 @@ public class VPanel extends JPanel{
 			for(int j = 0; j < array[i].length; j++)
 			{
 				int temp = array[i][j].elevation;
+				g2d.drawRect(i*10, j*10, 10, 10);
 				if(temp >=240)
 					g2d.setColor(new Color(255,255,255));
 				else if(temp >=200 && temp < 240)
@@ -40,9 +41,9 @@ public class VPanel extends JPanel{
 					g2d.setColor(new Color(0, 112, 3));
 				else if(temp >=100 && temp < 150)
 					g2d.setColor(new Color(0, 221, 20));
-				else if(temp >=50 && temp < 100)
+				else if(temp >=20 && temp < 100)
 					g2d.setColor(new Color(0, 255, 6));
-				else if(temp >=1 && temp < 50)
+				else if(temp >=1 && temp < 20)
 					g2d.setColor(new Color(255, 250, 0));
 				else if(temp == 0)
 					g2d.setColor(new Color(0, 242, 255));
@@ -58,7 +59,7 @@ public class VPanel extends JPanel{
 					g2d.setColor(new Color(0, 5, 119));
 				else if(temp <=-240)
 					g2d.setColor(new Color(0, 0, 0)); 
-				g2d.drawRect(i*10, j*10, 10, 10);
+				g2d.fillRect(i*10, j*10, 10, 10);
 			}
 		}
 	}
