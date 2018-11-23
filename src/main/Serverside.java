@@ -21,14 +21,14 @@ public class Serverside {
 				System.out.println("avilable commands:");
 				System.out.println("close - closes application");
 				System.out.println("help - shows this list");
-				System.out.println("render <Xcoord> <Ycoord> - render a specific chunck at specified coordinates");
+				System.out.println("render <Xcoord> <Ycoord> - render a specific chunk at specified coordinates");
 				System.out.println();
 			} else if (temp.equals("render")) {
 				try {
 					int x = t.nextInt();
 					int y = t.nextInt();
 					//insert future code here
-					System.out.println("sucessfully rendered chunck at (" + x + ", " + y + ")");
+					System.out.println("sucessfully rendered chunk at (" + x + ", " + y + ")");
 				}catch(InputMismatchException e)
 				{
 					System.out.println("Invalid command, usage : render <Xcord> <Ycord>");
