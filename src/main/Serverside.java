@@ -9,14 +9,6 @@ import java.util.Scanner;
 
 public class Serverside {
 	public static void main(String[] args) {
-		PrintStream p = new PrintStream(System.out) {
-		    @Override
-		    public void println(String x) {
-		        super.printf("[%s]:\t%s\n", new SimpleDateFormat("hh:mm:ss a").format(new Date()),x);
-		    }
-		};
-		System.setOut(p);
-		
 		init();
 		Scanner s = new Scanner(System.in);
 		while (true) {
@@ -51,6 +43,12 @@ public class Serverside {
 	}
 
 	public static void init() {
-
+		PrintStream p = new PrintStream(System.out) {
+		    @Override
+		    public void println(String x) {
+		        super.printf("[%s]:\t%s\n", new SimpleDateFormat("hh:mm:ss a").format(new Date()),x);
+		    }
+		};
+		System.setOut(p);
 	}
 }
