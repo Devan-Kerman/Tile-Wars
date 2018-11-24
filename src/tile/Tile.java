@@ -8,6 +8,7 @@ public class Tile implements Serializable {
 	public int ownerid;
 	public Improvement i;
 
+	
 	public byte elevation; // 'Z' (Elevation)
 	public byte iron_ore;
 	public byte bauxite_ore;

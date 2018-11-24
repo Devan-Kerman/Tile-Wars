@@ -16,7 +16,7 @@ import visualizer.VPanel;
 
 public class Serverside {
 	private static final Logger LOGGER = LoggerFactory.getLogger(Serverside.class);
-	
+
 	public static void main(String[] args) throws IOException {
 		Boot.boot();
 		cmds();
@@ -61,24 +61,21 @@ public class Serverside {
 				} catch (NoSuchElementException e) {
 					LOGGER.info("Invalid command, usage : export <Xcord> <Ycord>");
 				}
-			}
-			else if(temp.equals("generate")) {
+			} else if (temp.equals("generate")) {
 				StopWatch.start();
 				int x = t.nextInt();
 				int y = t.nextInt();
 				ChunkManager.getChunk(x, y);
 				long duration = StopWatch.stop();
-		        System.out.println("MS: " +duration);
-			}
-			else if(temp.equals("StressTest")) {
+				System.out.println("MS: " + duration);
+			} else if (temp.equals("StressTest")) {
 				StopWatch.start();
-				for(int c = 0; c < 100; c++)
-					for(int b = 0; b < 100; b++)
+				for (int c = 0; c < 100; c++)
+					for (int b = 0; b < 100; b++)
 						ChunkManager.getChunk(c, b);
 				long duration = StopWatch.stop();
-		        System.out.println("MS: " +duration);
-			}
-			else
+				System.out.println("MS: " + duration);
+			} else
 				LOGGER.info("invalid command, try \"help\" for a list of avilable commands");
 		}
 		t.close();
