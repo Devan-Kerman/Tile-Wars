@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class Tile implements Serializable {
 	private static final long serialVersionUID = 382610168546865107L;
-	// 19 bytes
+	
 	private int ownerid;
 	private Improvement i;
 
