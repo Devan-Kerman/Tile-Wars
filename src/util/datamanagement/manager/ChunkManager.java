@@ -25,6 +25,7 @@ public class ChunkManager {
 			hm.put(y, c);
 			chunks.put(x, hm);
 		}
+		write(c);
 		return c;
 	}
 	
@@ -62,14 +63,18 @@ public class ChunkManager {
 		return new File("Chunkdata/["+x+","+y+"].chunk").exists();
 	}
 	
-	public static void write(Chunk c) throws FileNotFoundException, IOException {
-		File f = new File("Chunkdata/["+c.coors.x+","+c.coors.y+"].temp");
-		f.delete();
-		f.createNewFile();
-		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(f));
-		oos.writeObject(c);
-		oos.close();
-		f.renameTo(new File("Chunkdata/["+c.coors.x+","+c.coors.y+"].chunk"));
+	public static void write(Chunk c) {
+		try {
+			File f = new File("Chunkdata/["+c.coors.x+","+c.coors.y+"].temp");
+			f.delete();
+			f.createNewFile();
+			ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(f));
+			oos.writeObject(c);
+			oos.close();
+			f.renameTo(new File("Chunkdata/["+c.coors.x+","+c.coors.y+"].chunk"));
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
 	}
 	public static Chunk read(int x, int y) throws FileNotFoundException, IOException, ClassNotFoundException {
 		ObjectInputStream ois = new ObjectInputStream(new FileInputStream("Chunkdata/["+x+","+y+"].chunk"));
