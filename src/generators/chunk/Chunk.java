@@ -22,4 +22,7 @@ public class Chunk implements Serializable {
 				data[x][y] = Generator.generate(cx*chunksize + x, cy*chunksize + y);
 		coors = new Point(cx,cy);
 	}
+	public static long longerHashCode(int x, int y) {
+		return ((long)x<<32)+y;
+	}
 }

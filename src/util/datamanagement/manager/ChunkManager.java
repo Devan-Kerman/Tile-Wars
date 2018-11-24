@@ -10,7 +10,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.nio.file.Path;
 
 import generators.chunk.Chunk;
 import gnu.trove.map.hash.TIntObjectHashMap;
@@ -33,6 +32,11 @@ public class ChunkManager {
 		}
 		write(c);
 		return c;
+	}
+	
+	public static long longerHashCode(int x, int y) {
+		long newx = x >> 32;
+		return newx+y;
 	}
 	
 	public static Chunk getUnsafe(int x, int y) {
