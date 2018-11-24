@@ -4,9 +4,7 @@ import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.HashMap;
@@ -19,13 +17,18 @@ public class GenericDatabase<T> {
 		data = new HashMap<String, T>();
 	}
 	
-	public void write(T c) {
+	public void replace(String key, T value) {
+		data.remove(key);
+		data.put(key, value);
+	}
+	
+	public void write() {
 		try {
 			File f = new File(save.getAbsolutePath()+".temp");
 			f.delete();
 			f.createNewFile();
 			ObjectOutputStream oos = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(f), 300000));
-			oos.writeObject(c);
+			oos.writeObject(data);
 			oos.close();
 			f.renameTo(save);
 		} catch(Exception e) {
@@ -33,10 +36,11 @@ public class GenericDatabase<T> {
 		}
 	}
 	@SuppressWarnings("unchecked")
-	public T read(int x, int y) throws FileNotFoundException, IOException, ClassNotFoundException {
-		ObjectInputStream ois = new ObjectInputStream(new BufferedInputStream(new FileInputStream(save), 300000));
-		T c = (T) ois.readObject();
-		ois.close();
-		return c;
+	public void read() {
+		try {
+			ObjectInputStream ois = new ObjectInputStream(new BufferedInputStream(new FileInputStream(save), 300000));
+			data = (HashMap<String, T>) ois.readObject();
+			ois.close();
+		} catch(Exception e) {e.printStackTrace();}
 	}
 }

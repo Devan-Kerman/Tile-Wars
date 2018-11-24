@@ -1,6 +1,6 @@
 package exceptions;
 
-public class NotEnoughResourcesException extends Exception {
+public class NotEnoughResourcesException extends RuntimeException {
 	
 	/**
 	 * 

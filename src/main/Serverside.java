@@ -83,5 +83,6 @@ public class Serverside {
 		}
 		t.close();
 		s.close();
+		Boot.nationdb.write();
 	}
 }
