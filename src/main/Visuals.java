@@ -11,7 +11,7 @@ import visualizer.VPanel;
 public class Visuals {
 	public static void visualize(int cx, int cy) {
 		JFrame jf = new JFrame("Chunk viewer");
-		jf.add(new VPanel(ChunkManager.getSafe(cx, cy).data));
+		jf.add(new VPanel(ChunkManager.getChunk(cx, cy).getData()));
 		jf.pack();
 		jf.setVisible(true);
 		jf.setSize(new Dimension(Chunk.chunksize, Chunk.chunksize));

@@ -12,56 +12,33 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
 import generators.chunk.Chunk;
-import gnu.trove.map.hash.TIntObjectHashMap;
 import tile.Tile;
+import util.datamanagement.ChunkCache;
 
 public class ChunkManager {
-	public static TIntObjectHashMap<TIntObjectHashMap<Chunk>> chunks = new TIntObjectHashMap<>();
+	private static ChunkCache cache = new ChunkCache();
 	public static void clear() {
-		chunks = new TIntObjectHashMap<>();
+		cache = new ChunkCache();
 	}
 	
-	public static Chunk gen(int x, int y) {
+	public static Chunk gen(final int x, final int y) {
 		Chunk c = new Chunk(x, y);
-		if(chunks.containsKey(x))
-			chunks.get(x).put(y, c);
-		else {
-			TIntObjectHashMap<Chunk> hm = new TIntObjectHashMap<>();
-			hm.put(y, c);
-			chunks.put(x, hm);
-		}
+		cache.put(x, y, c);
 		write(c);
 		return c;
 	}
 	
-	public static Chunk getUnsafe(int x, int y) {
-		return chunks.get(x).get(y);
+	public static Chunk getChunk(final int x, final int y) {
+		return cache.get(x, y);
 	}
-	public static boolean inChunks(int x, int y) {
-		return chunks.containsKey(x) && chunks.get(x).containsKey(y);
-	}
-	public static Chunk getSafe(int x, int y) {
-		Chunk c;
-		if(inChunks(x,y)) {
-			c = getUnsafe(x,y);
-		}
-		else if(inDrive(x,y)) {
-			try {
-				c = read(x,y);
-			} catch(Exception e) {
-				c = null;
-			}
-		}
-		else {
-			c = gen(x,y);
-		}
-		
-		return c;
+	
+	public static boolean inChunks(final int x, final int y) {
+		return cache.containsKey(x, y);
 	}
 	
 	public static Tile getTile(int tx, int ty) {
-		Chunk c = getSafe(tx/Chunk.chunksize, ty/Chunk.chunksize);
-		return c.data[tx%Chunk.chunksize][ty%Chunk.chunksize];
+		Chunk c = getChunk(tx/Chunk.chunksize, ty/Chunk.chunksize);
+		return c.getData()[tx%Chunk.chunksize][ty%Chunk.chunksize];
 	}
 	
 	public static boolean inDrive(int x, int y) {
@@ -70,18 +47,18 @@ public class ChunkManager {
 	
 	public static void write(Chunk c) {
 		try {
-			File f = new File("Chunkdata/["+c.coors.x+","+c.coors.y+"].temp");
+			File f = new File("Chunkdata/["+c.getX()+","+c.getY()+"].temp");
 			f.delete();
 			f.createNewFile();
 			ObjectOutputStream oos = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(f), 300000));
 			oos.writeObject(c);
 			oos.close();
-			f.renameTo(new File("Chunkdata/["+c.coors.x+","+c.coors.y+"].chunk"));
+			f.renameTo(new File("Chunkdata/["+c.getX()+","+c.getY()+"].chunk"));
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
-		if(new File("Chunkdata/["+c.coors.x+","+c.coors.y+"].chunk").exists())
-			System.out.println("Chunk ["+c.coors.x+","+c.coors.y+"] was successfully saved");
+		if(new File("Chunkdata/["+c.getX()+","+c.getY()+"].chunk").exists())
+			System.out.println("Chunk ["+c.getX()+","+c.getY()+"] was successfully saved");
 	}
 	public static Chunk read(int x, int y) throws FileNotFoundException, IOException, ClassNotFoundException {
 		ObjectInputStream ois = new ObjectInputStream(new BufferedInputStream(new FileInputStream("Chunkdata/["+x+","+y+"].chunk"), 300000));
