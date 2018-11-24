@@ -10,13 +10,17 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.nio.file.Path;
 
 import generators.chunk.Chunk;
 import gnu.trove.map.hash.TIntObjectHashMap;
 import tile.Tile;
 
 public class ChunkManager {
-	public static final TIntObjectHashMap<TIntObjectHashMap<Chunk>> chunks = new TIntObjectHashMap<>();
+	public static TIntObjectHashMap<TIntObjectHashMap<Chunk>> chunks = new TIntObjectHashMap<>();
+	public static void clear() {
+		chunks = new TIntObjectHashMap<>();
+	}
 	
 	public static Chunk gen(int x, int y) {
 		Chunk c = new Chunk(x, y);

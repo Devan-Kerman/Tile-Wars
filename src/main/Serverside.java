@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import util.datamanagement.manager.ChunkManager;
+import util.testing.StopWatch;
 import visualizer.VPanel;
 
 public class Serverside {
@@ -64,9 +65,20 @@ public class Serverside {
 				}
 			}
 			else if(temp.equals("generate")) {
+				StopWatch.start();
 				int x = t.nextInt();
 				int y = t.nextInt();
 				ChunkManager.getSafe(x, y);
+				long duration = StopWatch.stop();
+		        System.out.println("MS: " +duration);
+			}
+			else if(temp.equals("StressTest")) {
+				StopWatch.start();
+				for(int c = 0; c < 100; c++)
+					for(int b = 0; b < 100; b++)
+						ChunkManager.getSafe(c, b);
+				long duration = StopWatch.stop();
+		        System.out.println("MS: " +duration);
 			}
 			else
 				LOGGER.info("invalid command, try \"help\" for a list of avilable commands");
