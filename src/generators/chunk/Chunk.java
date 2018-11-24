@@ -12,8 +12,7 @@ public class Chunk implements Serializable {
 	private final Tile[][] data;
 	private final int x, y;
 	
-	
-	public Chunk(int cx, int cy) {
+	public Chunk(final int cx, final int cy) {
 		this.data = new Tile[chunksize][chunksize];
 		for(int x = 0; x < chunksize; x++)
 			for (int y = 0; y < chunksize; y++)

@@ -13,17 +13,17 @@ public class Generator {
 	public static final CurveGen COALGEN = new CurveGen(10, 150);
 	public static final CurveGen OILGEN = new CurveGen(10, -150);
 
-	public static Tile generate(int x, int y) {
+	public static Tile generate(final int x, final int y) {
 		Tile t = new Tile();
 		t.setElevation((byte) (TG.genPoint(x, y) * 125));
-		t.setIronOre((byte) IRONGEN.calculate(t.getElevation()));
+		t.setIronOre(IRONGEN.calculate(t.getElevation()));
 		t.setBauxiteOre(BAUXGEN.calculate(t.getElevation()));
 		t.setTinOre(TINGEN.calculate(t.getElevation()));
-		t.setGoldOre((byte) t.getTinOre());
-		t.setSilverOre((byte) t.getGoldOre());
-		t.setCoalOre((byte) COALGEN.calculate(t.getElevation()));
+		t.setGoldOre(t.getTinOre());
+		t.setSilverOre(t.getGoldOre());
+		t.setCoalOre(COALGEN.calculate(t.getElevation()));
 		t.setPlatinumOre(t.getGoldOre());
-		t.setNaturalGas((byte) t.getCoalOre());
+		t.setNaturalGas(t.getCoalOre());
 		t.setOil(OILGEN.calculate(t.getElevation()));
 		t.setGems((byte) t.getOil());
 		if (t.getElevation() < -25)
