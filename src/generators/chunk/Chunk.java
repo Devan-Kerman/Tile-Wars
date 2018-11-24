@@ -1,28 +1,35 @@
 package generators.chunk;
 
-import java.awt.Point;
 import java.io.Serializable;
 
 import generators.terrain.Generator;
 import tile.Tile;
 
 public class Chunk implements Serializable {
-	/**
-	 * 
-	 */
+	public static final int chunksize = 100;
 	private static final long serialVersionUID = 7297134163391801440L;
-	public Tile[][] data;
-	public static int chunksize = 100;
-	public Point coors;
+	
+	private final Tile[][] data;
+	private final int x, y;
 	
 	public Chunk(int cx, int cy) {
-		data = new Tile[chunksize][chunksize];
+		this.data = new Tile[chunksize][chunksize];
 		for(int x = 0; x < chunksize; x++)
 			for (int y = 0; y < chunksize; y++)
 				data[x][y] = Generator.generate(cx*chunksize + x, cy*chunksize + y);
-		coors = new Point(cx,cy);
+		this.x = cx;
+		this.y = cy; 
 	}
-	public static long longerHashCode(int x, int y) {
-		return ((long)x<<32)+y;
+	
+	public Tile[][] getData() {
+		return data;
+	}
+
+	public int getX() {
+		return x;
+	}
+
+	public int getY() {
+		return y;
 	}
 }

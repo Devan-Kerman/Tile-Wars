@@ -55,7 +55,7 @@ public class VPanel extends JPanel{
 		Graphics2D g2d = imag.createGraphics();
 		for(int i = 0; i < array.length; i++) {
 			for(int j = 0; j < array[i].length; j++) {
-				int temp = array[i][j].elevation;
+				int temp = array[i][j].getElevation();
 				if(temp >=240)
 					g2d.setColor(new Color(255,255,255));
 				else if(temp >=200 && temp < 240)
