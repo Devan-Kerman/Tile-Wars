@@ -15,6 +15,7 @@ public class Chunk implements Serializable {
 	public static int chunksize = 100;
 	public Point coors;
 	
+	
 	public Chunk(int cx, int cy) {
 		data = new Tile[chunksize][chunksize];
 		for(int x = 0; x < chunksize; x++)

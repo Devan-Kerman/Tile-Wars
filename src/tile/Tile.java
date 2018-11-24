@@ -7,7 +7,10 @@ public class Tile implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 382610168546865107L;
-	// 15 bytes
+	// 19 bytes
+	public int ownerid;
+	public Improvement i;
+	
 	public byte elevation; // 'Z' (Elevation)
 	public byte iron_ore;
 	public byte bauxite_ore;
@@ -23,4 +26,6 @@ public class Tile implements Serializable {
 	public byte wildlife;
 	public byte lumber;
 	public byte humidity;
+	
+	
 }
