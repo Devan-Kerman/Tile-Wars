@@ -3,11 +3,7 @@ package main;
 import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
-import java.io.PrintStream;
-import java.text.SimpleDateFormat;
-import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 import java.util.InputMismatchException;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
@@ -28,11 +24,11 @@ public class Serverside {
 		while (true) {
 			t = new Scanner(s.nextLine());
 			String temp = t.next();
-			if (temp.equals("close")) {
+			if (temp.equals("exit")) {
 				break;
 			} else if (temp.equals("help")) {
 				System.out.println("avilable commands:");
-				System.out.println("close - closes application");
+				System.out.println("exit - closes application");
 				System.out.println("help - shows this list");
 				System.out.println("render <Xcoord> <Ycoord> - render a chunk at specified coordinates");
 				System.out.println();
@@ -69,8 +65,6 @@ public class Serverside {
 				}
 
 				System.out.println();
-			} else if(temp.equals("Exit")) {
-				break;
 			}
 			else
 				System.out.println("nvalid command, try \"help\" for a list of avilable commands");
