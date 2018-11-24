@@ -1,10 +1,10 @@
 package game.resources;
 
 public class Resource {
-	public final String resourceID;
+	public String resourceID;
 	public int amount;
-	
-	public Resource(final String resourceID, final int amount) {
+
+	public Resource(String resourceID, final int amount) {
 		this.resourceID = resourceID;
 		this.amount = amount;
 	}

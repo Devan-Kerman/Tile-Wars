@@ -13,29 +13,28 @@ public class Generator {
 	public static final CurveGen COALGEN = new CurveGen(10, 150);
 	public static final CurveGen OILGEN = new CurveGen(10, -150);
 
-	public static Tile generate(final int x, final int y) {
+	public static Tile generate(int x, int y) {
 		Tile t = new Tile();
-
-		t.setElevation((byte) (TG.genPoint(x, y) * 125));
-		t.setIronOre(IRONGEN.calculate(t.getElevation()));
-		t.setBauxiteOre(BAUXGEN.calculate(t.getElevation()));
-		t.setTinOre(TINGEN.calculate(t.getElevation()));
-		t.setGoldOre(t.getTinOre());
-		t.setSilverOre(t.getGoldOre());
-		t.setCoalOre(COALGEN.calculate(t.getElevation()));
-		t.setPlatinumOre(t.getGoldOre());
-		t.setNaturalGas(t.getCoalOre());
-		t.setOil(OILGEN.calculate(t.getElevation()));
-		t.setGems((byte) t.getOil());
-		if (t.getElevation() < -25)
-			t.setWildlife((byte) 50);
-		else if (t.getElevation() < 25 && t.getElevation() >= -25)
-			t.setWildlife((byte) 15);
+		t.elevation = (byte) (TG.genPoint(x, y)*125);
+		t.iron_ore = IRONGEN.calculate(t.elevation);
+		t.bauxite_ore = BAUXGEN.calculate(t.elevation);
+		t.tin_ore = TINGEN.calculate(t.elevation);
+		t.gold_ore = t.tin_ore;
+		t.silver_ore = t.gold_ore;
+		t.coal_ore = COALGEN.calculate(t.elevation);
+		t.platinum_ore = t.gold_ore;
+		t.nat_gas = t.coal_ore;
+		t.oil = OILGEN.calculate(t.elevation);
+		t.gems = t.oil;
+		if(t.elevation < -25)
+			t.wildlife = 50;
+		else if(t.elevation < 25 && t.elevation >= -25)
+			t.wildlife = 15;
 		else {
-			t.setWildlife((byte) (HG.genPoint(x, y) * 25));
-			t.setLumber((byte) (t.getWildlife() * Math.sqrt(Math.random())));
+			t.wildlife = (byte) (HG.genPoint(x, y)*25);
+			t.lumber = (byte) (t.wildlife*Math.sqrt(Math.random()));
 		}
-		t.setHumidity(t.getWildlife());
+		t.humidity = t.wildlife;
 		return t;
 	}
 }
