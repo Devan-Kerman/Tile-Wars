@@ -3,32 +3,50 @@ package visualizer;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.event.MouseWheelEvent;
+import java.awt.event.MouseWheelListener;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 import tile.Tile;
 
 public class VPanel extends JPanel{
-
 	private static final long serialVersionUID = 1064812704658251024L;
-	Tile[][] array;
+	private int scale = 25;
+	private final Tile[][] array;
 	BufferedImage img;
 	public VPanel(Tile[][] arr) {
 		array = arr;
-		img = new BufferedImage(arr.length *5, arr[0].length*5, BufferedImage.TYPE_INT_ARGB);
+		img = new BufferedImage(arr.length *scale, arr[0].length*scale, BufferedImage.TYPE_INT_ARGB);
+		addMouseWheelListener(new MouseWheelListener() {
+			@Override
+			public void mouseWheelMoved(MouseWheelEvent e) {
+				scale += e.getWheelRotation();
+				repaint();
+			}
+		});
 	}
 	@Override
 	public void paintComponent(Graphics g) {
+		super.paintComponent(g);
 		drawImage();
 		g.drawImage(img, 0, 0, null);
 	}
+	
+	public void Export(File f) throws IOException {
+		drawImage();
+		ImageIO.write(img, "png", f);
+	}
+	
 	private void drawImage() {
 		Graphics2D g2d = img.createGraphics();
 		for(int i = 0; i < array.length; i++) {
 			for(int j = 0; j < array[i].length; j++) {
 				int temp = array[i][j].elevation;
-				g2d.drawRect(i*5, j*5, 5, 5);
 				if(temp >=240)
 					g2d.setColor(new Color(255,255,255));
 				else if(temp >=200 && temp < 240)
@@ -55,7 +73,9 @@ public class VPanel extends JPanel{
 					g2d.setColor(new Color(0, 5 + (int)((temp + 200)* 0.125), 119 + (int)((temp + 200)* 2.975)));
 				else if(temp <=-240)
 					g2d.setColor(new Color(0, 0, 0));
-				g2d.fillRect(i*5, j*5, 5, 5);
+				g2d.fillRect(i*scale, j*scale, scale, scale);
+				g2d.setColor(new Color(0,0,0,100));
+				//g2d.drawString(array[i][j].elevation+"", i*scale, j*scale);
 			}
 		}
 	}
