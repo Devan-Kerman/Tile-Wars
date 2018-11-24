@@ -16,7 +16,6 @@ import visualizer.VPanel;
 
 public class Serverside {
 	private static final Logger LOGGER = LoggerFactory.getLogger(Serverside.class);
-	
 	public static void main(String[] args) throws IOException {
 		Boot.boot();
 		cmds();
@@ -39,11 +38,11 @@ public class Serverside {
 				try {
 					int x = t.nextInt();
 					int y = t.nextInt();
-					Visuals.visualize(x, y);					
-					LOGGER.info("Sucessfully rendered chunk at (" + x + ", " + y + ")");				
-				} catch(InputMismatchException e) {
+					Visuals.visualize(x, y);
+					LOGGER.info("Sucessfully rendered chunk at (" + x + ", " + y + ")");
+				} catch (InputMismatchException e) {
 					LOGGER.info("Invalid command, usage : render <Xcord> <Ycord>");
-				}catch(NoSuchElementException e) {
+				} catch (NoSuchElementException e) {
 					LOGGER.info("Invalid command, usage : render <Xcord> <Ycord>");
 				}
 			} else if (temp.equals("export")) {
@@ -54,13 +53,11 @@ public class Serverside {
 					f.delete();
 					new VPanel(ChunkManager.getChunk(x, y).getData()).Export(f);
 					Desktop.getDesktop().open(f);
-					//insert future code here
+					// insert future code here
 					LOGGER.info("Sucessfully exported chunk at (" + x + ", " + y + ")");
-				}catch(InputMismatchException e)
-				{
+				} catch (InputMismatchException e) {
 					LOGGER.info("Invalid command, usage : export <Xcord> <Ycord>");
-				}catch(NoSuchElementException e)
-				{
+				} catch (NoSuchElementException e) {
 					LOGGER.info("Invalid command, usage : export <Xcord> <Ycord>");
 				}
 			}
