@@ -24,7 +24,7 @@ public class Inventory {
 	public void take(ArrayList<Resource> resourcea) throws NotEnoughResourcesException {
 		for (int x = 0; x < resourcea.size(); x++) {
 			Resource r = resourcea.get(x);
-			take(r.getResourceID(), r.getAmount());
+			take(r.resourceID, r.amount);
 		}
 	}
 
@@ -37,7 +37,7 @@ public class Inventory {
 	public void put(ArrayList<Resource> resourcea) {
 		for (int x = 0; x < resourcea.size(); x++) {
 			Resource r = resourcea.get(x);
-			put(r.getResourceID(), r.getAmount());
+			put(r.resourceID, r.amount);
 		}
 	}
 }
