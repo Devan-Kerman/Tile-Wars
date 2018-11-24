@@ -35,6 +35,9 @@ public class Serverside {
 				LOGGER.info("close - closes application");
 				LOGGER.info("help - shows this list");
 				LOGGER.info("render <Xcoord> <Ycoord> - render a specific chunck at specified coordinates");
+				LOGGER.info("export <Xcoord> <Ycoord> - exports a chunk to a png file");
+				LOGGER.info("generate - generates a chunk within time");
+				LOGGER.info("stress - stress tests the generation function");
 			} else if (temp.equals("render")) {
 				try {
 					int x = t.nextInt();
@@ -67,8 +70,9 @@ public class Serverside {
 				int y = t.nextInt();
 				ChunkManager.getChunk(x, y);
 				long duration = StopWatch.stop();
-				System.out.println("MS: " + duration);
-			} else if (temp.equals("StressTest")) {
+		        System.out.println("MS: " +duration);
+			}
+			else if(temp.equals("stress")) {
 				StopWatch.start();
 				for (int c = 0; c < 100; c++)
 					for (int b = 0; b < 100; b++)
