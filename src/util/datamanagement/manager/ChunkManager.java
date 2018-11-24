@@ -28,10 +28,16 @@ public class ChunkManager {
 	}
 	
 	public static Chunk getSafe(int x, int y) {
-		if(inChunks(x,y))
-			return getUnsafe(x,y);
-		else
-			return gen(x,y);
+		
+		Chunk c;
+		if(inChunks(x,y)) {
+			c = getUnsafe(x,y);
+		}
+		else {
+			c = gen(x,y);
+		}
+		
+		return c;
 	}
 	
 	public static Tile getTile(int tx, int ty) {

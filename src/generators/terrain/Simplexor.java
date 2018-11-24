@@ -38,13 +38,7 @@ public class Simplexor {
 		}
 		return totalNoise;
 	}
-	public double start = 0;
-	public void seed(int x) {
-		start = Math.sqrt(x);
-	}
 	public double genPoint(int x, int y) {
-		y+=start;
-		x+=start;
 		double total = 0;
 		double layerFrequency = SCALE;
 		double layerWeight = 1;
