@@ -3,6 +3,7 @@ package visualizer;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 import java.awt.image.BufferedImage;
@@ -16,16 +17,19 @@ import tile.Tile;
 
 public class VPanel extends JPanel{
 	private static final long serialVersionUID = 1064812704658251024L;
-	private int scale = 25;
+	private int scale = 10;
 	private final Tile[][] array;
 	BufferedImage img;
 	public VPanel(Tile[][] arr) {
 		array = arr;
-		img = new BufferedImage(arr.length *scale, arr[0].length*scale, BufferedImage.TYPE_INT_ARGB);
+		img = new BufferedImage(arr.length *10, arr[0].length*10, BufferedImage.TYPE_INT_ARGB);
+		drawImage(img);
 		addMouseWheelListener(new MouseWheelListener() {
 			@Override
 			public void mouseWheelMoved(MouseWheelEvent e) {
-				scale += e.getWheelRotation();
+				scale -= e.getWheelRotation();
+				if(scale <= 0)
+					scale = 1;
 				repaint();
 			}
 		});
@@ -33,17 +37,22 @@ public class VPanel extends JPanel{
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		drawImage();
-		g.drawImage(img, 0, 0, null);
+		Graphics2D g2 = (Graphics2D) g; 
+		g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
+                //RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+                RenderingHints.VALUE_INTERPOLATION_NEAREST_NEIGHBOR);
+                //RenderingHints.VALUE_INTERPOLATION_BICUBIC);
+        g2.drawImage(img, 0, 0, array.length*scale, array[0].length*scale, null);
+		//g.drawImage(img.getScaledInstance(array.length*scale, array[0].length*scale, Image.SCALE_SMOOTH), 0, 0, null);
 	}
 	
 	public void Export(File f) throws IOException {
-		drawImage();
+		drawImage(img);
 		ImageIO.write(img, "png", f);
 	}
-	
-	private void drawImage() {
-		Graphics2D g2d = img.createGraphics();
+
+	private void drawImage(BufferedImage imag) {
+		Graphics2D g2d = imag.createGraphics();
 		for(int i = 0; i < array.length; i++) {
 			for(int j = 0; j < array[i].length; j++) {
 				int temp = array[i][j].elevation;

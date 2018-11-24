@@ -1,16 +1,23 @@
 package main;
 
+import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.net.ServerSocket;
 import java.net.Socket;
 
 public class Network {
-	public Socket serversocket;
+	public ServerSocket serversocket;
 	public ObjectInputStream ois;
 	public ObjectOutputStream oos;
 	
-	public Network(String port) {
-		
+	public Network(int port) {
+		try {
+			serversocket = new ServerSocket(port);
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	public void client() {
 		

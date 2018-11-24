@@ -62,7 +62,6 @@ public class Serverside {
 				{
 					LOGGER.info("Invalid command, usage : export <Xcord> <Ycord>");
 				}
-
 			}
 			else if(temp.equals("generate")) {
 				int x = t.nextInt();
