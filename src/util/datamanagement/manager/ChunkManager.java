@@ -16,7 +16,10 @@ import gnu.trove.map.hash.TIntObjectHashMap;
 import tile.Tile;
 
 public class ChunkManager {
-	public static final TIntObjectHashMap<TIntObjectHashMap<Chunk>> chunks = new TIntObjectHashMap<>();
+	public static TIntObjectHashMap<TIntObjectHashMap<Chunk>> chunks = new TIntObjectHashMap<>();
+	public static void clear() {
+		chunks = new TIntObjectHashMap<>();
+	}
 	
 	public static Chunk gen(int x, int y) {
 		Chunk c = new Chunk(x, y);
