@@ -3,11 +3,14 @@ package game.resources;
 public class Resource {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 	public String resourceID;
 	public int amount;
 
 	public Resource(String resourceID, final int amount) {
 =======
+=======
+>>>>>>> parent of 8d1b4b2... Merge branch 'master' of https://github.com/Devan-Kerman/Tile-Wars
 =======
 >>>>>>> parent of 8d1b4b2... Merge branch 'master' of https://github.com/Devan-Kerman/Tile-Wars
 	private final String resourceID;
