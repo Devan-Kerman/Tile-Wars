@@ -34,11 +34,6 @@ public class ChunkManager {
 		return c;
 	}
 	
-	public static long longerHashCode(int x, int y) {
-		long newx = x >> 32;
-		return newx+y;
-	}
-	
 	public static Chunk getUnsafe(int x, int y) {
 		return chunks.get(x).get(y);
 	}
