@@ -1,5 +1,8 @@
 package main;
 
+import java.awt.Desktop;
+import java.io.File;
+import java.io.IOException;
 import java.io.PrintStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -7,9 +10,33 @@ import java.util.InputMismatchException;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
+import util.datamanagement.manager.ChunkManager;
+import visualizer.VPanel;
+
 public class Serverside {
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		init();
+		cmds();
+	}
+
+	public static void init() {
+		PrintStream p = new PrintStream(System.out) {
+		    @Override
+		    public void println(String x) {
+		        super.printf("[%s]:\t%s\n", new SimpleDateFormat("hh:mm:ss a").format(new Date()),x);
+		    }
+		    @Override
+		    public void println(int x) {
+		        super.printf("[%s]:\t%d\n", new SimpleDateFormat("hh:mm:ss a").format(new Date()),x);
+		    }
+		    @Override
+		    public void println(double x) {
+		        super.printf("[%s]:\t%3.3f\n", new SimpleDateFormat("hh:mm:ss a").format(new Date()),x);
+		    }
+		};
+		System.setOut(p);
+	}
+	public static void cmds() throws IOException {
 		Scanner s = new Scanner(System.in);
 		Scanner t;
 		while (true) {
@@ -29,7 +56,24 @@ public class Serverside {
 					int y = t.nextInt();
 					Visuals.visualize(x, y);
 					//insert future code here
-					System.out.println("sucessfully rendered chunck at (" + x + ", " + y + ")");
+					System.out.println("Sucessfully rendered chunk at (" + x + ", " + y + ")");
+				}catch(InputMismatchException e)
+				{
+					System.out.println("Invalid command, usage : render <Xcord> <Ycord>");
+				}catch(NoSuchElementException e)
+				{
+					System.out.println("Invalid command, usage : render <Xcord> <Ycord>");
+				}
+			} else if (temp.equals("export")) {
+				try {
+					int x = t.nextInt();
+					int y = t.nextInt();
+					File f = new File("yeet.png");
+					f.delete();
+					new VPanel(ChunkManager.getSafe(x, y).data).Export(f);
+					Desktop.getDesktop().open(f);
+					//insert future code here
+					System.out.println("Sucessfully exported chunk at (" + x + ", " + y + ")");
 				}catch(InputMismatchException e)
 				{
 					System.out.println("Invalid command, usage : render <Xcord> <Ycord>");
@@ -39,20 +83,13 @@ public class Serverside {
 				}
 
 				System.out.println();
-			} else
+			} else if(temp.equals("Exit")) {
+				break;
+			}
+			else
 				System.out.println("nvalid command, try \"help\" for a list of avilable commands");
 		}
 		t.close();
 		s.close();
-	}
-
-	public static void init() {
-		PrintStream p = new PrintStream(System.out) {
-		    @Override
-		    public void println(String x) {
-		        super.printf("[%s]:\t%s\n", new SimpleDateFormat("hh:mm:ss a").format(new Date()),x);
-		    }
-		};
-		System.setOut(p);
 	}
 }
