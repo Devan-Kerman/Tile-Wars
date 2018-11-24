@@ -37,14 +37,10 @@ public class Serverside {
 				try {
 					int x = t.nextInt();
 					int y = t.nextInt();
-					Visuals.visualize(x, y);
-					//insert future code here
-					LOGGER.info("Sucessfully rendered chunk at (" + x + ", " + y + ")");
-				}catch(InputMismatchException e)
-				{
+					Visuals.visualize(x, y);					LOGGER.info("Sucessfully rendered chunk at (" + x + ", " + y + ")");				
+				} catch(InputMismatchException e) {
 					LOGGER.info("Invalid command, usage : render <Xcord> <Ycord>");
-				}catch(NoSuchElementException e)
-				{
+				}catch(NoSuchElementException e) {
 					LOGGER.info("Invalid command, usage : render <Xcord> <Ycord>");
 				}
 			} else if (temp.equals("export")) {
