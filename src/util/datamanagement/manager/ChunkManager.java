@@ -60,6 +60,7 @@ public class ChunkManager {
 		if(new File("Chunkdata/["+c.getX()+","+c.getY()+"].chunk").exists())
 			System.out.println("Chunk ["+c.getX()+","+c.getY()+"] was successfully saved");
 	}
+	
 	public static Chunk read(int x, int y) throws FileNotFoundException, IOException, ClassNotFoundException {
 		ObjectInputStream ois = new ObjectInputStream(new BufferedInputStream(new FileInputStream("Chunkdata/["+x+","+y+"].chunk"), 300000));
 		Chunk c = (Chunk) ois.readObject();

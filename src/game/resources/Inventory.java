@@ -1,43 +1,37 @@
 package game.resources;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.EnumMap;
 
 import exceptions.NotEnoughResourcesException;
 
 public class Inventory {
-	public HashMap<String, Integer> resources;
+	public EnumMap<Resource, Integer> resources;
 
 	public Inventory() {
-		resources = new HashMap<String, Integer>();
+		resources = new EnumMap<>(Resource.class);
 	}
 
-	public void take(String resource, int amount) throws NotEnoughResourcesException {
-		int current = resources.get(resource);
+	public ItemStack take(Resource resource, int amount) throws NotEnoughResourcesException {
+		if(amount <= 0) {
+			throw new IllegalArgumentException("Amount must be greater than zero");
+		}
+		
+		int current = resources.getOrDefault(resource, 0);
 		if (current > amount) {
-			resources.remove(resource);
 			resources.put(resource, current - amount);
+			return new ItemStack(resource, amount);
 		} else
 			throw new NotEnoughResourcesException("Not enough " + resource + " current amount: " + current);
 	}
 
-	public void take(ArrayList<Resource> resourcea) throws NotEnoughResourcesException {
-		for (int x = 0; x < resourcea.size(); x++) {
-			Resource r = resourcea.get(x);
-			take(r.resourceID, r.amount);
-		}
+	public void put(Resource resource, int amount) {
+		resources.merge(resource, amount, (a, b) -> a + b);
 	}
 
-	public void put(String resource, int amount) {
-		amount += resources.get(resource);
-		resources.remove(resource);
-		resources.put(resource, amount);
-	}
-
-	public void put(ArrayList<Resource> resourcea) {
-		for (int x = 0; x < resourcea.size(); x++) {
-			Resource r = resourcea.get(x);
-			put(r.resourceID, r.amount);
+	public void putAll(ArrayList<ItemStack> resources) {
+		for (ItemStack stack: resources) {
+			put(stack.getResource(), stack.getAmount());
 		}
 	}
 }
