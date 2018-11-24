@@ -17,10 +17,24 @@ public class Inventory {
 			throw new NotEnoughResourcesException("Not enough " + resource + " current amount: " + current);
 	}
 	
-	public void take(ArrayList<Resource> resources) throws NotEnoughResourcesException {
-		for(int x = 0; x < resources.size(); x++) {
-			Resource r = resources.get(x);
+	public void take(ArrayList<Resource> resourcea) throws NotEnoughResourcesException {
+		for(int x = 0; x < resourcea.size(); x++) {
+			Resource r = resourcea.get(x);
 			take(r.resourceID, r.amount);
 		}
 	}
+	
+	public void put(String resource, int amount) {
+		amount += resources.get(resource);
+		resources.remove(resource);
+		resources.put(resource, amount);
+	}
+	
+	public void put(ArrayList<Resource> resourcea) {
+		for(int x = 0; x < resourcea.size(); x++) {
+			Resource r = resourcea.get(x);
+			put(r.resourceID, r.amount);
+		}
+	}
+	
 }
