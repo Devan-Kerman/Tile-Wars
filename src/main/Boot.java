@@ -7,6 +7,6 @@ public class Boot {
 		File chunkdir = new File("Chunkdata");
 		if(!chunkdir.exists())
 			chunkdir.mkdirs();
-		
 	}
+	
 }

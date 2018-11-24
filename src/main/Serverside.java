@@ -17,6 +17,7 @@ public class Serverside {
 	private static final Logger LOGGER = LoggerFactory.getLogger(Serverside.class);
 	
 	public static void main(String[] args) throws IOException {
+		Boot.boot();
 		cmds();
 	}
 
@@ -37,7 +38,8 @@ public class Serverside {
 				try {
 					int x = t.nextInt();
 					int y = t.nextInt();
-					Visuals.visualize(x, y);					LOGGER.info("Sucessfully rendered chunk at (" + x + ", " + y + ")");				
+					Visuals.visualize(x, y);					
+					LOGGER.info("Sucessfully rendered chunk at (" + x + ", " + y + ")");				
 				} catch(InputMismatchException e) {
 					LOGGER.info("Invalid command, usage : render <Xcord> <Ycord>");
 				}catch(NoSuchElementException e) {
@@ -61,6 +63,11 @@ public class Serverside {
 					LOGGER.info("Invalid command, usage : export <Xcord> <Ycord>");
 				}
 
+			}
+			else if(temp.equals("generate")) {
+				int x = t.nextInt();
+				int y = t.nextInt();
+				ChunkManager.getSafe(x, y);
 			}
 			else
 				LOGGER.info("invalid command, try \"help\" for a list of avilable commands");
