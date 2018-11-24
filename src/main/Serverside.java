@@ -3,18 +3,21 @@ package main;
 import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
-import java.time.format.DateTimeFormatter;
 import java.util.InputMismatchException;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import util.datamanagement.manager.ChunkManager;
 import visualizer.VPanel;
 
 public class Serverside {
-	private static final DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("hh:mm:ss");
+	private static final Logger LOGGER = LoggerFactory.getLogger(Serverside.class);
 	
 	public static void main(String[] args) throws IOException {
+		Boot.boot();
 		cmds();
 	}
 
@@ -24,27 +27,23 @@ public class Serverside {
 		while (true) {
 			t = new Scanner(s.nextLine());
 			String temp = t.next();
-			if (temp.equals("exit")) {
+			if (temp.equals("close") || temp.equals("Exit")) {
 				break;
 			} else if (temp.equals("help")) {
-				System.out.println("avilable commands:");
-				System.out.println("exit - closes application");
-				System.out.println("help - shows this list");
-				System.out.println("render <Xcoord> <Ycoord> - render a chunk at specified coordinates");
-				System.out.println();
+				LOGGER.info("avilable commands:");
+				LOGGER.info("close - closes application");
+				LOGGER.info("help - shows this list");
+				LOGGER.info("render <Xcoord> <Ycoord> - render a specific chunck at specified coordinates");
 			} else if (temp.equals("render")) {
 				try {
 					int x = t.nextInt();
 					int y = t.nextInt();
-					Visuals.visualize(x, y);
-					//insert future code here
-					System.out.println("Sucessfully rendered chunk at (" + x + ", " + y + ")");
-				}catch(InputMismatchException e)
-				{
-					System.out.println("Invalid command, usage : render <Xcord> <Ycord>");
-				}catch(NoSuchElementException e)
-				{
-					System.out.println("Invalid command, usage : render <Xcord> <Ycord>");
+					Visuals.visualize(x, y);					
+					LOGGER.info("Sucessfully rendered chunk at (" + x + ", " + y + ")");				
+				} catch(InputMismatchException e) {
+					LOGGER.info("Invalid command, usage : render <Xcord> <Ycord>");
+				}catch(NoSuchElementException e) {
+					LOGGER.info("Invalid command, usage : render <Xcord> <Ycord>");
 				}
 			} else if (temp.equals("export")) {
 				try {
@@ -55,19 +54,22 @@ public class Serverside {
 					new VPanel(ChunkManager.getSafe(x, y).data).Export(f);
 					Desktop.getDesktop().open(f);
 					//insert future code here
-					System.out.println("Sucessfully exported chunk at (" + x + ", " + y + ")");
+					LOGGER.info("Sucessfully exported chunk at (" + x + ", " + y + ")");
 				}catch(InputMismatchException e)
 				{
-					System.out.println("Invalid command, usage : render <Xcord> <Ycord>");
+					LOGGER.info("Invalid command, usage : export <Xcord> <Ycord>");
 				}catch(NoSuchElementException e)
 				{
-					System.out.println("Invalid command, usage : render <Xcord> <Ycord>");
+					LOGGER.info("Invalid command, usage : export <Xcord> <Ycord>");
 				}
-
-				System.out.println();
+			}
+			else if(temp.equals("generate")) {
+				int x = t.nextInt();
+				int y = t.nextInt();
+				ChunkManager.getSafe(x, y);
 			}
 			else
-				System.out.println("nvalid command, try \"help\" for a list of avilable commands");
+				LOGGER.info("invalid command, try \"help\" for a list of avilable commands");
 		}
 		t.close();
 		s.close();

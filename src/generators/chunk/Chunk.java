@@ -1,13 +1,18 @@
 package generators.chunk;
 
 import java.awt.Point;
+import java.io.Serializable;
 
 import generators.terrain.Generator;
 import tile.Tile;
 
-public class Chunk {
+public class Chunk implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7297134163391801440L;
 	public Tile[][] data;
-	public static int chunksize = 1000;
+	public static int chunksize = 100;
 	public Point coors;
 	
 	public Chunk(int cx, int cy) {

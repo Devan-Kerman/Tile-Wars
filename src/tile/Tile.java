@@ -1,6 +1,12 @@
 package tile;
 
-public class Tile {
+import java.io.Serializable;
+
+public class Tile implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 382610168546865107L;
 	// 23 bytes
 	public int x; // X
 	public int y; // Y
