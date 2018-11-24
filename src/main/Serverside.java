@@ -16,6 +16,7 @@ import visualizer.VPanel;
 
 public class Serverside {
 	private static final Logger LOGGER = LoggerFactory.getLogger(Serverside.class);
+	
 	public static void main(String[] args) throws IOException {
 		Boot.boot();
 		cmds();
@@ -82,5 +83,6 @@ public class Serverside {
 		}
 		t.close();
 		s.close();
+		Boot.nationdb.write();
 	}
 }

@@ -6,8 +6,11 @@ import java.util.HashMap;
 import exceptions.NotEnoughResourcesException;
 
 public class Inventory {
-	public HashMap<String, Integer> resources;
-
+	public HashMap<String,Integer> resources;
+	public Inventory() {
+		resources = new HashMap<String,Integer>();
+	}
+	
 	public void take(String resource, int amount) throws NotEnoughResourcesException {
 		int current = resources.get(resource);
 		if (current > amount) {
@@ -21,6 +24,19 @@ public class Inventory {
 		for (int x = 0; x < resources.size(); x++) {
 			Resource r = resources.get(x);
 			take(r.getResourceID(), r.getAmount());
+		}
+	}
+	
+	public void put(String resource, int amount) {
+		amount += resources.get(resource);
+		resources.remove(resource);
+		resources.put(resource, amount);
+	}
+	
+	public void put(ArrayList<Resource> resourcea) {
+		for(int x = 0; x < resourcea.size(); x++) {
+			Resource r = resourcea.get(x);
+			put(r.getResourceID(), r.getAmount());
 		}
 	}
 }
