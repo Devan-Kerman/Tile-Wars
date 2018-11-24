@@ -5,6 +5,8 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.text.SimpleDateFormat;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.InputMismatchException;
 import java.util.NoSuchElementException;
@@ -14,28 +16,12 @@ import util.datamanagement.manager.ChunkManager;
 import visualizer.VPanel;
 
 public class Serverside {
+	private static final DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("hh:mm:ss");
+	
 	public static void main(String[] args) throws IOException {
-		init();
 		cmds();
 	}
 
-	public static void init() {
-		PrintStream p = new PrintStream(System.out) {
-		    @Override
-		    public void println(String x) {
-		        super.printf("[%s]:\t%s\n", new SimpleDateFormat("hh:mm:ss a").format(new Date()),x);
-		    }
-		    @Override
-		    public void println(int x) {
-		        super.printf("[%s]:\t%d\n", new SimpleDateFormat("hh:mm:ss a").format(new Date()),x);
-		    }
-		    @Override
-		    public void println(double x) {
-		        super.printf("[%s]:\t%3.3f\n", new SimpleDateFormat("hh:mm:ss a").format(new Date()),x);
-		    }
-		};
-		System.setOut(p);
-	}
 	public static void cmds() throws IOException {
 		Scanner s = new Scanner(System.in);
 		Scanner t;

@@ -16,8 +16,8 @@ import tile.Tile;
 
 public class VPanel extends JPanel{
 	private static final long serialVersionUID = 1064812704658251024L;
-	int scale = 25;
-	Tile[][] array;
+	private int scale = 25;
+	private final Tile[][] array;
 	BufferedImage img;
 	public VPanel(Tile[][] arr) {
 		array = arr;
@@ -32,6 +32,7 @@ public class VPanel extends JPanel{
 	}
 	@Override
 	public void paintComponent(Graphics g) {
+		super.paintComponent(g);
 		drawImage();
 		g.drawImage(img, 0, 0, null);
 	}
