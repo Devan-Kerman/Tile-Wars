@@ -35,7 +35,6 @@ public class VPanel extends JPanel {
 				else
 					scale -= e.getWheelRotation()*2;
 				repaint();
-				System.out.println(scale);	
 					if(scale <= 1)
 					scale = 1;
 			}
