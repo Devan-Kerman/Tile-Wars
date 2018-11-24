@@ -36,16 +36,16 @@ public class ChunkManager {
 		return cache.containsKey(x, y);
 	}
 	
-	public static Tile getTile(int tx, int ty) {
+	public static Tile getTile(final int tx, final int ty) {
 		Chunk c = getChunk(tx/Chunk.chunksize, ty/Chunk.chunksize);
 		return c.getData()[tx%Chunk.chunksize][ty%Chunk.chunksize];
 	}
 	
-	public static boolean inDrive(int x, int y) {
+	public static boolean inDrive(final int x, final int y) {
 		return new File("Chunkdata/["+x+","+y+"].chunk").exists();
 	}
 	
-	public static void write(Chunk c) {
+	public static void write(final Chunk c) {
 		try {
 			File f = new File("Chunkdata/["+c.getX()+","+c.getY()+"].temp");
 			f.delete();

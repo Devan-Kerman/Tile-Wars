@@ -37,8 +37,7 @@ public class Inventory {
 	public void put(ArrayList<Resource> resourcea) {
 		for (int x = 0; x < resourcea.size(); x++) {
 			Resource r = resourcea.get(x);
-			put(r.resourceID, r.amount);
+			put(r.getResourceID(), r.getAmount());
 		}
 	}
-
 }
