@@ -1,6 +1,8 @@
 package util.datamanagement.manager;
 
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -68,18 +70,21 @@ public class ChunkManager {
 			File f = new File("Chunkdata/["+c.coors.x+","+c.coors.y+"].temp");
 			f.delete();
 			f.createNewFile();
-			ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(f));
+			ObjectOutputStream oos = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(f), 29000000));
 			oos.writeObject(c);
 			oos.close();
 			f.renameTo(new File("Chunkdata/["+c.coors.x+","+c.coors.y+"].chunk"));
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
+		if(new File("Chunkdata/["+c.coors.x+","+c.coors.y+"].chunk").exists())
+			System.out.println("Chunk ["+c.coors.x+","+c.coors.y+"] was successfully saved");
 	}
 	public static Chunk read(int x, int y) throws FileNotFoundException, IOException, ClassNotFoundException {
-		ObjectInputStream ois = new ObjectInputStream(new FileInputStream("Chunkdata/["+x+","+y+"].chunk"));
+		ObjectInputStream ois = new ObjectInputStream(new BufferedInputStream(new FileInputStream("Chunkdata/["+x+","+y+"].chunk"), 29000000));
 		Chunk c = (Chunk) ois.readObject();
 		ois.close();
+		System.out.println("Chunk: ["+x+","+y+"] was found and retrieved");
 		return c;
 	}
 }

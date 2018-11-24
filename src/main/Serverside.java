@@ -15,6 +15,9 @@ public class Serverside {
 	private static final DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("hh:mm:ss");
 	
 	public static void main(String[] args) throws IOException {
+		Boot.boot();
+		
+		
 		cmds();
 	}
 
@@ -67,6 +70,11 @@ public class Serverside {
 				System.out.println();
 			} else if(temp.equals("Exit")) {
 				break;
+			}
+			else if(temp.equals("generate")) {
+				int x = t.nextInt();
+				int y = t.nextInt();
+				ChunkManager.getSafe(x, y);
 			}
 			else
 				System.out.println("nvalid command, try \"help\" for a list of avilable commands");
