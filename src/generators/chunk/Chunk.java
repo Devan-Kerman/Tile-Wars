@@ -5,7 +5,7 @@ import tile.Tile;
 
 public class Chunk {
 	public Tile[][] data;
-	public static int chunksize = 100;
+	public static int chunksize = 1000;
 	public Chunk(int cx, int cy) {
 		data = new Tile[chunksize][chunksize];
 		for(int x = 0; x < chunksize; x++)
