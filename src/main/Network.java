@@ -21,7 +21,9 @@ public class Network {
 			try {
 				Socket s = ss.accept();
 				new Thread(new Client(s)).start();
-			} catch (IOException e) {e.printStackTrace();}
+			} catch (Exception e) {e.printStackTrace();return;}
+			if(ss.isClosed())
+				break;
 		}
 	}
 }

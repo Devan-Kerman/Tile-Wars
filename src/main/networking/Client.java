@@ -15,23 +15,32 @@ public class Client implements Runnable {
 	private ObjectOutputStream oos;
 	
 	public Client(Socket s) {
+		System.out.println("New Client!");
 		try {
-			ois = new ObjectInputStream(new BufferedInputStream(s.getInputStream()));
 			oos = new ObjectOutputStream(new BufferedOutputStream(s.getOutputStream()));
+			oos.flush();
+			ois = new ObjectInputStream(new BufferedInputStream(s.getInputStream()));
+			System.out.println("Intialized");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 	
 	public void run() {
+		System.out.println("Started!");
 		try {
 			while(true) {
 				Packet p = (Packet) ois.readObject();
+				System.out.println("Packet Recieved!");
 				if(p.request.equalsIgnoreCase("position")) {
+					System.out.print("And...");
 					Integer x = (Integer) p.data.get("X");
 					Integer y = (Integer) p.data.get("Y");
 					oos.writeObject(retrieve(x,y));
+					System.out.println(" Sent!");
 				}
+				else
+					return;
 			}
 		} catch(Exception e) {e.printStackTrace(); return;}
 	}

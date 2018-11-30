@@ -16,14 +16,14 @@ public class Generator {
 	public static Tile generate(int x, int y) {
 		Tile t = new Tile();
 		t.elevation = (byte) (TG.genPoint(x, y)*125);
-		t.iron_ore = IRONGEN.calculate(t.elevation);
-		t.bauxite_ore = BAUXGEN.calculate(t.elevation);
-		t.tin_ore = TINGEN.calculate(t.elevation);
-		t.gold_ore = t.tin_ore;
-		t.silver_ore = t.gold_ore;
-		t.coal_ore = COALGEN.calculate(t.elevation);
-		t.platinum_ore = t.gold_ore;
-		t.nat_gas = t.coal_ore;
+		t.ironOre = IRONGEN.calculate(t.elevation);
+		t.bauxiteOre = BAUXGEN.calculate(t.elevation);
+		t.tinOre = TINGEN.calculate(t.elevation);
+		t.goldOre = t.tinOre;
+		t.silverOre = t.goldOre;
+		t.coalOre = COALGEN.calculate(t.elevation);
+		t.platinumOre = t.goldOre;
+		t.natGas = t.coalOre;
 		t.oil = OILGEN.calculate(t.elevation);
 		t.gems = t.oil;
 		if(t.elevation < -25)

@@ -55,7 +55,7 @@ public class Serverside {
 					int y = t.nextInt();
 					File f = new File("yeet.png");
 					f.delete();
-					new VPanel(ChunkManager.safeChunk(x, y).getData()).Export(f);
+					new VPanel(ChunkManager.safeChunk(x, y).data).Export(f);
 					Desktop.getDesktop().open(f);
 					// insert future code here
 					LOGGER.info("Sucessfully exported chunk at (" + x + ", " + y + ")");

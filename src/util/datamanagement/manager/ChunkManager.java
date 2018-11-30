@@ -40,7 +40,7 @@ public class ChunkManager {
 
 	public static Tile getTile(final int tx, final int ty) {
 		Chunk c = safeChunk(tx / Chunk.chunksize, ty / Chunk.chunksize);
-		return c.getData()[tx % Chunk.chunksize][ty % Chunk.chunksize];
+		return c.data[tx % Chunk.chunksize][ty % Chunk.chunksize];
 	}
 
 	private static boolean inDrive(final int x, final int y) {
@@ -49,18 +49,18 @@ public class ChunkManager {
 
 	private static void write(final Chunk c) {
 		try {
-			File f = new File("Chunkdata/[" + c.getX() + "," + c.getY() + "].temp");
+			File f = new File("Chunkdata/[" + c.x + "," + c.y + "].temp");
 			f.delete();
 			f.createNewFile();
 			ObjectOutputStream oos = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(f), 300000));
 			oos.writeObject(c);
 			oos.close();
-			f.renameTo(new File("Chunkdata/[" + c.getX() + "," + c.getY() + "].chunk"));
+			f.renameTo(new File("Chunkdata/[" + c.x + "," + c.y + "].chunk"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		if (new File("Chunkdata/[" + c.getX() + "," + c.getY() + "].chunk").exists())
-			System.out.println("Chunk [" + c.getX() + "," + c.getY() + "] was successfully saved");
+		if (new File("Chunkdata/[" + c.x + "," + c.y + "].chunk").exists())
+			System.out.println("Chunk [" + c.x + "," + c.x + "] was successfully saved");
 	}
 
 	private static Chunk read(int x, int y) throws FileNotFoundException, IOException, ClassNotFoundException {
