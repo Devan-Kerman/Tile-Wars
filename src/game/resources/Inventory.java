@@ -6,6 +6,8 @@ import java.util.EnumMap;
 import exceptions.NotEnoughResourcesException;
 
 public class Inventory {
+	
+
 	public EnumMap<Resource, Integer> resources;
 
 	public Inventory() {
@@ -31,7 +33,7 @@ public class Inventory {
 
 	public void putAll(ArrayList<ItemStack> resources) {
 		for (ItemStack stack: resources) {
-			put(stack.getResource(), stack.getAmount());
+			put(stack.r, stack.amount);
 		}
 	}
 }

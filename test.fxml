@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane id="AnchorPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1000.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2">
+  <children>
+    <TabPane blendMode="SRC_OVER" disable="false" focusTraversable="true" layoutX="14.0" layoutY="14.0" prefHeight="722.0" prefWidth="972.0" rotateGraphic="false" tabClosingPolicy="UNAVAILABLE" visible="true">
+      <tabs>
+        <Tab text="World">
+          <content>
+            <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+              <children>
+                <ImageView blendMode="SRC_OVER" depthTest="INHERIT" fitHeight="653.0000999999975" fitWidth="943.9999389648438" layoutX="14.0" layoutY="14.0" mouseTransparent="false" pickOnBounds="true" preserveRatio="false">
+                  <image>
+                    <Image url="file:/C:/Users/devan/Dropbox/Master/Tile-Wars/yeet.png" />
+                  </image>
+                </ImageView>
+              </children>
+            </AnchorPane>
+          </content>
+        </Tab>
+        <Tab text="Nation">
+          <content>
+            <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+              <children>
+                <Label layoutX="14.0" layoutY="14.0" minHeight="32.0" prefHeight="96.0" prefWidth="944.0" text="Nation Name" textFill="#005a66" textOverrun="ELLIPSIS" underline="false" wrapText="false">
+                  <font>
+                    <Font size="72.0" />
+                  </font>
+                </Label>
+                <PieChart id="PieChart" cache="false" clockwise="true" layoutX="14.0" layoutY="110.0" minWidth="186.0" prefHeight="200.0" prefWidth="200.0" startAngle="0.0" title="Score: 000" />
+                <TableView layoutX="807.0" layoutY="14.0" prefHeight="653.0" prefWidth="151.0">
+                  <columns>
+                    <TableColumn prefWidth="75.0" text="Resource" />
+                    <TableColumn prefWidth="75.0" text="# per day" />
+                  </columns>
+                </TableView>
+                <TextArea layoutX="214.0" layoutY="110.0" prefHeight="200.0" prefWidth="577.0" promptText="" text="Nation Info: &#10;" wrapText="true" />
+                <ImageView fitHeight="354.0" fitWidth="777.0" layoutX="14.0" layoutY="311.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                    <Image url="file:/C:/Users/devan/Dropbox/Master/Tile-Wars/yeet.png" />
+                  </image>
+                </ImageView>
+              </children>
+            </AnchorPane>
+          </content>
+        </Tab>
+      </tabs>
+    </TabPane>
+  </children>
+</AnchorPane>

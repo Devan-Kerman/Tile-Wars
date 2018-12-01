@@ -1,25 +1,36 @@
 package main.networking;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.net.Socket;
 
+import com.esotericsoftware.kryo.Kryo;
+import com.esotericsoftware.kryo.io.Input;
+import com.esotericsoftware.kryo.io.Output;
+
 import generators.chunk.Chunk;
+import tile.Improvement;
+import tile.Tile;
 import util.datamanagement.manager.ChunkManager;
 
 public class Client implements Runnable {
-	private ObjectInputStream ois;
-	private ObjectOutputStream oos;
+	private Input ois;
+	private Output oos;
+	private Kryo k;
 	
 	public Client(Socket s) {
 		System.out.println("New Client!");
 		try {
-			oos = new ObjectOutputStream(new BufferedOutputStream(s.getOutputStream()));
+			k = new Kryo();
+			k.register(Chunk[][].class);
+			k.register(Chunk[].class);
+			k.register(Chunk.class);
+			k.register(Tile[].class);
+			k.register(Tile[][].class);
+			k.register(Tile.class);
+			k.register(Improvement.class);
+			oos = new Output(s.getOutputStream());
 			oos.flush();
-			ois = new ObjectInputStream(new BufferedInputStream(s.getInputStream()));
+			ois = new Input(s.getInputStream());
 			System.out.println("Intialized");
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -30,13 +41,14 @@ public class Client implements Runnable {
 		System.out.println("Started!");
 		try {
 			while(true) {
-				Packet p = (Packet) ois.readObject();
+				Integer opcode = k.readObject(ois, Integer.class);
 				System.out.println("Packet Recieved!");
-				if(p.request.equalsIgnoreCase("position")) {
+				if(opcode == 0) {
 					System.out.print("And...");
-					Integer x = (Integer) p.data.get("X");
-					Integer y = (Integer) p.data.get("Y");
-					oos.writeObject(retrieve(x,y));
+					Integer x = k.readObject(ois, Integer.class);
+					Integer y = k.readObject(ois, Integer.class);
+					k.writeObject(oos, retrieve(x,y));
+					oos.flush();
 					System.out.println(" Sent!");
 				}
 				else
