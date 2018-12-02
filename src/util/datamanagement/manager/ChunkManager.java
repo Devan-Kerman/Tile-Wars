@@ -59,16 +59,12 @@ public class ChunkManager {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		if (new File("Chunkdata/[" + c.x + "," + c.y + "].chunk").exists())
-			System.out.println("Chunk [" + c.x + "," + c.x + "] was successfully saved");
 	}
 
 	private static Chunk read(int x, int y) throws FileNotFoundException, IOException, ClassNotFoundException {
-		ObjectInputStream ois = new ObjectInputStream(
-				new BufferedInputStream(new FileInputStream("Chunkdata/[" + x + "," + y + "].chunk"), 300000));
+		ObjectInputStream ois = new ObjectInputStream(new BufferedInputStream(new FileInputStream("Chunkdata/[" + x + "," + y + "].chunk"), 300000));
 		Chunk c = (Chunk) ois.readObject();
 		ois.close();
-		System.out.println("Chunk: [" + x + "," + y + "] was found and retrieved");
 		return c;
 	}
 }

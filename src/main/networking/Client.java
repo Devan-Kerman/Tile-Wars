@@ -45,7 +45,6 @@ public class Client implements Runnable {
 		try {
 			while(true) {
 				Integer opcode = k.readObject(ois, Integer.class);
-				System.out.println("Client " + clientID + " sent opcode " + opcode);
 				if(opcode == 0) {
 					Integer x = k.readObject(ois, Integer.class);
 					Integer y = k.readObject(ois, Integer.class);
@@ -53,7 +52,7 @@ public class Client implements Runnable {
 					oos.flush();
 				}
 				else if(opcode == 1) {
-					k.writeObject(oos, Chunk.chunksize);
+					//I dunno what this'll be fore
 				}
 				else {
 					System.out.println("Connection Aborted!");
@@ -69,9 +68,10 @@ public class Client implements Runnable {
 		y -= 1;
 		for(int s = 0; s < 3; s++)
 			for(int d = 0; d < 3; d++)
-				cs[s][d] = ChunkManager.safeChunk(x++, y++);
+				cs[s][d] = ChunkManager.safeChunk(x+s, y+d);
 		return cs;
 	}
+	
 	
 }
 
