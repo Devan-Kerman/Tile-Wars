@@ -16,8 +16,10 @@ public class Client implements Runnable {
 	private Input ois;
 	private Output oos;
 	private Kryo k;
-	
+	private static int clientCounter;
+	private int clientID;
 	public Client(Socket s) {
+		clientID = clientCounter++;
 		System.out.println("New Client!");
 		try {
 			k = new Kryo();
@@ -28,6 +30,7 @@ public class Client implements Runnable {
 			k.register(Tile[][].class);
 			k.register(Tile.class);
 			k.register(Improvement.class);
+			k.register(Integer.class);
 			oos = new Output(s.getOutputStream());
 			oos.flush();
 			ois = new Input(s.getInputStream());
@@ -42,17 +45,20 @@ public class Client implements Runnable {
 		try {
 			while(true) {
 				Integer opcode = k.readObject(ois, Integer.class);
-				System.out.println("Packet Recieved!");
+				System.out.println("Client " + clientID + " sent opcode " + opcode);
 				if(opcode == 0) {
-					System.out.print("And...");
 					Integer x = k.readObject(ois, Integer.class);
 					Integer y = k.readObject(ois, Integer.class);
 					k.writeObject(oos, retrieve(x,y));
 					oos.flush();
-					System.out.println(" Sent!");
 				}
-				else
+				else if(opcode == 1) {
+					k.writeObject(oos, Chunk.chunksize);
+				}
+				else {
+					System.out.println("Connection Aborted!");
 					return;
+				}
 			}
 		} catch(Exception e) {e.printStackTrace(); return;}
 	}
