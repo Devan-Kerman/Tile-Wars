@@ -59,7 +59,7 @@ public class VPanel extends JPanel {
 		
 		for(int i = 0; i < array.length; i++) {
 			for(int j = 0; j < array[i].length; j++) {
-				int temp = array[i][j].getElevation();
+				int temp = array[i][j].elevation;
 				if(temp >=240)
 					g2d.setColor(new Color(255,255,255));
 				else if(temp >=200 && temp < 240)

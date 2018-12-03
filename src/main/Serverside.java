@@ -55,7 +55,7 @@ public class Serverside {
 					int y = t.nextInt();
 					File f = new File("yeet.png");
 					f.delete();
-					new VPanel(ChunkManager.getChunk(x, y).getData()).Export(f);
+					new VPanel(ChunkManager.safeChunk(x, y).data).Export(f);
 					Desktop.getDesktop().open(f);
 					// insert future code here
 					LOGGER.info("Sucessfully exported chunk at (" + x + ", " + y + ")");
@@ -68,7 +68,7 @@ public class Serverside {
 				StopWatch.start();
 				int x = t.nextInt();
 				int y = t.nextInt();
-				ChunkManager.getChunk(x, y);
+				ChunkManager.safeChunk(x, y);
 				long duration = StopWatch.stop();
 		        System.out.println("MS: " +duration);
 			}
@@ -76,7 +76,7 @@ public class Serverside {
 				StopWatch.start();
 				for (int c = 0; c < 100; c++)
 					for (int b = 0; b < 100; b++)
-						ChunkManager.getChunk(c, b);
+						ChunkManager.safeChunk(c, b);
 				long duration = StopWatch.stop();
 				System.out.println("MS: " + duration);
 			} else
