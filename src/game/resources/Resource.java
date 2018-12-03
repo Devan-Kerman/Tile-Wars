@@ -2,7 +2,7 @@ package game.resources;
 
 public class Resource {
 	private final String resourceID;
-	private int amount;
+	int amount;
 	
 	public Resource(final String resourceID, final int amount) {
 		this.resourceID = resourceID;
