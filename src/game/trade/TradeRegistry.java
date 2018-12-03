@@ -12,5 +12,5 @@ public class TradeRegistry {
 
 	public TradeRegistry() {
 		trades = MAP_BUILDER.build();
-	}
+	} 
 }

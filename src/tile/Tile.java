@@ -23,5 +23,4 @@ public class Tile implements Serializable {
 	public byte wildlife;
 	public byte lumber;
 	public byte humidity;
-
 }
