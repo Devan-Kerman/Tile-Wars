@@ -29,13 +29,17 @@ public class ChunkManager {
 	}
 
 	public static Chunk safeChunk(final int x, final int y) {
-		if (cache.containsKey(x, y))
+		if (cache.containsKey(x, y)) {
+			System.out.println("Reading chunk from memory");
 			return cache.get(x, y);
-		else if (inDrive(x, y)) try {
+		} else if (inDrive(x, y)) try {
+			System.out.println("Reading chunk from disk");
 			return read(x, y);
 		} catch(Exception e) {e.printStackTrace(); return null;}
-		else
+		else {
+			System.out.println("Generating new chunk");
 			return gen(x, y);
+		}
 	}
 
 	public static Tile getTile(final int tx, final int ty) {

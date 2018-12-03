@@ -19,7 +19,7 @@ public class Serverside {
 
 	public static void main(String[] args) throws IOException {
 		Boot.boot();
-		cmds();
+		//cmds();
 	}
 
 	public static void cmds() throws IOException {
