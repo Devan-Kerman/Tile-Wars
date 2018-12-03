@@ -16,10 +16,10 @@ public class Client implements Runnable {
 	private Input ois;
 	private Output oos;
 	private Kryo k;
-	private static int clientCounter;
-	private int clientID;
+	//private static int clientCounter;
+	//private int clientID;
 	public Client(Socket s) {
-		clientID = clientCounter++;
+		//clientID = clientCounter++;
 		System.out.println("New Client!");
 		try {
 			k = new Kryo();
@@ -53,6 +53,10 @@ public class Client implements Runnable {
 				}
 				else if(opcode == 1) {
 					//I dunno what this'll be fore
+					Integer x = k.readObject(ois, Integer.class);
+					Integer y = k.readObject(ois, Integer.class);
+					k.writeObject(oos, ChunkManager.safeChunk(x, y));
+					oos.flush();
 				}
 				else {
 					System.out.println("Connection Aborted!");
