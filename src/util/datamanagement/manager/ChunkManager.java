@@ -30,18 +30,18 @@ public class ChunkManager {
 
 	public static Chunk safeChunk(final int x, final int y) {
 		if (cache.containsKey(x, y)) {
-			System.out.println("Reading chunk from memory");
 			return cache.get(x, y);
 		} else if (inDrive(x, y)) try {
-			System.out.println("Reading chunk from disk");
 			return read(x, y);
 		} catch(Exception e) {e.printStackTrace(); return null;}
 		else {
-			System.out.println("Generating new chunk");
 			return gen(x, y);
 		}
 	}
-
+	/*
+	 * @deprecated Unreliable for negitive coordinates, and should not be used anyways as it is slow.
+	 */
+	@Deprecated()
 	public static Tile getTile(final int tx, final int ty) {
 		Chunk c = safeChunk(tx / Chunk.chunksize, ty / Chunk.chunksize);
 		return c.data[tx % Chunk.chunksize][ty % Chunk.chunksize];

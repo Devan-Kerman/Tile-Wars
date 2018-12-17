@@ -10,6 +10,7 @@ import java.util.Scanner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import tile.Tile;
 import util.datamanagement.manager.ChunkManager;
 import util.testing.StopWatch;
 import visualizer.VPanel;
@@ -17,8 +18,10 @@ import visualizer.VPanel;
 public class Serverside {
 	private static final Logger LOGGER = LoggerFactory.getLogger(Serverside.class);
 
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) {
+		System.out.println("Booting");
 		Boot.boot();
+		System.out.println("keked");
 		//cmds();
 	}
 
@@ -77,6 +80,17 @@ public class Serverside {
 				for (int c = 0; c < 100; c++)
 					for (int b = 0; b < 100; b++)
 						ChunkManager.safeChunk(c, b);
+				for (int c = 0; c < 100; c++)
+					for (int b = 0; b < 100; b++) {
+						Tile[][] chunk = ChunkManager.safeChunk(c, b).data;
+						for (int x = 0; x < 100; x++)
+							for (int y = 0; y < 100; y++) {
+								if(chunk[x][y].i.tickable()) {
+									chunk[x][y].i.execute(null);
+									System.out.println("Tickable!");
+								}
+							}
+					}
 				long duration = StopWatch.stop();
 				System.out.println("MS: " + duration);
 			} else

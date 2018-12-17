@@ -1,5 +1,9 @@
 package game;
 
 public class GlobalData {
-	public int nidcounter = 0;
+	public static int nidcounter = 0;
+	private GlobalData() {
+		throw new IllegalStateException("Utility class");
+	}
+	
 }
