@@ -17,14 +17,14 @@ public class Serverside {
 	
 	
 	public static void main(String[] args) {
-		logger.info("Booting");
 		logger = new DLogger();
+		logger.info("Booting");
 		Boot.boot();
 		logger.relief("Booted");
-		//cmds();
+		cmds();
 	}
 
-	public static void cmds() throws IOException {
+	public static void cmds() {
 		Scanner s = new Scanner(System.in);
 		Scanner t;
 		while (true) {
@@ -61,6 +61,8 @@ public class Serverside {
 					logger.info("Sucessfully exported chunk at (" + x + ", " + y + ")");
 				} catch (InputMismatchException e) {
 					logger.info("Invalid command, usage : export <Xcord> <Ycord>");
+				} catch (IOException e) {
+					logger.error(e.getLocalizedMessage());
 				}
 			} else if (temp.equals("generate")) {
 				StopWatch.start();

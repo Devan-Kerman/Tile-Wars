@@ -8,9 +8,9 @@ import java.util.logging.Logger;
 public class DLogger {
 
 	private static final Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
-
 	public DLogger() {
 		LOGGER.setLevel(Level.FINEST);
+		LOGGER.setUseParentHandlers(false);
 		LOGGER.addHandler(new Handler() {
 
 			@Override
@@ -25,10 +25,10 @@ public class DLogger {
 
 			@Override
 			public void publish(LogRecord r) {
+				
 				Level l = r.getLevel();
-				System.out.printf("%s -> %s : ", r.getParameters()[0], r.getMessage(), l.toString());
+				System.out.printf("\n%s -> %s : %s", r.getParameters()[0], l.toString(), r.getMessage());
 			}
-
 		});
 
 	}
