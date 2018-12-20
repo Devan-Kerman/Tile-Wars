@@ -3,15 +3,16 @@ package util.testing;
 import java.time.Clock;
 
 public class StopWatch {
-   private static long begin =0l;
-   private static long end =0l;
+	private StopWatch() {
+	}
 
-   public static void start(){
-        begin = Clock.systemDefaultZone().millis();
-   }
+	private static long begin = 0l;
 
-   public static long stop(){
-        end = Clock.systemDefaultZone().millis();
-        return end-begin;
-   }
+	public static void start() {
+		begin = Clock.systemDefaultZone().millis();
+	}
+
+	public static long stop() {
+		return Clock.systemDefaultZone().millis() - begin;
+	}
 }

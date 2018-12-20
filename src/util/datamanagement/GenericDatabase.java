@@ -7,14 +7,17 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
+import java.nio.file.Files;
 import java.util.HashMap;
+import java.util.Map;
 
-public class GenericDatabase<T> {
-	public HashMap<String, T> data;
+public class GenericDatabase<T extends Serializable> {
+	public Map<String, T> data;
 	public File save;
 	public GenericDatabase(String location) {
 		save = new File(location);
-		data = new HashMap<String, T>();
+		data = new HashMap<>();
 	}
 	
 	public void replace(String key, T value) {
@@ -25,7 +28,7 @@ public class GenericDatabase<T> {
 	public void write() {
 		try {
 			File f = new File(save.getAbsolutePath()+".temp");
-			f.delete();
+			Files.delete(f.toPath());
 			f.createNewFile();
 			ObjectOutputStream oos = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(f), 300000));
 			oos.writeObject(data);

@@ -4,17 +4,18 @@ import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.nio.file.Files;
 
 import generators.chunk.Chunk;
-import tile.Tile;
 import util.datamanagement.ChunkCache;
 
 public class ChunkManager {
+	private ChunkManager() {}
+	
 	private static ChunkCache cache = new ChunkCache();
 
 	public static void clear() {
@@ -38,14 +39,6 @@ public class ChunkManager {
 			return gen(x, y);
 		}
 	}
-	/*
-	 * @deprecated Unreliable for negitive coordinates, and should not be used anyways as it is slow.
-	 */
-	@Deprecated()
-	public static Tile getTile(final int tx, final int ty) {
-		Chunk c = safeChunk(tx / Chunk.chunksize, ty / Chunk.chunksize);
-		return c.data[tx % Chunk.chunksize][ty % Chunk.chunksize];
-	}
 
 	private static boolean inDrive(final int x, final int y) {
 		return new File("Chunkdata/[" + x + "," + y + "].chunk").exists();
@@ -54,7 +47,7 @@ public class ChunkManager {
 	private static void write(final Chunk c) {
 		try {
 			File f = new File("Chunkdata/[" + c.x + "," + c.y + "].temp");
-			f.delete();
+			Files.delete(f.toPath());
 			f.createNewFile();
 			ObjectOutputStream oos = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(f), 300000));
 			oos.writeObject(c);
@@ -65,7 +58,7 @@ public class ChunkManager {
 		}
 	}
 
-	private static Chunk read(int x, int y) throws FileNotFoundException, IOException, ClassNotFoundException {
+	private static Chunk read(int x, int y) throws  IOException, ClassNotFoundException {
 		ObjectInputStream ois = new ObjectInputStream(new BufferedInputStream(new FileInputStream("Chunkdata/[" + x + "," + y + "].chunk"), 300000));
 		Chunk c = (Chunk) ois.readObject();
 		ois.close();

@@ -4,8 +4,6 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
-import java.awt.event.MouseWheelEvent;
-import java.awt.event.MouseWheelListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -25,19 +23,16 @@ public class VPanel extends JPanel {
 		array = arr;
 		img = new BufferedImage(arr.length * 10, arr[0].length * 10, BufferedImage.TYPE_INT_ARGB);
 		drawImage(img);
-		addMouseWheelListener(new MouseWheelListener() {
-			@Override
-			public void mouseWheelMoved(MouseWheelEvent e) {
-				if(scale < 10)
-					scale -= e.getWheelRotation()/4.0;
-				else if(scale < 30)
-					scale -= e.getWheelRotation();
-				else
-					scale -= e.getWheelRotation()*2;
-				repaint();
-					if(scale <= 1)
-					scale = 1;
-			}
+		addMouseWheelListener(e -> {
+			if(scale < 10)
+				scale -= e.getWheelRotation()/4.0;
+			else if(scale < 30)
+				scale -= e.getWheelRotation();
+			else
+				scale -= e.getWheelRotation()*2;
+			repaint();
+				if(scale <= 1)
+				scale = 1;
 		});
 	}
 
@@ -49,7 +44,7 @@ public class VPanel extends JPanel {
 		g2.drawImage(img, 0, 0, (int)Math.round(array.length * scale), (int)Math.round(array[0].length * scale), null);
 	}
 
-	public void Export(File f) throws IOException {
+	public void export(File f) throws IOException {
 		drawImage(img);
 		ImageIO.write(img, "png", f);
 	}

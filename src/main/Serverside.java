@@ -3,12 +3,9 @@ package main;
 import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.InputMismatchException;
-import java.util.NoSuchElementException;
 import java.util.Scanner;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import tile.Tile;
 import util.datamanagement.manager.ChunkManager;
@@ -16,12 +13,14 @@ import util.testing.StopWatch;
 import visualizer.VPanel;
 
 public class Serverside {
-	private static final Logger LOGGER = LoggerFactory.getLogger(Serverside.class);
-
+	public static DLogger logger;
+	
+	
 	public static void main(String[] args) {
-		System.out.println("Booting");
+		logger.info("Booting");
+		logger = new DLogger();
 		Boot.boot();
-		System.out.println("keked");
+		logger.relief("Booted");
 		//cmds();
 	}
 
@@ -34,38 +33,34 @@ public class Serverside {
 			if (temp.equals("close") || temp.equals("Exit")) {
 				break;
 			} else if (temp.equals("help")) {
-				LOGGER.info("avilable commands:");
-				LOGGER.info("close - closes application");
-				LOGGER.info("help - shows this list");
-				LOGGER.info("render <Xcoord> <Ycoord> - render a specific chunck at specified coordinates");
-				LOGGER.info("export <Xcoord> <Ycoord> - exports a chunk to a png file");
-				LOGGER.info("generate - generates a chunk within time");
-				LOGGER.info("stress - stress tests the generation function");
+				logger.info("avilable commands:");
+				logger.info("close - closes application");
+				logger.info("help - shows this list");
+				logger.info("render <Xcoord> <Ycoord> - render a specific chunck at specified coordinates");
+				logger.info("export <Xcoord> <Ycoord> - exports a chunk to a png file");
+				logger.info("generate - generates a chunk within time");
+				logger.info("stress - stress tests the generation function");
 			} else if (temp.equals("render")) {
 				try {
 					int x = t.nextInt();
 					int y = t.nextInt();
 					Visuals.visualize(x, y);
-					LOGGER.info("Sucessfully rendered chunk at (" + x + ", " + y + ")");
+					logger.info("Sucessfully rendered chunk at (" + x + ", " + y + ")");
 				} catch (InputMismatchException e) {
-					LOGGER.info("Invalid command, usage : render <Xcord> <Ycord>");
-				} catch (NoSuchElementException e) {
-					LOGGER.info("Invalid command, usage : render <Xcord> <Ycord>");
+					logger.info("Invalid command, usage : render <Xcord> <Ycord>");
 				}
 			} else if (temp.equals("export")) {
 				try {
 					int x = t.nextInt();
 					int y = t.nextInt();
 					File f = new File("yeet.png");
-					f.delete();
-					new VPanel(ChunkManager.safeChunk(x, y).data).Export(f);
+					Files.delete(f.toPath());
+					new VPanel(ChunkManager.safeChunk(x, y).data).export(f);
 					Desktop.getDesktop().open(f);
 					// insert future code here
-					LOGGER.info("Sucessfully exported chunk at (" + x + ", " + y + ")");
+					logger.info("Sucessfully exported chunk at (" + x + ", " + y + ")");
 				} catch (InputMismatchException e) {
-					LOGGER.info("Invalid command, usage : export <Xcord> <Ycord>");
-				} catch (NoSuchElementException e) {
-					LOGGER.info("Invalid command, usage : export <Xcord> <Ycord>");
+					logger.info("Invalid command, usage : export <Xcord> <Ycord>");
 				}
 			} else if (temp.equals("generate")) {
 				StopWatch.start();
@@ -73,7 +68,7 @@ public class Serverside {
 				int y = t.nextInt();
 				ChunkManager.safeChunk(x, y);
 				long duration = StopWatch.stop();
-		        System.out.println("MS: " +duration);
+		        logger.info("MS: " +duration);
 			}
 			else if(temp.equals("stress")) {
 				StopWatch.start();
@@ -87,14 +82,14 @@ public class Serverside {
 							for (int y = 0; y < 100; y++) {
 								if(chunk[x][y].i.tickable()) {
 									chunk[x][y].i.execute(null);
-									System.out.println("Tickable!");
+									logger.info("Tickable!");
 								}
 							}
 					}
 				long duration = StopWatch.stop();
-				System.out.println("MS: " + duration);
+				logger.info("MS: " + duration);
 			} else
-				LOGGER.info("invalid command, try \"help\" for a list of avilable commands");
+				logger.info("invalid command, try \"help\" for a list of avilable commands");
 		}
 		t.close();
 		s.close();

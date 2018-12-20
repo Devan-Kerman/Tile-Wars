@@ -6,7 +6,7 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Network {
+public class Network implements Runnable {
 	public ServerSocket ss;
 	public List<Client> clients;
 	
@@ -16,7 +16,7 @@ public class Network {
         	ss = new ServerSocket(port);
         } catch (IOException e) {e.printStackTrace();}
 	}
-	public void start() {
+	public void run() {
 		while(true) {
 			Client c = null;
 			try {
@@ -25,7 +25,6 @@ public class Network {
 				new Thread(c).start();
 				clients.add(c);
 			} catch (Exception e) {clients.remove(c);}
-			System.out.println(clients.size());
 			if(ss.isClosed())
 				break;
 		}
