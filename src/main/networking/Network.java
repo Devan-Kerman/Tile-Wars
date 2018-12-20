@@ -6,6 +6,8 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
+import main.Serverside;
+
 public class Network implements Runnable {
 	public ServerSocket ss;
 	public List<Client> clients;
@@ -14,7 +16,10 @@ public class Network implements Runnable {
 		clients = new ArrayList<>();
         try {
         	ss = new ServerSocket(port);
-        } catch (IOException e) {e.printStackTrace();}
+        } catch (IOException e) {
+        	Serverside.logger.error(e.getMessage());
+        	System.exit(0);
+        }
 	}
 	public void run() {
 		while(true) {

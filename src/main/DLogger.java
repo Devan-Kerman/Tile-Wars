@@ -8,6 +8,7 @@ import java.util.logging.Logger;
 public class DLogger {
 
 	private static final Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+
 	public DLogger() {
 		LOGGER.setLevel(Level.FINEST);
 		LOGGER.setUseParentHandlers(false);
@@ -25,9 +26,11 @@ public class DLogger {
 
 			@Override
 			public void publish(LogRecord r) {
-				
 				Level l = r.getLevel();
-				System.out.printf("\n%s -> %s : %s", r.getParameters()[0], l.toString(), r.getMessage());
+				if(l.intValue() != Level.SEVERE.intValue())
+					System.out.printf("%s -> %s : %s\n", r.getParameters()[0], l.toString(), r.getMessage());
+				else
+					System.err.printf("%s -> %s : %s\n", r.getParameters()[0], l.toString(), r.getMessage());
 			}
 		});
 

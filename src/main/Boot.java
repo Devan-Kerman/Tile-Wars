@@ -12,9 +12,9 @@ public class Boot {
 	public static void boot() {
 		Serverside.logger.info("Initializing network");
 		mainet = new Network(6702);
-		Serverside.logger.info("Initialized network...\nStarting network"); 
+		Serverside.logger.info("Starting network"); 
 		new Thread(mainet).start();
-		Serverside.logger.info("Network Started...\nReading data");
+		Serverside.logger.info("Reading data");
 		nationdb = new GenericDatabase<>("General.data");
 		File chunkdir = new File("Chunkdata");
 		if(!chunkdir.exists())

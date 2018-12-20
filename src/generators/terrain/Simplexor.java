@@ -26,11 +26,11 @@ public class Simplexor {
 
 		for (int octave = 0; octave < octaves; octave++) {
 			// Calculate single layer/octave of simplex noise, then add it to total noise
-			for (int x = 0; x < width; x++) {
-				for (int y = 0; y < height; y++) {
+			for (int x = 0; x < width; x++) 
+				for (int y = 0; y < height; y++) 
 					totalNoise[x][y] += SimplexNoise.noise(x * layerFrequency, y * layerFrequency) * layerWeight;
-				}
-			}
+				
+			
 		
 			// Increase variables with each incrementing octave
 			layerFrequency *= 2;
@@ -40,7 +40,7 @@ public class Simplexor {
 		return totalNoise;
 	}
 	
-	public double genPoint(int x, int y) {
+	public double genPoint(long x, long y) {
 		double total = 0;
 		double layerFrequency = scale;
 		double layerWeight = 1;

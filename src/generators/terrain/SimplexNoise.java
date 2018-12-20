@@ -61,8 +61,7 @@ public class SimplexNoise { // Simplex noise in 2D, 3D and 4D
 
 	// 2D simplex noise
 	public static double noise(final double xin, final double yin) {
-		double n0, n1, n2; // Noise contributions from the three corners
-		// Skew the input space to determine which simplex cell we're in
+		double n0, n1, n2;
 		double s = (xin + yin) * F2; // Hairy factor for 2D
 		int i = fastfloor(xin + s);
 		int j = fastfloor(yin + s);

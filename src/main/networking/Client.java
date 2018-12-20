@@ -74,7 +74,6 @@ public class Client implements Runnable {
 		} catch (Exception e) {
 			Boot.mainet.clients.remove(this);
 		}
-		System.out.println(Thread.getAllStackTraces().keySet().size());
 	}
 
 	public Chunk[][] retrieve(int x, int y) {

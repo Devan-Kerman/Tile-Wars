@@ -7,15 +7,13 @@ import java.nio.file.Files;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-import tile.Tile;
 import util.datamanagement.manager.ChunkManager;
 import util.testing.StopWatch;
 import visualizer.VPanel;
 
 public class Serverside {
 	public static DLogger logger;
-	
-	
+
 	public static void main(String[] args) {
 		logger = new DLogger();
 		logger.info("Booting");
@@ -70,24 +68,12 @@ public class Serverside {
 				int y = t.nextInt();
 				ChunkManager.safeChunk(x, y);
 				long duration = StopWatch.stop();
-		        logger.info("MS: " +duration);
-			}
-			else if(temp.equals("stress")) {
+				logger.info("MS: " + duration);
+			} else if (temp.equals("stress")) {
 				StopWatch.start();
 				for (int c = 0; c < 100; c++)
 					for (int b = 0; b < 100; b++)
 						ChunkManager.safeChunk(c, b);
-				for (int c = 0; c < 100; c++)
-					for (int b = 0; b < 100; b++) {
-						Tile[][] chunk = ChunkManager.safeChunk(c, b).data;
-						for (int x = 0; x < 100; x++)
-							for (int y = 0; y < 100; y++) {
-								if(chunk[x][y].i.tickable()) {
-									chunk[x][y].i.execute(null);
-									logger.info("Tickable!");
-								}
-							}
-					}
 				long duration = StopWatch.stop();
 				logger.info("MS: " + duration);
 			} else

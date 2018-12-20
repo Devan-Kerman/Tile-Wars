@@ -14,7 +14,7 @@ public class Generator {
 	public static final CurveGen COALGEN = new CurveGen(10, 150);
 	public static final CurveGen OILGEN = new CurveGen(10, -150);
 
-	public static Tile generate(int x, int y) {
+	public static Tile generate(long x, long y) {
 		Tile t = new Tile();
 		t.elevation = (byte) (TG.genPoint(x, y) * 125);
 		t.ironOre = IRONGEN.calculate(t.elevation);

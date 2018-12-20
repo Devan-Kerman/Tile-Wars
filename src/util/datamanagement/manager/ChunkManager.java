@@ -47,7 +47,8 @@ public class ChunkManager {
 	private static void write(final Chunk c) {
 		try {
 			File f = new File("Chunkdata/[" + c.x + "," + c.y + "].temp");
-			Files.delete(f.toPath());
+			if(f.exists())
+				Files.delete(f.toPath());
 			f.createNewFile();
 			ObjectOutputStream oos = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(f), 300000));
 			oos.writeObject(c);
