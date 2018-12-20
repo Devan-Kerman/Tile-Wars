@@ -1,0 +1,3 @@
+Add tile entity class as child to tile, remove improvements from regular tile to conserve memory.
+
+Add tile entity log for game cycle, store the long x, long y
