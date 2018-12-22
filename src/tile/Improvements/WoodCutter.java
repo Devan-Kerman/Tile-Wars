@@ -25,11 +25,14 @@ public class WoodCutter extends Improvement {
 		owner.inv.takeAll(upgradeCosts[0]);
 	}
 	
-	
 	@Override
 	public void execute() {
-		owner.inv.take(Resource.MONEY, (double) tile.data.get("population"));
-		owner.inv.put(Resource.RAWWOOD, (int) Math.sqrt((double)tile.data.get("population") * tier * tile.lumber));
+		int population = tile.getData("population");
+		if(owner.inv.hasEnough(Resource.FOOD, population)) {
+			owner.inv.take(Resource.FOOD, population);
+			tile.editData("population", in -> (((int)in)+1)*1.01);
+		}
+		owner.inv.put(Resource.RAWWOOD, (int) Math.sqrt((population * tier * tile.lumber)));
 	}
 
 	@Override
@@ -62,6 +65,6 @@ public class WoodCutter extends Improvement {
 
 	@Override
 	public void demolish() {
-		
+		tile.deleteData("population");
 	}
 }

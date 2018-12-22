@@ -21,7 +21,7 @@ public abstract class Improvement {
 	public abstract void execute();
 	
 	/**
-	 * 
+	 * Demolishes the improvment, make sure to run this rather than just reasigning the Improvment, or old data might persist.
 	 */
 	public abstract void demolish();
 	
