@@ -8,7 +8,7 @@ public class ChunkCache {
 	private final int maxSize;
 	
 	public ChunkCache() {
-		this(1000);
+		this(5000);
 	}
 	
 	public ChunkCache(final int maxSize) {
@@ -22,10 +22,8 @@ public class ChunkCache {
 	
 	public void put(final int x, final int y, final Chunk chunk) {
 		map.putAndMoveToFirst(twoIntsToLong(x, y), chunk);
-		
-		if(map.size() > maxSize) {
-			map.removeLast();
-		}
+		if(map.size() > maxSize)
+			ChunkManager.write(map.removeLast());
 	}
 	
 	

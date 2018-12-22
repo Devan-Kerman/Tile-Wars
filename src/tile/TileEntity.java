@@ -7,6 +7,7 @@ public class TileEntity extends Tile {
 	 */
 	private static final long serialVersionUID = -2129487004281541842L;
 	public Improvement i;
+	public int population;
 
 	public TileEntity(Tile t, Improvement i) {
 		elevation = t.elevation;

@@ -5,7 +5,7 @@ import java.awt.Dimension;
 import javax.swing.JFrame;
 
 import generators.chunk.Chunk;
-import util.datamanagement.manager.ChunkManager;
+import util.datamanagement.ChunkManager;
 import visualizer.VPanel;
 
 public class Visuals {

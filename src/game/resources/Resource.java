@@ -1,4 +1,9 @@
 package game.resources;
 public enum Resource {
-	COAL, OIL, IRON;
+	COAL, OIL, IRON,
+	MONEY, RAWWOOD, STONE, 
+	TIN, COPPER, BRONZE,
+	ALUMINUM, STEEL, TUNGSTEN,
+	GOLD, SILVER, LEAD, MERCURY,
+	PLATINUM, COBALT;
 }

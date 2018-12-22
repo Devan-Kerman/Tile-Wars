@@ -36,6 +36,7 @@ public class Generator {
 			t.lumber = (byte) (t.wildlife * Math.sqrt(Math.random()));
 		}
 		t.humidity = t.wildlife;
+		t.metalicOre = (byte) ((t.bauxiteOre + t.copperOre + t.tinOre + t.ironOre + t.goldOre + t.silverOre + t.platinumOre)/7);
 		return t;
 	}
 }
