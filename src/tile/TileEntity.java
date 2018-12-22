@@ -1,5 +1,12 @@
 package tile;
 
+import java.util.Map;
+
+/**
+ * Litterally just a tile with an improvment/thing
+ * @author devan
+ *
+ */
 public class TileEntity extends Tile {
 
 	/**
@@ -7,7 +14,7 @@ public class TileEntity extends Tile {
 	 */
 	private static final long serialVersionUID = -2129487004281541842L;
 	public Improvement i;
-	public int population;
+	public Map<String, Object> data;
 
 	public TileEntity(Tile t, Improvement i) {
 		elevation = t.elevation;

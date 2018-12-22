@@ -9,9 +9,6 @@ import java.util.Random;
 import game.resources.Inventory;
 
 public class Nation implements Serializable {
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -5982268049046188288L;
 	public List<TilePoint> tiles;
 	public Inventory inv;
@@ -25,7 +22,9 @@ public class Nation implements Serializable {
 		if (!f.exists())
 			f.mkdir();
 	}
-
+	/**
+	 * Generates a new Nation with a random id, this should only be used when a new player joins the game, or for testing
+	 */
 	public Nation() {
 		tiles = new ArrayList<>();
 		inv = new Inventory();
@@ -36,12 +35,4 @@ public class Nation implements Serializable {
 		homedir = new File("NationData/"+(id=gid)+".nation");
 		
 	}
-	public byte randNeg() {
-		return (byte) (Math.random()>.5?-1:1);
-	}
-	
-	
-	
-	
-
 }

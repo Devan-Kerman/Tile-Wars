@@ -12,6 +12,11 @@ public class Network implements Runnable {
 	public ServerSocket ss;
 	public List<Client> clients;
 	
+	/**
+	 * Creates a new network on the specified port
+	 * @param port
+	 * 		port number
+	 */
 	public Network(int port) {
 		clients = new ArrayList<>();
         try {

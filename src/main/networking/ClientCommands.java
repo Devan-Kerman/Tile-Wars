@@ -36,6 +36,8 @@ public class ClientCommands {
 	public void getChunks() {
 		Integer x = k.readObject(ois, Integer.class);
 		Integer y = k.readObject(ois, Integer.class);
+		c.p.x = x;
+		c.p.y = y;
 		write(retrieve(x, y));
 	}
 	

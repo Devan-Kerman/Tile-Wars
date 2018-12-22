@@ -22,6 +22,9 @@ public class Serverside {
 		cmds();
 	}
 
+	/**
+	 * Commands and shit
+	 */
 	public static void cmds() {
 		Scanner s = new Scanner(System.in);
 		Scanner t;

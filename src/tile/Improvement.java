@@ -1,32 +1,56 @@
 package tile;
 
-import java.util.Map;
-
-import game.resources.Inventory;
+import game.nation.Nation;
 import game.resources.ItemStack;
 
-public interface Improvement {
+public abstract class Improvement {
+	protected Nation owner;
+	protected int tier;
+	protected TileEntity tile;
 	
-	public void execute(Inventory i);
-
-	public default boolean tickable() {
-		return false;
-	}
-
-	public default boolean dataHolder() {
-		return false;
-	}
-
-	public default Map<String, String> getData() {
-		return null;
+	public Improvement(Nation owner, TileEntity tile) {
+		this.owner = owner;
+		tier = 0;
+		tile.i = this;
+		this.tile = tile;
 	}
 	
-	public static ItemStack[] defaultCost() {
-		return new ItemStack[0];
-	}
+	/**
+	 * Runs the tiles execution method
+	 */
+	public abstract void execute();
 	
-	public void upgrade(Inventory i);
+	/**
+	 * 
+	 */
+	public abstract void demolish();
 	
-	public ItemStack[] upgradeCost();
+	/**
+	 * Returns whether or not the improvment needs to be "ticked"
+	 * @return
+	 * 		true/false
+	 */
+	public abstract boolean tickable();
+	
+	/**
+	 * Gets the cost required to get the first tier
+	 * @return
+	 *		{@link ItemStack} array of costs
+	 */
+	public abstract ItemStack[] defaultCost();
+	
+	/**
+	 * Increases the tier of the improvement, simply ignores the request if there is not enough resources
+	 */
+	public abstract void upgrade();
+	
+	/**
+	 * Gets the cost of improving the structure 1 more tier
+	 * @return
+	 * 		The resources required ({@link ItemStack} array)
+	 */
+	public abstract ItemStack[] upgradeCost();
+	
+	public abstract int getTier();
 	
 }

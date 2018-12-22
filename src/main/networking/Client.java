@@ -1,5 +1,6 @@
 package main.networking;
 
+import java.awt.Point;
 import java.io.IOException;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -20,6 +21,9 @@ public class Client implements Runnable {
 	public Output oos;
 	static Kryo k;
 	ClientCommands cc;
+	
+	//Client's Chunk Coordinate
+	Point p = new Point();
 	static {
 		k = new Kryo();
 		k.register(Chunk[][].class);
@@ -70,7 +74,14 @@ public class Client implements Runnable {
 			Boot.mainet.clients.remove(this);
 		}
 	}
+	/**
+	 * adds a tile update to the client, automatically discards edits that aren't in range
+	 * @param t
+	 * 		The location of the update
+	 */
 	public void addUpdate(TilePoint t) {
-		edits.add(t);
+		if(p.distance(t.chunk) <= cc.renderdistance)
+			edits.add(t);
 	}
+	
 }

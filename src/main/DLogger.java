@@ -8,7 +8,10 @@ import java.util.logging.Logger;
 public class DLogger {
 
 	private static final Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
-
+	
+	/**
+	 * Initializes the logger
+	 */
 	public DLogger() {
 		LOGGER.setLevel(Level.FINEST);
 		LOGGER.setUseParentHandlers(false);
@@ -36,27 +39,42 @@ public class DLogger {
 
 	}
 
-	/*
-	 * Error = #ff0000 Warn = #ff6600 Info = #ffffff Debug = #33ccff Relief =
-	 * #99ff66
+	/**
+	 * Puts an error message on the consol with the stack trace
+	 * @param info
 	 */
-
 	public void error(String info) {
 		LOGGER.log(Level.SEVERE, info, Thread.currentThread().getStackTrace()[2]);
 	}
 
+	/**
+	 * Puts an warn message on the consol with the stack trace
+	 * @param info
+	 */
 	public void warn(String info) {
 		LOGGER.log(Level.WARNING, info, Thread.currentThread().getStackTrace()[2]);
 	}
 
+	/**
+	 * Puts an info message on the consol with the stack trace
+	 * @param info
+	 */
 	public void info(String info) {
 		LOGGER.log(Level.INFO, info, Thread.currentThread().getStackTrace()[2]);
 	}
 
+	/**
+	 * Puts an debug message on the consol with the stack trace
+	 * @param info
+	 */
 	public void debug(String info) {
 		LOGGER.log(Level.CONFIG, info, Thread.currentThread().getStackTrace()[2]);
 	}
 
+	/**
+	 * Puts an relief message on the consol with the stack trace
+	 * @param info
+	 */
 	public void relief(String info) {
 		LOGGER.log(Level.FINE, info, Thread.currentThread().getStackTrace()[2]);
 	}
