@@ -41,8 +41,8 @@ public class Generator {
 		else if (t.elevation < 25 && t.elevation >= -25)
 			t.wildlife = 15;
 		else {
-			t.wildlife = (byte) (HG.genPoint(x, y) * 25);
-			t.lumber = (byte) (t.wildlife * Math.sqrt(Math.random()));
+			t.wildlife = (byte) Math.abs(HG.genPoint(x, y) * 25);
+			t.lumber = t.elevation>10?(byte) (t.wildlife * Math.random()):0;
 		}
 		t.humidity = t.wildlife;
 		t.metalicOre = (byte) ((t.bauxiteOre + t.copperOre + t.tinOre + t.ironOre + t.goldOre + t.silverOre + t.platinumOre)/7);

@@ -34,6 +34,7 @@ public class Serverside {
 		Scanner s = new Scanner(System.in);
 		Scanner t;
 		while (true) {
+			try {
 			t = new Scanner(s.nextLine());
 			String temp = t.next();
 			if (temp.equals("close") || temp.equals("Exit")) {
@@ -60,28 +61,42 @@ public class Serverside {
 				getN(t.nextInt());
 			} else
 				DLogger.info("invalid command, try \"help\" for a list of avilable commands");
+			} catch (Exception e) {
+				e.printStackTrace();
+				DLogger.warn(e.getMessage());
+			}
 		}
 		t.close();
 		s.close();
 		Boot.nationdb.write();
 	}
+	
 	public static void display(int nationid) {
-		System.out.println(NationCache.getNation(nationid).toString());
+		Nation n = NationCache.getNation(nationid);
+		DLogger.debug(n.toString());
+		n.save();
 	}
+	
 	public static void getN(int nationid) {
 		NationCache.getNation(nationid).save();
 	}
+	
 	public static void execNation(int nationid) {
-		GameManager.runNation(NationCache.getNation(nationid));
+		Nation n = NationCache.getNation(nationid);
+		GameManager.runNation(n);
+		n.save();
 	}
 	
 	public static void addImprove(TilePoint tp, int iid, int nationid) {
-		GameManager.addImprovement(NationCache.getNation(nationid), tp, Improvement.getImprovement(iid));
+		Nation n = NationCache.getNation(nationid);
+		GameManager.addImprovement(n, tp, Improvement.getImprovement(iid));
+		n.save();
 	}
 	
 	public static void addResources(String name, int amount, int nid) {
 		Nation n = NationCache.getNation(nid);
 		n.getInventory().put(Enum.valueOf(Resource.class, name),amount);
+		n.save();
 		DLogger.debug("Added Resources");
 	}
 	public static void createNation() {

@@ -41,7 +41,7 @@ public class Inventory {
 	 * @param amount The amount of the resource
 	 * @return if the inventory has equal/surplus of that resource
 	 */
-	public boolean hasEnough(Resource r, double amount) {
+	public boolean hasEnough(Resource r, int amount) {
 		return resources.getOrDefault(r, 0) >= amount;
 	}
 

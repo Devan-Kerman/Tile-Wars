@@ -30,6 +30,14 @@ public class Chunk implements Serializable {
 				data[r][c] = Generator.generate(cx * GlobalData.CHUNKSIZE + (long)r, cy * GlobalData.CHUNKSIZE + (long)c);
 	}
 	
+	/**
+	 * For serialization! do not use!!
+	 */
+	public Chunk() {
+		super();
+		data = new Tile[GlobalData.CHUNKSIZE][GlobalData.CHUNKSIZE];
+	}
+	
 	public void save() {
 		ChunkManager.write(this);
 	}

@@ -4,6 +4,7 @@ package tile.Improvements;
 import game.nation.Nation;
 import game.resources.ItemStack;
 import game.resources.Resource;
+import main.DLogger;
 import tile.Improvement;
 import tile.TileEntity;
 
@@ -24,8 +25,8 @@ public class WoodCutter extends Improvement {
 	}
 	
 	public void setTile(TileEntity tile) {
-		tile.i = this;
 		this.tile = tile;
+		tile.addData("population", 100);
 	}
 	
 	@Override
@@ -33,8 +34,9 @@ public class WoodCutter extends Improvement {
 		int population = tile.getData("population");
 		if(owner.getInventory().hasEnough(Resource.FOOD, population)) {
 			owner.getInventory().take(Resource.FOOD, population);
-			tile.editData("population", in -> (((int)in)+1)*1.01);
-			owner.getInventory().put(Resource.RAWWOOD, (int) Math.sqrt((population * tier * tile.lumber)));
+			tile.editData("population", in -> (int)((((int)in)+1)*1.01));
+			DLogger.info(population+" "+(tier+1)+" " + tile.lumber);
+			owner.getInventory().put(Resource.RAWWOOD, (int) Math.sqrt((population * (tier+1) * tile.lumber)));
 		}
 	}
 

@@ -136,7 +136,10 @@ public class Nation implements Serializable {
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		for (ItemStack itsa : inv.getStacks())
-			sb.append(String.format("\n[%s, %d]", itsa.r.name(), itsa.amount));
+			sb.append(String.format("\t[%s, %d]", itsa.r.name(), itsa.amount));
+		sb.append('\n');
+		for (TilePoint point2 : tiles)
+			sb.append("\t"+point2.toString());
 		return String.format("%s : %s", super.toString(), sb.toString());
 	}
 

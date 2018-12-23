@@ -23,5 +23,6 @@ public class Tile implements Serializable {
 	public byte lumber;
 	public byte humidity;
 	public byte metalicOre;
+	
 
 }
