@@ -41,6 +41,6 @@ public class Chunk implements Serializable {
 	public void save() {
 		ChunkManager.write(this);
 	}
-	
-	
 }
+
+

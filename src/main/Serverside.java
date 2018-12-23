@@ -68,7 +68,6 @@ public class Serverside {
 		}
 		t.close();
 		s.close();
-		Boot.nationdb.write();
 	}
 	
 	public static void display(int nationid) {
@@ -100,7 +99,7 @@ public class Serverside {
 		DLogger.debug("Added Resources");
 	}
 	public static void createNation() {
-		Nation n = new Nation(true);
+		Nation n = NationCache.newNation();
 		n.save();
 	}
 	

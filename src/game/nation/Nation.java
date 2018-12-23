@@ -42,7 +42,7 @@ public class Nation implements Serializable {
 	 * Generates a new Nation with a random id, this should only be used when a new
 	 * player joins the game, or for testing
 	 */
-	public Nation(boolean startinginv) {
+	Nation(boolean startinginv) {
 		tiles = new ArrayList<>();
 		inv = new Inventory();
 		if (startinginv) {
@@ -67,7 +67,7 @@ public class Nation implements Serializable {
 	/**
 	 * Generic nation for serialization
 	 */
-	public Nation() {
+	Nation() {
 		tiles = new ArrayList<>();
 		inv = new Inventory();
 	}

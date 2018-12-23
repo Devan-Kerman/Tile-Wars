@@ -9,14 +9,17 @@ import com.esotericsoftware.kryo.io.Input;
 import com.esotericsoftware.kryo.io.Output;
 
 import game.GlobalData;
+import game.nation.Nation;
 import game.nation.TilePoint;
 import main.Boot;
 import main.DLogger;
+import tile.Tile;
 
 public class Client implements Runnable {
 	public Input ois;
 	public Output oos;
 	ClientCommands cc;
+	Nation n;
 	
 	//Client's Chunk Coordinate
 	Point p = new Point();
@@ -38,18 +41,23 @@ public class Client implements Runnable {
 	 * 2 -> distance <- accept
 	 * 3 <- 0 (ping testing)
 	 */
+	boolean loggedin = false;
 	public void run() {
 		try {
 			while (true) {
 				Integer opcode = GlobalData.kryo.readObject(ois, Integer.class);
-				if (opcode == 0) {
+				if (opcode == 0 && loggedin) {
 					cc.getChunks();
-				} else if (opcode == 1) {
+				} else if (opcode == 1 && loggedin) {
 					cc.getUpdates();
-				} else if(opcode == 2) {
+				} else if(opcode == 2 && loggedin) {
 					cc.changeRender();
-				} else if(opcode == 3) {	
+				} else if(opcode == 3 && loggedin) {
 					cc.ping();
+				} else if(opcode == 4) {
+					cc.register();
+				} else if(opcode == 5) {
+					cc.login();
 				} else {
 					DLogger.warn("Connection Aborted!");
 					return;
@@ -64,7 +72,7 @@ public class Client implements Runnable {
 	 * @param t
 	 * 		The location of the update
 	 */
-	public void addUpdate(TilePoint t) {
+	public void addUpdate(TilePoint t, Tile tile) {
 		if(p.distance(t.chunk) <= cc.renderdistance)
 			edits.add(t);
 	}

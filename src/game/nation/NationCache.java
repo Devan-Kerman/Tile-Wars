@@ -37,7 +37,11 @@ public class NationCache {
 		}
 		return ids;
 	}
-	
+	public static Nation newNation() {
+		Nation n = new Nation(true);
+		nations.put(n.id, n);
+		return n;
+	}
 	
 	private NationCache() {}
 }

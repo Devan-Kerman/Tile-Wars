@@ -35,6 +35,7 @@ public class GlobalData {
 		kryo.register(TileEntity.class);
 		kryo.register(Improvement.class);
 		kryo.register(HashMap.class);
+		kryo.register(String.class);
 		for (Class<? extends Improvement> improv : getClasses(GlobalData.class.getClassLoader(), "tile/Improvements"))
 			kryo.register(improv);
 	}
