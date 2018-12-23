@@ -5,45 +5,30 @@ import java.io.IOException;
 import java.net.Socket;
 import java.util.ArrayList;
 
-import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.io.Input;
 import com.esotericsoftware.kryo.io.Output;
 
+import game.GlobalData;
 import game.nation.TilePoint;
-import generators.chunk.Chunk;
 import main.Boot;
-import main.Serverside;
-import tile.Improvement;
-import tile.Tile;
+import main.DLogger;
 
 public class Client implements Runnable {
 	public Input ois;
 	public Output oos;
-	static Kryo k;
 	ClientCommands cc;
 	
 	//Client's Chunk Coordinate
 	Point p = new Point();
-	static {
-		k = new Kryo();
-		k.register(Chunk[][].class);
-		k.register(Chunk[].class);
-		k.register(Chunk.class);
-		k.register(Tile[].class);
-		k.register(Tile[][].class);
-		k.register(Tile.class);
-		k.register(Improvement.class);
-		k.register(Integer.class);
-		k.register(TilePoint.class);
-	}
+	
 	ArrayList<TilePoint> edits;
 	public Client(Socket s) throws IOException {
-		Serverside.logger.info("New Client!");
+		DLogger.info("New Client!");
 		edits = new ArrayList<>();
 		oos = new Output(s.getOutputStream());
 		oos.flush();
 		ois = new Input(s.getInputStream());
-		Serverside.logger.info("Client Connection Established!");
+		DLogger.info("Client Connection Established!");
 		cc = new ClientCommands(this);
 	}
 	/*
@@ -56,7 +41,7 @@ public class Client implements Runnable {
 	public void run() {
 		try {
 			while (true) {
-				Integer opcode = k.readObject(ois, Integer.class);
+				Integer opcode = GlobalData.kryo.readObject(ois, Integer.class);
 				if (opcode == 0) {
 					cc.getChunks();
 				} else if (opcode == 1) {
@@ -66,7 +51,7 @@ public class Client implements Runnable {
 				} else if(opcode == 3) {	
 					cc.ping();
 				} else {
-					Serverside.logger.warn("Connection Aborted!");
+					DLogger.warn("Connection Aborted!");
 					return;
 				}
 			}

@@ -1,56 +1,79 @@
 package tile;
 
+import java.io.Serializable;
+
 import game.nation.Nation;
 import game.resources.ItemStack;
+import tile.Improvements.WoodCutter;
 
-public abstract class Improvement {
-	protected Nation owner;
+public abstract class Improvement implements Serializable {
+	private static final long serialVersionUID = 5435731092896677938L;
 	protected int tier;
 	protected TileEntity tile;
-	
-	public Improvement(Nation owner, TileEntity tile) {
-		this.owner = owner;
-		tier = 0;
-		tile.i = this;
-		this.tile = tile;
+
+	public static Improvement getImprovement(int id) {
+		if (id == 0)
+			return new WoodCutter();
+		return null;
 	}
-	
+
+	public Improvement() {
+		tier = 0;
+	}
+
+	public abstract void setTile(TileEntity tile);
+
 	/**
 	 * Runs the tiles execution method
+	 * @param n
+	 * 		Nation to execute on
 	 */
-	public abstract void execute();
-	
+	public abstract void execute(Nation n);
+
 	/**
-	 * Demolishes the improvment, make sure to run this rather than just reasigning the Improvment, or old data might persist.
+	 * Demolishes the improvment, make sure to run this rather than just reasigning
+	 * the Improvement, or old data might persist.
+	 * @param n
+	 * 		Nation to execute on
 	 */
-	public abstract void demolish();
-	
+	public abstract void demolish(Nation n);
+
 	/**
 	 * Returns whether or not the improvment needs to be "ticked"
-	 * @return
-	 * 		true/false
+	 * 
+	 * @return true/false
 	 */
 	public abstract boolean tickable();
-	
+
 	/**
 	 * Gets the cost required to get the first tier
-	 * @return
-	 *		{@link ItemStack} array of costs
+	 * 
+	 * @return {@link ItemStack} array of costs
 	 */
 	public abstract ItemStack[] defaultCost();
-	
+
 	/**
-	 * Increases the tier of the improvement, simply ignores the request if there is not enough resources
+	 * Increases the tier of the improvement, simply ignores the request if there is
+	 * not enough resources
+	 * @param n
+	 * 		Nation to execute on
 	 */
-	public abstract void upgrade();
-	
+	public abstract void upgrade(Nation n);
+
 	/**
 	 * Gets the cost of improving the structure 1 more tier
-	 * @return
-	 * 		The resources required ({@link ItemStack} array)
+	 * 
+	 * @return The resources required ({@link ItemStack} array)
 	 */
 	public abstract ItemStack[] upgradeCost();
-	
+
+	/**
+	 * Returns the tier of the improvment
+	 * 
+	 * @return (int)
+	 */
 	public abstract int getTier();
 	
+	public abstract boolean canRun(Nation n);
+
 }

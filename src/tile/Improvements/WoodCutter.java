@@ -8,8 +8,7 @@ import tile.Improvement;
 import tile.TileEntity;
 
 public class WoodCutter extends Improvement {
-	
-	
+	private static final long serialVersionUID = 2756588653745585335L;
 	private static ItemStack[][] upgradeCosts = new ItemStack[][] {
 			new ItemStack[] { new ItemStack(Resource.MONEY, 1000) },
 			new ItemStack[] { new ItemStack(Resource.MONEY, 2500), new ItemStack(Resource.RAWWOOD, 250) },
@@ -20,25 +19,29 @@ public class WoodCutter extends Improvement {
 			new ItemStack[] { new ItemStack(Resource.MONEY, 500000), new ItemStack(Resource.IRON, 250) }, };
 	
 			
-	public WoodCutter(Nation n, TileEntity tile) {
-		super(n, tile);
-		owner.inv.takeAll(upgradeCosts[0]);
+	public WoodCutter() {
+		super();
+	}
+	
+	public void setTile(TileEntity tile) {
+		tile.i = this;
+		this.tile = tile;
 	}
 	
 	@Override
-	public void execute() {
+	public void execute(Nation owner) {
 		int population = tile.getData("population");
-		if(owner.inv.hasEnough(Resource.FOOD, population)) {
-			owner.inv.take(Resource.FOOD, population);
+		if(owner.getInventory().hasEnough(Resource.FOOD, population)) {
+			owner.getInventory().take(Resource.FOOD, population);
 			tile.editData("population", in -> (((int)in)+1)*1.01);
+			owner.getInventory().put(Resource.RAWWOOD, (int) Math.sqrt((population * tier * tile.lumber)));
 		}
-		owner.inv.put(Resource.RAWWOOD, (int) Math.sqrt((population * tier * tile.lumber)));
 	}
 
 	@Override
-	public void upgrade() {
-		if (tier < upgradeCosts.length && owner.inv.hasEnough(upgradeCosts[tier + 1]))
-			owner.inv.takeAll(upgradeCosts[++tier]);
+	public void upgrade(Nation owner) {
+		if (tier < upgradeCosts.length && owner.getInventory().hasEnough(upgradeCosts[tier + 1]))
+			owner.getInventory().takeAll(upgradeCosts[++tier]);
 	}
 
 	@Override
@@ -64,7 +67,12 @@ public class WoodCutter extends Improvement {
 	}
 
 	@Override
-	public void demolish() {
+	public void demolish(Nation owner) {
 		tile.deleteData("population");
+	}
+
+	@Override
+	public boolean canRun(Nation owner) {
+		return owner.getInventory().hasEnough(Resource.FOOD, tile.getData("population"));
 	}
 }

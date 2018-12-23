@@ -13,16 +13,16 @@ public class Boot {
 	 * Initializes the game
 	 */
 	public static void boot() {
-		Serverside.logger.info("Initializing network");
+		DLogger.info("Initializing network");
 		mainet = new Network(6702);
-		Serverside.logger.info("Starting network"); 
+		DLogger.info("Starting network"); 
 		new Thread(mainet).start();
-		Serverside.logger.info("Reading data");
+		DLogger.info("Reading data");
 		nationdb = new GenericDatabase<>("General.data");
 		File chunkdir = new File("Chunkdata");
 		if(!chunkdir.exists())
 			chunkdir.mkdirs();
-		Serverside.logger.info("Booted!");
+		DLogger.info("Booted!");
 	}
 	
 }

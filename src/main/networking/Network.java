@@ -6,7 +6,7 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
-import main.Serverside;
+import main.DLogger;
 
 public class Network implements Runnable {
 	public ServerSocket ss;
@@ -22,7 +22,7 @@ public class Network implements Runnable {
         try {
         	ss = new ServerSocket(port);
         } catch (IOException e) {
-        	Serverside.logger.error(e.getMessage());
+        	DLogger.error(e.getMessage());
         	System.exit(0);
         }
 	}

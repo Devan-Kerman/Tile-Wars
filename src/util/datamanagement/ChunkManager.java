@@ -1,16 +1,19 @@
 package util.datamanagement;
 
+import java.awt.Point;
 import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.nio.file.Files;
 
+import com.esotericsoftware.kryo.io.Output;
+
+import game.GlobalData;
 import generators.chunk.Chunk;
+import main.DLogger;
 
 public class ChunkManager {
 	private ChunkManager() {
@@ -40,7 +43,6 @@ public class ChunkManager {
 	 * @return
 	 * 		The Chunk at specified position
 	 */
-
 	public static Chunk safeChunk(final int x, final int y) {
 		if (cache.containsKey(x, y)) {
 			return cache.get(x, y);
@@ -55,29 +57,35 @@ public class ChunkManager {
 			return gen(x, y);
 		}
 	}
-
+	
+	public static Chunk safeChunk(Point p) {
+		return safeChunk(p.x, p.y);
+	}
+	
+	public static void saveIfDeCached(Chunk c) {
+		if(cache.containsKey(c.x, c.y))
+			c.save();
+	}
+	
 	private static boolean inDrive(final int x, final int y) {
 		return new File("Chunkdata/[" + x + "," + y + "].chunk").exists();
 	}
-
+	
 	/**
 	 * Writes the chunk to disc
 	 * @param c
 	 * 	The chunk that will be written to disk
-	 * 
 	 */
-	static void write(final Chunk c) {
+	public static void write(final Chunk c) {
 		try {
 			File f = new File("Chunkdata/[" + c.x + "," + c.y + "].temp");
 			if (f.exists())
 				Files.delete(f.toPath());
 			f.createNewFile();
-			ObjectOutputStream oos = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(f), 300000));
-			oos.writeObject(c);
-			oos.close();
+			GlobalData.kryo.writeObject(new Output(new FileOutputStream(f)), c);
 			f.renameTo(new File("Chunkdata/[" + c.x + "," + c.y + "].chunk"));
 		} catch (Exception e) {
-			e.printStackTrace();
+			DLogger.error(e.getMessage());
 		}
 	}
 

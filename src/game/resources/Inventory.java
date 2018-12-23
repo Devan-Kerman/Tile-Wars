@@ -1,5 +1,6 @@
 package game.resources;
 
+import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
@@ -8,8 +9,22 @@ import exceptions.NotEnoughResourcesException;
 
 public class Inventory {
 
-	public Map<Resource, Double> resources;
+	public Map<Resource, Integer> resources;
+	/**
+	 * This method was sorta brute forced, think of a better way
+	 * @return
+	 * 		a list of the itemstacks
+	 */
+	public List<ItemStack> getStacks() {
+		List<ItemStack> is = new ArrayList<>();
+		resources.forEach((t, u) -> is.add(new ItemStack(t, u)));
+		return is;
+	}
 
+	public int getSize() {
+		return resources.size();
+	}
+	
 	/**
 	 * This creates a new "Inventory" of resources using the Enums specified in
 	 * game.resources.Resource
@@ -27,7 +42,7 @@ public class Inventory {
 	 * @return if the inventory has equal/surplus of that resource
 	 */
 	public boolean hasEnough(Resource r, double amount) {
-		return resources.getOrDefault(r, 0d) >= amount;
+		return resources.getOrDefault(r, 0) >= amount;
 	}
 
 	/**
@@ -38,7 +53,7 @@ public class Inventory {
 	 * @return if the inventory has equal/surplus of that resource
 	 */
 	public boolean hasEnough(ItemStack stacks) {
-		return resources.getOrDefault(stacks.r, 0d) >= stacks.amount;
+		return resources.getOrDefault(stacks.r, 0) >= stacks.amount;
 	}
 
 	/**
@@ -66,19 +81,19 @@ public class Inventory {
 	 * @param amount
 	 * 		Amount of the resource
 	 */
-	public void take(Resource resource, double amount) {
+	public void take(Resource resource, int amount) {
 		if (amount <= 0)
 			throw new IllegalArgumentException("Amount must be greater than zero");
 
-		double current = resources.getOrDefault(resource, 0d);
-
+		int current = resources.getOrDefault(resource, 0);
+		
 		if (current >= amount)
 			resources.put(resource, current - amount);
 		else
 			throw new NotEnoughResourcesException("Not enough " + resource + " current amount: " + current);
 	}
 
-	public void put(Resource resource, double amount) {
+	public void put(Resource resource, int amount) {
 		resources.merge(resource, amount, (a, b) -> a + b);
 	}
 

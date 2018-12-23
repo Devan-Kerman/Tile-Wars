@@ -30,5 +30,9 @@ public class Chunk implements Serializable {
 				data[r][c] = Generator.generate(cx * GlobalData.CHUNKSIZE + (long)r, cy * GlobalData.CHUNKSIZE + (long)c);
 	}
 	
+	public void save() {
+		ChunkManager.write(this);
+	}
+	
 	
 }

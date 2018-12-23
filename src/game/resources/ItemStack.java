@@ -3,9 +3,9 @@ package game.resources;
 public class ItemStack {
 
 	public Resource r;
-	public double amount;
+	public int amount;
 
-	public ItemStack(Resource r, double amount) {
+	public ItemStack(Resource r, int amount) {
 		super();
 		this.r = r;
 		this.amount = amount;
@@ -16,7 +16,7 @@ public class ItemStack {
 	 * @param multiplier
 	 * 		the multiplier
 	 */
-	public void multiply(double multiplier) {
+	public void multiply(int multiplier) {
 		amount*=multiplier;
 	}
 	
@@ -25,7 +25,7 @@ public class ItemStack {
 	 * @param add
 	 * 		the given amount
 	 */
-	public void add(double add) {
+	public void add(int add) {
 		amount += add;
 	}
 }

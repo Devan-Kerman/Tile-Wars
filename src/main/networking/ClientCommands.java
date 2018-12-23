@@ -4,12 +4,13 @@ import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.io.Input;
 import com.esotericsoftware.kryo.io.Output;
 
+import game.GlobalData;
 import game.nation.TilePoint;
 import generators.chunk.Chunk;
 import util.datamanagement.ChunkManager;
 
 public class ClientCommands {
-	private static Kryo k = Client.k;
+	private static Kryo k = GlobalData.kryo;
 	private Input ois;
 	private Output oos;
 	int renderdistance = 1;

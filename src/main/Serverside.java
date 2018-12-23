@@ -7,19 +7,24 @@ import java.nio.file.Files;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+import game.GameManager;
+import game.nation.Nation;
+import game.nation.NationCache;
+import game.nation.TilePoint;
+import game.resources.Resource;
+import tile.Improvement;
 import util.datamanagement.ChunkManager;
 import util.testing.StopWatch;
 import visualizer.VPanel;
 
 public class Serverside {
-	public static DLogger logger;
 
 	public static void main(String[] args) {
-		logger = new DLogger();
-		logger.info("Booting");
+		DLogger.info("Booting");
 		Boot.boot();
-		logger.relief("Booted");
+		DLogger.relief("Booted");
 		cmds();
+		
 	}
 
 	/**
@@ -41,35 +46,73 @@ public class Serverside {
 				export(t.nextInt(), t.nextInt());
 			} else if (temp.equals("generate")) {
 				generate(t.nextInt(), t.nextInt());
+			} else if (temp.equals("create")) {
+				createNation();
+			} else if (temp.equals("addresources")) {
+				addResources(t.next(), t.nextInt(), t.nextInt());
+			} else if (temp.equals("addimprovement")) {
+				addImprove(new TilePoint(t.nextInt(), t.nextInt(), t.nextByte(), t.nextByte()), t.nextInt(), t.nextInt());
+			} else if (temp.equals("execnation")) {
+				execNation(t.nextInt());
+			} else if (temp.equals("displaystats")) {
+				display(t.nextInt());
+			} else if (temp.equals("testser")) {
+				getN(t.nextInt());
 			} else
-				logger.info("invalid command, try \"help\" for a list of avilable commands");
+				DLogger.info("invalid command, try \"help\" for a list of avilable commands");
 		}
 		t.close();
 		s.close();
 		Boot.nationdb.write();
 	}
+	public static void display(int nationid) {
+		System.out.println(NationCache.getNation(nationid).toString());
+	}
+	public static void getN(int nationid) {
+		NationCache.getNation(nationid).save();
+	}
+	public static void execNation(int nationid) {
+		GameManager.runNation(NationCache.getNation(nationid));
+	}
+	
+	public static void addImprove(TilePoint tp, int iid, int nationid) {
+		GameManager.addImprovement(NationCache.getNation(nationid), tp, Improvement.getImprovement(iid));
+	}
+	
+	public static void addResources(String name, int amount, int nid) {
+		Nation n = NationCache.getNation(nid);
+		n.getInventory().put(Enum.valueOf(Resource.class, name),amount);
+		DLogger.debug("Added Resources");
+	}
+	public static void createNation() {
+		Nation n = new Nation(true);
+		n.save();
+	}
+	
 	public static void help() {
-		logger.info("avilable commands:");
-		logger.info("close - closes application");
-		logger.info("help - shows this list");
-		logger.info("render <Xcoord> <Ycoord> - render a specific chunck at specified coordinates");
-		logger.info("export <Xcoord> <Ycoord> - exports a chunk to a png file");
-		logger.info("generate - generates a chunk within time");
-		logger.info("stress - stress tests the generation function");
+		DLogger.info("avilable commands:");
+		DLogger.info("close - closes application");
+		DLogger.info("help - shows this list");
+		DLogger.info("render <Xcoord> <Ycoord> - render a specific chunck at specified coordinates");
+		DLogger.info("export <Xcoord> <Ycoord> - exports a chunk to a png file");
+		DLogger.info("generate - generates a chunk within time");
+		DLogger.info("create - creates a new nation");
+		DLogger.info("addresources <ResourceName> <amount> <nationid>");
+		DLogger.info("addimprovment <ChunkX> <ChunkY> <TileX> <TileY> <ImprovementID> <NationID>");
 	}
 	public static void render(int x, int y) {
 		try {
 			Visuals.visualize(x, y);
-			logger.info("Sucessfully rendered chunk at (" + x + ", " + y + ")");
+			DLogger.info("Sucessfully rendered chunk at (" + x + ", " + y + ")");
 		} catch (InputMismatchException e) {
-			logger.info("Invalid command, usage : render <Xcord> <Ycord>");
+			DLogger.info("Invalid command, usage : render <Xcord> <Ycord>");
 		}
 	}
 	public static void generate(int x, int y) {
 		StopWatch.start();
 		ChunkManager.safeChunk(x, y);
 		long duration = StopWatch.stop();
-		logger.info("MS: " + duration);
+		DLogger.info("MS: " + duration);
 	}
 	public static void export(int x, int y) {
 		try {
@@ -78,11 +121,11 @@ public class Serverside {
 			new VPanel(ChunkManager.safeChunk(x, y).data).export(f);
 			Desktop.getDesktop().open(f);
 			// insert future code here
-			logger.info("Sucessfully exported chunk at (" + x + ", " + y + ")");
+			DLogger.info("Sucessfully exported chunk at (" + x + ", " + y + ")");
 		} catch (InputMismatchException e) {
-			logger.info("Invalid command, usage : export <Xcord> <Ycord>");
+			DLogger.info("Invalid command, usage : export <Xcord> <Ycord>");
 		} catch (IOException e) {
-			logger.error(e.getLocalizedMessage());
+			DLogger.error(e.getLocalizedMessage());
 		}
 	}
 }

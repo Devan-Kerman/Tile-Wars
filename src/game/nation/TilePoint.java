@@ -38,5 +38,13 @@ public class TilePoint {
 		this.tx = tx;
 		this.ty = ty;
 	}
+	
+	public TilePoint() {
+		this(new Point(0,0), (byte)0, (byte)0);
+	}
+	@Override
+	public String toString() {
+		return String.format("[%d, %d] -> [%d, %d]", chunk.x, chunk.y, tx, ty);
+	}
 
 }
