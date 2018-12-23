@@ -11,7 +11,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
-import tile.Tile;
+import game.tile.Tile;
 
 public class VPanel extends JPanel {
 	private static final long serialVersionUID = 1064812704658251024L;

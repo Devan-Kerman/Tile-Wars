@@ -3,8 +3,8 @@ package generators.chunk;
 import java.io.Serializable;
 
 import game.GlobalData;
+import game.tile.Tile;
 import generators.terrain.Generator;
-import tile.Tile;
 import util.datamanagement.ChunkManager;
 
 public class Chunk implements Serializable {

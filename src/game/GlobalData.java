@@ -9,11 +9,11 @@ import java.util.List;
 
 import com.esotericsoftware.kryo.Kryo;
 
+import game.tile.Improvement;
+import game.tile.Tile;
+import game.tile.TileEntity;
 import generators.chunk.Chunk;
 import main.DLogger;
-import tile.Improvement;
-import tile.Tile;
-import tile.TileEntity;
 
 /**
  * Contains static information that is global

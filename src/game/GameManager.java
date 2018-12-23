@@ -2,10 +2,10 @@ package game;
 
 import game.nation.Nation;
 import game.nation.TilePoint;
+import game.tile.Improvement;
+import game.tile.TileEntity;
 import generators.chunk.Chunk;
 import main.DLogger;
-import tile.Improvement;
-import tile.TileEntity;
 import util.datamanagement.ChunkManager;
 
 public class GameManager {

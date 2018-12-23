@@ -12,7 +12,7 @@ import game.nation.Nation;
 import game.nation.NationCache;
 import game.nation.TilePoint;
 import game.resources.Resource;
-import tile.Improvement;
+import game.tile.Improvement;
 import util.datamanagement.ChunkManager;
 import util.testing.StopWatch;
 import visualizer.VPanel;

@@ -1,7 +1,7 @@
 package main.networking;
 
 import game.nation.TilePoint;
-import tile.Tile;
+import game.tile.Tile;
 
 public class TileUpdate {
 

@@ -1,10 +1,10 @@
-package tile;
+package game.tile;
 
 import java.io.Serializable;
 
 import game.nation.Nation;
 import game.resources.ItemStack;
-import tile.Improvements.WoodCutter;
+import game.tile.Improvements.WoodCutter;
 
 public abstract class Improvement implements Serializable {
 	private static final long serialVersionUID = 5435731092896677938L;

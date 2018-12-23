@@ -11,9 +11,9 @@ import com.esotericsoftware.kryo.io.Output;
 import game.GlobalData;
 import game.nation.Nation;
 import game.nation.TilePoint;
+import game.tile.Tile;
 import main.Boot;
 import main.DLogger;
-import tile.Tile;
 
 public class Client implements Runnable {
 	public Input ois;

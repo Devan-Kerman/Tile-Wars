@@ -1,12 +1,12 @@
-package tile.Improvements;
+package game.tile.Improvements;
 
 
 import game.nation.Nation;
 import game.resources.ItemStack;
 import game.resources.Resource;
+import game.tile.Improvement;
+import game.tile.TileEntity;
 import main.DLogger;
-import tile.Improvement;
-import tile.TileEntity;
 
 public class WoodCutter extends Improvement {
 	private static final long serialVersionUID = 2756588653745585335L;

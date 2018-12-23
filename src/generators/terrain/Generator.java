@@ -1,7 +1,7 @@
 package generators.terrain;
 
+import game.tile.Tile;
 import generators.math.CurveGen;
-import tile.Tile;
 
 public class Generator {
 	private Generator() {}
