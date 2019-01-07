@@ -19,13 +19,41 @@ import game.resources.ItemStack;
 import game.resources.Resource;
 import main.DLogger;
 
+/**
+ * Any new values/data added to this class will not be saved unless you edit the
+ * serializer and deserializer
+ * 
+ * @author devan
+ *
+ */
 public class Nation implements Serializable {
 	private static final long serialVersionUID = -5982268049046188288L;
+	
+	/**
+	 * The list of the current owned improvments/tile entities this nation has
+	 */
 	public List<TilePoint> tiles;
+	/**
+	 * The inventory of the nation, has multiple ItemStacks
+	 */
 	private Inventory inv;
+	/**
+	 * The unique id of the nation
+	 */
 	public int id;
+	
+	/**
+	 * Number id generator
+	 */
 	private static Random r;
+	
+	/**
+	 * Stores a map of the enum and its "ID" for deserialization
+	 */
 	protected static final Map<Short, Resource> enummap = new HashMap<>();
+	/**
+	 * Same thing but in reverse for serialization
+	 */
 	protected static final Map<Resource, Short> idmap = new EnumMap<>(Resource.class);
 	static {
 		r = new Random();
@@ -41,6 +69,8 @@ public class Nation implements Serializable {
 	/**
 	 * Generates a new Nation with a random id, this should only be used when a new
 	 * player joins the game, or for testing
+	 * @param startinginv
+	 * 		Whether the player should start with the starting inventory (1000$ and 100 raw wood)
 	 */
 	Nation(boolean startinginv) {
 		tiles = new ArrayList<>();
@@ -72,6 +102,9 @@ public class Nation implements Serializable {
 		inv = new Inventory();
 	}
 
+	/**
+	 * Writes this instance to the disk
+	 */
 	public void save() {
 		try {
 			BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream("NationData/" + id + ".nation"));
@@ -82,7 +115,13 @@ public class Nation implements Serializable {
 		}
 	}
 
-	public static Nation getNation(int id) {
+	/**
+	 * Not meant to be used outside of the nationcache, use {@link NationCache}
+	 * 
+	 * @param id
+	 * @return
+	 */
+	static Nation getNation(int id) {
 		Nation n = new Nation();
 		n.id = id;
 		try {
@@ -132,28 +171,48 @@ public class Nation implements Serializable {
 		return n;
 	}
 
+	/**
+	 * toString() [RSSID, Amount]...\n [TilePoint.toString()]...
+	 */
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		for (ItemStack itsa : inv.getStacks())
-			sb.append(String.format("\t[%s, %d]", itsa.r.name(), itsa.amount));
+			sb.append(String.format(" [%s, %d]", itsa.r.name(), itsa.amount));
 		sb.append('\n');
 		for (TilePoint point2 : tiles)
-			sb.append("\t"+point2.toString());
+			sb.append(" " + point2.toString());
 		return String.format("%s : %s", super.toString(), sb.toString());
 	}
 
+	/**
+	 * Returns this Nation's inventory
+	 * 
+	 * @return {@link Inventory}
+	 */
 	public Inventory getInventory() {
 		if (inv == null)
 			inv = new Inventory();
 		return inv;
 	}
 
+	/**
+	 * Adds a point to this Nation's tile roster.
+	 * 
+	 * @param p {@link TilePoint}
+	 */
 	public void addTilePoint(TilePoint p) {
 		tiles.add(p);
 	}
 
-	public static int toInt(byte[] bytes, int offset) {
+	/**
+	 * Converts a set of 4 bytes to an integer
+	 * 
+	 * @param bytes  an array of bytes
+	 * @param offset where to begin the read
+	 * @return calculated (int)eger
+	 */
+	private static int toInt(byte[] bytes, int offset) {
 		int ret = 0;
 		for (int i = 0; i < 4 && i + offset < bytes.length; i++) {
 			ret <<= 8;
@@ -162,14 +221,25 @@ public class Nation implements Serializable {
 		return ret;
 	}
 
-	public static short toShort(byte[] bs) {
+	/**
+	 * Converts a set of 2 bytes to a short
+	 * 
+	 * @param bytes an array of bytes
+	 * @return calculated short
+	 */
+	private static short toShort(byte[] bs) {
 		return (short) (bs[0] << 8 | bs[1] & 0xFF);
 	}
 
+	/**
+	 * Serializes this instance into an array of bytes
+	 * 
+	 * @return data in bytes
+	 */
 	private byte[] serialize() {
 		int tilessize = tiles.size();
 		int invsize = inv.getSize();
-		byte[] buffer = new byte[tilessize*10 + invsize*6 + 8];
+		byte[] buffer = new byte[tilessize * 10 + invsize * 6 + 8];
 		int bytecounter = 0;
 		bytecounter = serializeInt(bytecounter, tilessize, buffer);
 		bytecounter = serializePoints(bytecounter, buffer);
@@ -181,6 +251,13 @@ public class Nation implements Serializable {
 		return buffer;
 	}
 
+	/**
+	 * Serializes the TilePoints of this class
+	 * 
+	 * @param start  starting number
+	 * @param buffer the array to read it from
+	 * @return ending number
+	 */
 	private int serializePoints(int start, byte[] buffer) {
 		int bytecounter = start;
 		for (TilePoint tile : tiles) {
@@ -198,7 +275,15 @@ public class Nation implements Serializable {
 		return bytecounter;
 	}
 
-	public int serializeInt(int start, int i, byte[] buffer) {
+	/**
+	 * converts the int into bytes and puts it in the buffer
+	 * 
+	 * @param start  the starting index
+	 * @param i      the integer to convert
+	 * @param buffer the buffer to put the bytes in
+	 * @return the ending index
+	 */
+	private int serializeInt(int start, int i, byte[] buffer) {
 		buffer[start++] = (byte) (i >> 24);
 		buffer[start++] = (byte) (i >> 16);
 		buffer[start++] = (byte) (i >> 8);
@@ -206,7 +291,15 @@ public class Nation implements Serializable {
 		return start;
 	}
 
-	public int serializeShort(int start, short i, byte[] buffer) {
+	/**
+	 * converts the short into bytes and puts it in the buffer
+	 * 
+	 * @param start  the starting index
+	 * @param i      the short to convert
+	 * @param buffer the buffer to put the bytes in
+	 * @return the ending index
+	 */
+	private int serializeShort(int start, short i, byte[] buffer) {
 		buffer[start++] = (byte) (i >> 8);
 		buffer[start++] = (byte) (i);
 		return start;

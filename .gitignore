@@ -2,3 +2,6 @@
 /.gradle/
 /build/
 *.chunk
+
+*.dnt
+*.nation

@@ -5,15 +5,17 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
-
 import com.esotericsoftware.kryo.Kryo;
+import com.esotericsoftware.kryo.serializers.MapSerializer;
 
+import game.nation.TilePoint;
 import game.tile.Improvement;
 import game.tile.Tile;
 import game.tile.TileEntity;
 import generators.chunk.Chunk;
-import main.DLogger;
+import main.networking.TileUpdate;
 
 /**
  * Contains static information that is global
@@ -24,19 +26,28 @@ import main.DLogger;
 public class GlobalData {
 
 	public static final int CHUNKSIZE = 100;
-	public static final Kryo kryo = new Kryo();
+	public static final Kryo kryo;
 	static {
+		kryo = new Kryo();
 		kryo.register(Chunk[][].class);
 		kryo.register(Chunk[].class);
 		kryo.register(Chunk.class);
 		kryo.register(Tile.class);
-		kryo.register(Tile[].class);
+		kryo.register(Tile[].class); 	
 		kryo.register(Tile[][].class);
 		kryo.register(TileEntity.class);
 		kryo.register(Improvement.class);
 		kryo.register(HashMap.class);
 		kryo.register(String.class);
-		for (Class<? extends Improvement> improv : getClasses(GlobalData.class.getClassLoader(), "tile/Improvements"))
+		kryo.register(TileUpdate.class);
+		kryo.register(TilePoint.class);
+		MapSerializer serializer = new MapSerializer();
+		kryo.register(HashMap.class, serializer);
+		kryo.register(LinkedHashMap.class, serializer);
+		serializer.setKeyClass(String.class, kryo.getSerializer(String.class));
+		serializer.setKeysCanBeNull(false);
+		serializer.setKeyClass(String.class, kryo.getSerializer(String.class));
+		for (Class<? extends Improvement> improv : getClasses(GlobalData.class.getClassLoader(), "game/tile/Improvements"))
 			kryo.register(improv);
 	}
 
@@ -59,7 +70,7 @@ public class GlobalData {
 				}
 			}
 		} catch (Exception e) {
-			DLogger.error(e.getMessage());
+			e.printStackTrace();
 		}
 		return classes;
 	}

@@ -2,6 +2,13 @@ package game.nation;
 
 import java.awt.Point;
 
+/**
+ * An instance of this class contains all the nessesary data to find a point within the game
+ * it consists of 4 values, or 1 point (int x, int y) which represents what chunk this point is in
+ * and 2 bytes, which represent the relitive coordinate of the tile, to the "0, 0" of the chunk
+ * @author devan
+ *
+ */
 public class TilePoint {
 	public Point chunk;
 	public byte tx;
@@ -39,9 +46,16 @@ public class TilePoint {
 		this.ty = ty;
 	}
 	
+	/**
+	 * Used for serialization, defaults to 0, 0 -> 0, 0
+	 */
 	public TilePoint() {
 		this(new Point(0,0), (byte)0, (byte)0);
 	}
+	
+	/**
+	 * String.format("[%d, %d] -> [%d, %d]", chunk.x, chunk.y, tx, ty)
+	 */
 	@Override
 	public String toString() {
 		return String.format("[%d, %d] -> [%d, %d]", chunk.x, chunk.y, tx, ty);

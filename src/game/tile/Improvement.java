@@ -6,17 +6,33 @@ import game.nation.Nation;
 import game.resources.ItemStack;
 import game.tile.Improvements.WoodCutter;
 
+/**
+ * An instance of this abstract class represents a building in the game
+ * anything that extends it must implement these methods
+ * @author devan
+ *
+ */
 public abstract class Improvement implements Serializable {
 	private static final long serialVersionUID = 5435731092896677938L;
 	protected int tier;
 	protected TileEntity tile;
 
+	/**
+	 * Creates a new improvement by the given ID
+	 * @param id
+	 * 		id of the improvement
+	 * @return
+	 * 		new instance of that improvement
+	 */
 	public static Improvement getImprovement(int id) {
 		if (id == 0)
 			return new WoodCutter();
 		return null;
 	}
 
+	/**
+	 * Null improvement, has no significant use other than super, doesn't do anything
+	 */
 	public Improvement() {
 		tier = 0;
 	}

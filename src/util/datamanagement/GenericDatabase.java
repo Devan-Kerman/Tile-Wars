@@ -26,7 +26,7 @@ public class GenericDatabase<K extends Object,T extends Object> {
 		save = location;
 		data = new HashMap<>();
 		File f = new File(save);
-		if(!f.exists()) try {f.createNewFile();} catch (IOException e) {DLogger.error(e.getMessage());}
+		if(!f.exists()) try {f.createNewFile(); write();} catch (IOException e) {DLogger.error(e.getMessage());}
 		else
 			read();
 	}
@@ -44,7 +44,7 @@ public class GenericDatabase<K extends Object,T extends Object> {
 			Files.delete(f.toPath());
 			f.createNewFile();
 			Output out = new Output(new FileOutputStream(save));
-			GlobalData.kryo.writeObject(out, data);
+			GlobalData.kryo.writeClassAndObject(out, data);
 			out.flush();
 			out.close();
 		} catch(Exception e) {
@@ -54,7 +54,7 @@ public class GenericDatabase<K extends Object,T extends Object> {
 	@SuppressWarnings("unchecked")
 	public void read() {
 		try {
-			data = GlobalData.kryo.readObject(new Input(new FileInputStream(save)), HashMap.class);
+			data = (HashMap<K, T>)GlobalData.kryo.readClassAndObject(new Input(new FileInputStream(save)));
 		} catch(Exception e) {e.printStackTrace();}
 	}
 }

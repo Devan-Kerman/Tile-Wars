@@ -3,9 +3,19 @@ package main;
 import java.io.File;
 
 import main.networking.Network;
+
+/**
+ * Reponsible for setting up the server
+ * @author devan
+ *
+ */
 public class Boot {
+	/**
+	 * Utility Class
+	 */
 	private Boot() {}
 	public static Network mainet;
+	
 	/**
 	 * Initializes the game
 	 */

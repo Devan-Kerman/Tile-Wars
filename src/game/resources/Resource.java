@@ -1,6 +1,6 @@
 package game.resources;
 /**
- * Contains all the enums of the resources a player can have
+ * Contains all the enums of the resources a player/nation can have
  * @author devan
  *
  */

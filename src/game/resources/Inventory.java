@@ -9,7 +9,11 @@ import exceptions.NotEnoughResourcesException;
 
 public class Inventory {
 
-	public Map<Resource, Integer> resources;
+	/**
+	 * The raw data of the inventory
+	 */
+	Map<Resource, Integer> resources;
+	
 	/**
 	 * This method was sorta brute forced, think of a better way
 	 * @return
@@ -21,13 +25,17 @@ public class Inventory {
 		return is;
 	}
 
+	/**
+	 * Returns the size of the inventory
+	 * @return
+	 */
 	public int getSize() {
 		return resources.size();
 	}
 	
 	/**
 	 * This creates a new "Inventory" of resources using the Enums specified in
-	 * game.resources.Resource
+	 * {@link Resource}
 	 */
 	public Inventory() {
 		resources = new EnumMap<>(Resource.class);
@@ -75,7 +83,7 @@ public class Inventory {
 	 * throws a {@link NotEnoughResourcesException} if the target inventory
 	 * does not contain enough resources
 	 * @see {@link #hasEnough(ItemStack) hasEnough}, {@link #hasEnough(ItemStack[]) hasEnough}, {@link #hasEnough(Resource, double) hasEnough}
-	 * 
+	 * @throws {@link NotEnoughResourcesException}
 	 * @param resource
 	 * 		Enum of the resource
 	 * @param amount
@@ -92,26 +100,74 @@ public class Inventory {
 		else
 			throw new NotEnoughResourcesException("Not enough " + resource + " current amount: " + current);
 	}
+	
+	/**
+	 * Removes the specified resources from the inventory,
+	 * throws a {@link NotEnoughResourcesException} if the target inventory
+	 * does not contain enough resources
+	 * @see {@link #hasEnough(ItemStack) hasEnough}, {@link #hasEnough(ItemStack[]) hasEnough}, {@link #hasEnough(Resource, double) hasEnough}
+	 * @throws {@link NotEnoughResourcesException}
+	 * @param i
+	 * 		{@link ItemStack}
+	 */
+	public void take(ItemStack i) {
+		take(i.r, i.amount);
+	}
 
+	/**
+	 * Adds the amount of resources to the inventory
+	 * @param resource
+	 * 		Enum of {@link Resource}
+	 * @param amount
+	 * 		Amount of resource (int)
+	 */
 	public void put(Resource resource, int amount) {
 		resources.merge(resource, amount, (a, b) -> a + b);
 	}
 
+	/**
+	 * Short method for adding multiple resources at once from the inventory
+	 * @param resources
+	 * 		{@link List} of {@link ItemStack}s
+	 */
 	public void putAll(List<ItemStack> resources) {
 		for (ItemStack stack : resources)
 			put(stack.r, stack.amount);
 	}
 
+	/**
+	 * Short method for adding multiple resources at once from the inventory
+	 * @param resources
+	 * 		Array of {@link ItemStack}s
+	 */
 	public void putAll(ItemStack[] resources) {
 		for (ItemStack stack : resources)
 			put(stack.r, stack.amount);
 	}
 
+	/**
+	 * Short method for taking multiple resources at once from the inventory
+	 * throws a {@link NotEnoughResourcesException} if the target inventory
+	 * does not contain enough resources
+	 * @see {@link #hasEnough(ItemStack) hasEnough}, {@link #hasEnough(ItemStack[]) hasEnough}, {@link #hasEnough(Resource, double) hasEnough}
+	 * @throws {@link NotEnoughResourcesException}
+	 * @param resources
+	 * 		{@link List} of {@link ItemStack}s
+	 */
 	public void takeAll(List<ItemStack> resources) {
 		for (ItemStack stack : resources)
 			take(stack.r, stack.amount);
 	}
 
+	/**
+	 * Short method for taking multiple resources at once from the inventory
+	 * throws a {@link NotEnoughResourcesException} if the target inventory
+	 * does not contain enough resources
+	 * @see {@link #hasEnough(ItemStack) hasEnough}, {@link #hasEnough(ItemStack[]) hasEnough}, {@link #hasEnough(Resource, double) hasEnough}
+	 * @throws {@link NotEnoughResourcesException}
+	 * @param resources
+	 * 		Array of {@link ItemStack}s
+	 */
 	public void takeAll(ItemStack[] resources) {
 		for (ItemStack stack : resources)
 			take(stack.r, stack.amount);

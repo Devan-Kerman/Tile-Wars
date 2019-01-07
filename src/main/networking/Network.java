@@ -8,6 +8,11 @@ import java.util.List;
 
 import main.DLogger;
 
+/**
+ * A network, manages clients
+ * @author devan
+ *
+ */
 public class Network implements Runnable {
 	public ServerSocket ss;
 	public List<Client> clients;

@@ -5,7 +5,17 @@ import java.util.logging.Level;
 import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 
+/**
+ * For logging and debugging, helps because it shows the recent stack trace so u can see where the print statement was
+ * @author devan
+ *
+ */
 public class DLogger {
+	
+	/**
+	 * Utility class
+	 */
+	private DLogger() {}
 
 	private static final Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 	

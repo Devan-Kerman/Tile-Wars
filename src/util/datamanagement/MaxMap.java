@@ -21,4 +21,13 @@ public class MaxMap<K, V> extends LinkedHashMap<K, V> {
 	public int getMaxSize() {
 		return maxSize;
 	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public boolean equals(Object arg0) {
+		if(arg0 instanceof MaxMap<?, ?>)
+			return false;
+		MaxMap<K, V> m = (MaxMap<K, V>)arg0;
+		return super.equals(m) && m.getMaxSize() == maxSize;
+	}
 }

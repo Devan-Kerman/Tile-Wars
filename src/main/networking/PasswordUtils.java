@@ -9,6 +9,11 @@ import java.util.Random;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 
+/**
+ * Idk some black magic I copied from the internet
+ * @author devan
+ *
+ */
 public class PasswordUtils {
 
 	private static final Random RANDOM = new SecureRandom();

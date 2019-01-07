@@ -8,6 +8,11 @@ import game.tile.Improvement;
 import game.tile.TileEntity;
 import main.DLogger;
 
+/**
+ * Creates raw wood
+ * @author devan
+ *
+ */
 public class WoodCutter extends Improvement {
 	private static final long serialVersionUID = 2756588653745585335L;
 	private static ItemStack[][] upgradeCosts = new ItemStack[][] {

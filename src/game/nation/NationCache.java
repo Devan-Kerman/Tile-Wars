@@ -5,6 +5,12 @@ import java.util.Map;
 
 import util.datamanagement.MaxMap;
 
+/**
+ * Used as a cache for nations, holds a buffer of 100 nations, and automatically writes them to disk if the buffer overflows.
+ * All methods are static
+ * @author devan
+ *
+ */
 public class NationCache {
 
 	static Map<Integer, Nation> nations;
@@ -19,6 +25,14 @@ public class NationCache {
 			}
 		};
 	}
+	
+	/**
+	 * Will first search the cache if the target ID exists in the cache, if not it attempts to read from the disk
+	 * @param id
+	 * 		The id of the desired nation
+	 * @return
+	 * 		The Nation Object
+	 */
 	public static Nation getNation(int id) {
 		if(!nations.containsKey(id)) {
 			Nation n = Nation.getNation(id);
@@ -28,6 +42,12 @@ public class NationCache {
 		else 
 			return nations.get(id);
 	}
+	
+	/**
+	 * Returns a list of the ids of all the currently saved nations, do not use often, not very fast
+	 * @return
+	 * 		int[] id list
+	 */
 	public static int[] allNations() {
 		File[] files = new File("NationData/").listFiles();
 		int[] ids = new int[files.length];
@@ -37,11 +57,19 @@ public class NationCache {
 		}
 		return ids;
 	}
+	
+	/**
+	 * Creates a brand new nation with the starting inventory
+	 * @return
+	 */
 	public static Nation newNation() {
 		Nation n = new Nation(true);
 		nations.put(n.id, n);
 		return n;
 	}
 	
+	/**
+	 * This class is for static methods only
+	 */
 	private NationCache() {}
 }

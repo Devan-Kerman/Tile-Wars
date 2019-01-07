@@ -15,6 +15,11 @@ import game.tile.Tile;
 import main.Boot;
 import main.DLogger;
 
+/**
+ * A connection to a client
+ * @author devan
+ *
+ */
 public class Client implements Runnable {
 	public Input ois;
 	public Output oos;
@@ -24,7 +29,7 @@ public class Client implements Runnable {
 	//Client's Chunk Coordinate
 	Point p = new Point();
 	
-	ArrayList<TilePoint> edits;
+	ArrayList<TileUpdate> edits;
 	public Client(Socket s) throws IOException {
 		DLogger.info("New Client!");
 		edits = new ArrayList<>();
@@ -34,6 +39,8 @@ public class Client implements Runnable {
 		DLogger.info("Client Connection Established!");
 		cc = new ClientCommands(this);
 	}
+	
+	boolean loggedin = false;
 	/*
 	 * Op codes 
 	 * 0 cx -> cy -> <- 3x3 Chunk Array 
@@ -41,7 +48,6 @@ public class Client implements Runnable {
 	 * 2 -> distance <- accept
 	 * 3 <- 0 (ping testing)
 	 */
-	boolean loggedin = false;
 	public void run() {
 		try {
 			while (true) {
@@ -67,6 +73,7 @@ public class Client implements Runnable {
 			Boot.mainet.clients.remove(this);
 		}
 	}
+	
 	/**
 	 * adds a tile update to the client, automatically discards edits that aren't in range
 	 * @param t
@@ -74,7 +81,7 @@ public class Client implements Runnable {
 	 */
 	public void addUpdate(TilePoint t, Tile tile) {
 		if(p.distance(t.chunk) <= cc.renderdistance)
-			edits.add(t);
+			edits.add(new TileUpdate(t, tile));
 	}
 	
 }

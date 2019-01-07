@@ -16,16 +16,36 @@ import game.GlobalData;
 import generators.chunk.Chunk;
 import main.DLogger;
 
+/**
+ * Manages chunk cache use, generation, serialization and deserialization
+ * @author devan
+ *
+ */
 public class ChunkManager {
+	/**
+	 * Utility Class
+	 */
 	private ChunkManager() {
 	}
 
 	private static ChunkCache cache = new ChunkCache();
 
+	/**
+	 * Clears the cache
+	 */
 	public static void clear() {
 		cache = new ChunkCache();
 	}
 
+	/**
+	 * Generates a new chunk at the given position
+	 * @param x
+	 * 		chunk x (int)
+	 * @param y
+	 * 		chunk y (int)
+	 * @return
+	 * 		Chunk
+	 */
 	private static Chunk gen(final int x, final int y) {
 		Chunk c = new Chunk(x, y);
 		write(c);
@@ -54,15 +74,36 @@ public class ChunkManager {
 		return c;
 	}
 
+	/**
+	 * calls {@link #safeChunk(int, int)} using safeChunk
+	 * @param p
+	 * 		Point to get chunk
+	 * @return
+	 * 		Chunk at the point
+	 */
 	public static Chunk safeChunk(Point p) {
 		return safeChunk(p.x, p.y);
 	}
 
+	/**
+	 * If the chunk no longer exists in the cache, it will save it
+	 * @param c
+	 * 		The chunk
+	 */
 	public static void saveIfDeCached(Chunk c) {
 		if (!cache.containsKey(c.x, c.y))
 			write(c);
 	}
 
+	/**
+	 * Checks if the specified chunk is in the drive
+	 * @param x
+	 * 		x coor
+	 * @param y
+	 * 		y coor
+	 * @return
+	 * 		true/false
+	 */
 	private static boolean inDrive(final int x, final int y) {
 		return new File("Chunkdata/[" + x + "," + y + "].chunk").exists();
 	}
@@ -79,7 +120,7 @@ public class ChunkManager {
 			File f = new File(pathstrn);
 			f.createNewFile();
 			Output o = new Output(new FileOutputStream(f));
-			GlobalData.kryo.writeObject(o, c);
+			GlobalData.kryo.writeClassAndObject(o, c);
 			o.flush();
 			o.close();
 			Files.move(f.toPath(), new File("Chunkdata/[" + c.x + "," + c.y + "].chunk").toPath(), StandardCopyOption.REPLACE_EXISTING);
@@ -91,8 +132,22 @@ public class ChunkManager {
 		DLogger.info("Wrote chunk " + c.x + "," + c.y + " to disk");
 	}
 
+	
+	public static void writeAll() {
+		cache.map.forEach((hash, chunk) -> write(chunk));
+	}
+	
+	/**
+	 * Reads a chunk from the disk
+	 * @param x
+	 * 		chunk x
+	 * @param y
+	 * 		chunk y
+	 * @return
+	 * 		Chunk
+	 * @throws IOException
+	 */
 	private static Chunk read(int x, int y) throws IOException {
-		return GlobalData.kryo.readObject(new Input(new FileInputStream("Chunkdata/[" + x + "," + y + "].chunk")),
-				Chunk.class);
+		return (Chunk) GlobalData.kryo.readClassAndObject(new Input(new FileInputStream("Chunkdata/[" + x + "," + y + "].chunk")));
 	}
 }
