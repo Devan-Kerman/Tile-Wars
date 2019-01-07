@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/Tile-Wars.iml" filepath="$PROJECT_DIR$/.idea/Tile-Wars.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Tile-Wars_main.iml" filepath="$PROJECT_DIR$/.idea/modules/Tile-Wars_main.iml" group="Tile-Wars" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Tile-Wars_test.iml" filepath="$PROJECT_DIR$/.idea/modules/Tile-Wars_test.iml" group="Tile-Wars" />
+    </modules>
+  </component>
+</project>

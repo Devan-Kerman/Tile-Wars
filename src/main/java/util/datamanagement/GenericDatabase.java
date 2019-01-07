@@ -44,7 +44,7 @@ public class GenericDatabase<K extends Object,T extends Object> {
 			Files.delete(f.toPath());
 			f.createNewFile();
 			Output out = new Output(new FileOutputStream(save));
-			GlobalData.kryo.writeClassAndObject(out, data);
+			GlobalData.kryo.writeObject(out, data);
 			out.flush();
 			out.close();
 		} catch(Exception e) {

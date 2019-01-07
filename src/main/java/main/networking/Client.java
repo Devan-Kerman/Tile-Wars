@@ -25,10 +25,10 @@ public class Client implements Runnable {
 	public Output oos;
 	ClientCommands cc;
 	Nation n;
-	
+
 	//Client's Chunk Coordinate
 	Point p = new Point();
-	
+
 	ArrayList<TileUpdate> edits;
 	public Client(Socket s) throws IOException {
 		DLogger.info("New Client!");
@@ -39,11 +39,11 @@ public class Client implements Runnable {
 		DLogger.info("Client Connection Established!");
 		cc = new ClientCommands(this);
 	}
-	
+
 	boolean loggedin = false;
 	/*
-	 * Op codes 
-	 * 0 cx -> cy -> <- 3x3 Chunk Array 
+	 * Op codes
+	 * 0 cx -> cy -> <- 3x3 Chunk Array
 	 * 1 <- Tile updates
 	 * 2 -> distance <- accept
 	 * 3 <- 0 (ping testing)
@@ -51,7 +51,8 @@ public class Client implements Runnable {
 	public void run() {
 		try {
 			while (true) {
-				Integer opcode = (Integer)GlobalData.kryo.readClassAndObject(ois);
+				Integer opcode = GlobalData.kryo.readObject(ois, Integer.class);
+					DLogger.info(String.valueOf(opcode));
 				if (opcode == 0 && loggedin) {
 					cc.getChunks();
 				} else if (opcode == 1 && loggedin) {
@@ -73,7 +74,7 @@ public class Client implements Runnable {
 			Boot.mainet.clients.remove(this);
 		}
 	}
-	
+
 	/**
 	 * adds a tile update to the client, automatically discards edits that aren't in range
 	 * @param t
@@ -83,5 +84,5 @@ public class Client implements Runnable {
 		if(p.distance(t.chunk) <= cc.renderdistance)
 			edits.add(new TileUpdate(t, tile));
 	}
-	
+
 }
