@@ -52,6 +52,7 @@ public class Client implements Runnable {
 		try {
 			while (true) {
 				Integer opcode = GlobalData.kryo.readObject(ois, Integer.class);
+					DLogger.info(String.valueOf(opcode));
 				if (opcode == 0 && loggedin) {
 					cc.getChunks();
 				} else if (opcode == 1 && loggedin) {

@@ -78,8 +78,8 @@ public class ClientCommands {
 	}
 	
 	public void getChunks() {
-		Integer x = (Integer) k.readClassAndObject(ois);
-		Integer y = (Integer) k.readClassAndObject(ois);
+		Integer x = k.readObject(ois, Integer.class);
+		Integer y = k.readObject(ois, Integer.class);
 		c.p.x = x;
 		c.p.y = y;
 		write(retrieve(x, y));
@@ -103,14 +103,14 @@ public class ClientCommands {
 	}
 	
 	public void write(Object o) {
-		k.writeClassAndObject(oos, o);
+		k.writeObject(oos, o);
 		oos.flush();
 	}
 	
 	public <T> T read(Class<T> type) {
-		Object r = k.readClassAndObject(ois);
+		T r = k.readObject(ois, type);
 		oos.flush();
-		return type.cast(r);
+		return r;
 	}
 
 }
