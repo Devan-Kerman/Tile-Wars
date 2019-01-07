@@ -120,7 +120,7 @@ public class ChunkManager {
 			File f = new File(pathstrn);
 			f.createNewFile();
 			Output o = new Output(new FileOutputStream(f));
-			GlobalData.kryo.writeClassAndObject(o, c);
+			GlobalData.kryo.writeObject(o, c);
 			o.flush();
 			o.close();
 			Files.move(f.toPath(), new File("Chunkdata/[" + c.x + "," + c.y + "].chunk").toPath(), StandardCopyOption.REPLACE_EXISTING);
@@ -148,6 +148,6 @@ public class ChunkManager {
 	 * @throws IOException
 	 */
 	private static Chunk read(int x, int y) throws IOException {
-		return (Chunk) GlobalData.kryo.readClassAndObject(new Input(new FileInputStream("Chunkdata/[" + x + "," + y + "].chunk")));
+		return GlobalData.kryo.readObject(new Input(new FileInputStream("Chunkdata/[" + x + "," + y + "].chunk")), Chunk.class);
 	}
 }
