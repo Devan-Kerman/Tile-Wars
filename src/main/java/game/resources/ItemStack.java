@@ -12,7 +12,7 @@ public class ItemStack {
 	/**
 	 * The resource's enum
 	 */
-	public Resource r;
+	public final Resource r;
 	
 	/**
 	 * The amount of said resource the item stack has, CANNOT BE NEGATIVE

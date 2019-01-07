@@ -1,23 +1,11 @@
 package game.nation;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.EnumMap;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
-
 import game.resources.Inventory;
 import game.resources.ItemStack;
 import game.resources.Resource;
 import main.DLogger;
+import java.io.*;
+import java.util.*;
 
 /**
  * Any new values/data added to this class will not be saved unless you edit the
@@ -45,7 +33,7 @@ public class Nation implements Serializable {
 	/**
 	 * Number id generator
 	 */
-	private static Random r;
+	private static final Random r;
 	
 	/**
 	 * Stores a map of the enum and its "ID" for deserialization
@@ -58,8 +46,10 @@ public class Nation implements Serializable {
 	static {
 		r = new Random();
 		File f = new File("NationData/");
-		if (!f.exists())
-			f.mkdir();
+		if (!f.exists()) {
+			boolean failed = !f.mkdir();
+			if(failed) DLogger.warn("Failed to create NationData folder!!!");
+		}
 		for (Resource res : Resource.values()) {
 			enummap.put(res.getID(), res);
 			idmap.put(res, res.getID());
@@ -180,8 +170,10 @@ public class Nation implements Serializable {
 		for (ItemStack itsa : inv.getStacks())
 			sb.append(String.format(" [%s, %d]", itsa.r.name(), itsa.amount));
 		sb.append('\n');
-		for (TilePoint point2 : tiles)
-			sb.append(" " + point2.toString());
+		for (TilePoint point2 : tiles) {
+			sb.append(' ');
+			sb.append(point2.toString());
+		}
 		return String.format("%s : %s", super.toString(), sb.toString());
 	}
 
@@ -224,7 +216,7 @@ public class Nation implements Serializable {
 	/**
 	 * Converts a set of 2 bytes to a short
 	 * 
-	 * @param bytes an array of bytes
+	 * @param bs an array of bytes
 	 * @return calculated short
 	 */
 	private static short toShort(byte[] bs) {

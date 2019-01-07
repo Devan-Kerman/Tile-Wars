@@ -14,8 +14,8 @@ import main.DLogger;
  *
  */
 public class Network implements Runnable {
-	public ServerSocket ss;
-	public List<Client> clients;
+	private ServerSocket ss;
+	private final List<Client> clients;
 	
 	/**
 	 * Creates a new network on the specified port
@@ -32,7 +32,7 @@ public class Network implements Runnable {
         }
 	}
 	public void run() {
-		while(true) {
+		do {
 			Client c = null;
 			try {
 				Socket s = ss.accept();
@@ -40,8 +40,6 @@ public class Network implements Runnable {
 				new Thread(c).start();
 				clients.add(c);
 			} catch (Exception e) {clients.remove(c);}
-			if(ss.isClosed())
-				break;
-		}
+		} while (!ss.isClosed());
 	}
 }

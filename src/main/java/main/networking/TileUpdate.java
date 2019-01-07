@@ -10,8 +10,8 @@ import game.tile.Tile;
  */
 public class TileUpdate {
 
-	public TilePoint point;
-	public Tile tile;
+	public final TilePoint point;
+	public final Tile tile;
 	/**
 	 * Used to send updates to the client if they need it
 	 * @param point

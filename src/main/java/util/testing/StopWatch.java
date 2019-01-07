@@ -6,7 +6,7 @@ public class StopWatch {
 	private StopWatch() {
 	}
 
-	private static long begin = 0l;
+	private static long begin = 0L;
 
 	public static void start() {
 		begin = Clock.systemDefaultZone().millis();

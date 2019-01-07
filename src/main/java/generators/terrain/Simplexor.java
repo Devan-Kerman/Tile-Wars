@@ -1,9 +1,9 @@
 package generators.terrain;
 
 public class Simplexor {
-	private int octaves;
-	private double roughness;
-	private double scale;
+	private final int octaves;
+	private final double roughness;
+	private final double scale;
 	/**
 	 * Creates new simplexor map thing
 	 * @param octaves

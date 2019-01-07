@@ -10,7 +10,7 @@ import java.awt.Point;
  *
  */
 public class TilePoint {
-	public Point chunk;
+	public final Point chunk;
 	public byte tx;
 	public byte ty;
 	/**

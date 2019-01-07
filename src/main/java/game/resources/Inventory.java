@@ -12,7 +12,7 @@ public class Inventory {
 	/**
 	 * The raw data of the inventory
 	 */
-	Map<Resource, Integer> resources;
+	final Map<Resource, Integer> resources;
 	
 	/**
 	 * This method was sorta brute forced, think of a better way
@@ -82,7 +82,7 @@ public class Inventory {
 	 * Removes the specified resources from the inventory,
 	 * throws a {@link NotEnoughResourcesException} if the target inventory
 	 * does not contain enough resources
-	 * @see {@link #hasEnough(ItemStack) hasEnough}, {@link #hasEnough(ItemStack[]) hasEnough}, {@link #hasEnough(Resource, double) hasEnough}
+	 * @see {@link #hasEnough(ItemStack) hasEnough}, {@link #hasEnough(ItemStack[]) hasEnough}, {@link #hasEnough(Resource, int) hasEnough}
 	 * @throws {@link NotEnoughResourcesException}
 	 * @param resource
 	 * 		Enum of the resource
@@ -105,7 +105,7 @@ public class Inventory {
 	 * Removes the specified resources from the inventory,
 	 * throws a {@link NotEnoughResourcesException} if the target inventory
 	 * does not contain enough resources
-	 * @see {@link #hasEnough(ItemStack) hasEnough}, {@link #hasEnough(ItemStack[]) hasEnough}, {@link #hasEnough(Resource, double) hasEnough}
+	 * @see {@link #hasEnough(ItemStack) hasEnough}, {@link #hasEnough(ItemStack[]) hasEnough}, {@link #hasEnough(Resource, int) hasEnough}
 	 * @throws {@link NotEnoughResourcesException}
 	 * @param i
 	 * 		{@link ItemStack}
@@ -149,7 +149,7 @@ public class Inventory {
 	 * Short method for taking multiple resources at once from the inventory
 	 * throws a {@link NotEnoughResourcesException} if the target inventory
 	 * does not contain enough resources
-	 * @see {@link #hasEnough(ItemStack) hasEnough}, {@link #hasEnough(ItemStack[]) hasEnough}, {@link #hasEnough(Resource, double) hasEnough}
+	 * @see {@link #hasEnough(ItemStack) hasEnough}, {@link #hasEnough(ItemStack[]) hasEnough}, {@link #hasEnough(Resource, int) hasEnough}
 	 * @throws {@link NotEnoughResourcesException}
 	 * @param resources
 	 * 		{@link List} of {@link ItemStack}s
@@ -163,7 +163,7 @@ public class Inventory {
 	 * Short method for taking multiple resources at once from the inventory
 	 * throws a {@link NotEnoughResourcesException} if the target inventory
 	 * does not contain enough resources
-	 * @see {@link #hasEnough(ItemStack) hasEnough}, {@link #hasEnough(ItemStack[]) hasEnough}, {@link #hasEnough(Resource, double) hasEnough}
+	 * @see {@link #hasEnough(ItemStack) hasEnough}, {@link #hasEnough(ItemStack[]) hasEnough}, {@link #hasEnough(Resource, int) hasEnough}
 	 * @throws {@link NotEnoughResourcesException}
 	 * @param resources
 	 * 		Array of {@link ItemStack}s

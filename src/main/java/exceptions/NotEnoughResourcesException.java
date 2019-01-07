@@ -10,7 +10,7 @@ public class NotEnoughResourcesException extends RuntimeException {
 	 * Creates a new NotEnoughResourcesException with the specified message
 	 * This exception is thrown when an ItemStack/Set of resources are attempted to been
 	 * withdrawed from an inventory
-	 * @see {@link Inventory#hasEnough(game.resources.ItemStack)}, {@link Inventory#hasEnough(game.resources.ItemStack[])}, {@link Inventory#hasEnough(game.resources.Resource, double)}
+	 * @see {@link Inventory#hasEnough(game.resources.ItemStack)}, {@link Inventory#hasEnough(game.resources.ItemStack[])}, {@link Inventory#hasEnough(game.resources.Resource, int)}
 	 * @param s
 	 * 		The message string
 	 */

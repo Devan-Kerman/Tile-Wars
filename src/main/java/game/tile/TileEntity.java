@@ -17,7 +17,7 @@ public class TileEntity extends Tile {
 	 */
 	private static final long serialVersionUID = -2129487004281541842L;
 	
-	private Map<String, Object> data;
+	private final Map<String, Object> data;
 	public Improvement i;
 	@SuppressWarnings("unchecked")
 	public <T> T getData(String key) {

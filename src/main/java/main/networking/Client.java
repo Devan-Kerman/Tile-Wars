@@ -27,9 +27,9 @@ public class Client implements Runnable {
 	Nation n;
 
 	//Client's Chunk Coordinate
-	Point p = new Point();
+	final Point p = new Point();
 
-	ArrayList<TileUpdate> edits;
+	final ArrayList<TileUpdate> edits;
 	public Client(Socket s) throws IOException {
 		DLogger.info("New Client!");
 		edits = new ArrayList<>();
@@ -71,7 +71,7 @@ public class Client implements Runnable {
 				}
 			}
 		} catch (Exception e) {
-			Boot.mainet.clients.remove(this);
+			Boot.mainnet.clients.remove(this);
 		}
 	}
 

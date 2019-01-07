@@ -16,17 +16,23 @@ import main.DLogger;
 
 public class GenericDatabase<K extends Object,T extends Object> {
 	private Map<K, T> data;
-	private String save;
+	private final String save;
 	public GenericDatabase(String location, Class<K> clask, Class<T> clasy) {
 		this(location);
 		GlobalData.kryo.register(clask);
 		GlobalData.kryo.register(clasy);
 	}
+
 	public GenericDatabase(String location) {
 		save = location;
 		data = new HashMap<>();
 		File f = new File(save);
-		if(!f.exists()) try {f.createNewFile(); write();} catch (IOException e) {DLogger.error(e.getMessage());}
+		if(!f.exists()) try {
+			boolean test = !f.createNewFile();
+			if(test)
+				DLogger.warn("File : " + location + " was unable to be created...");
+			 write();
+		} catch (IOException e) {DLogger.error(e.getMessage());}
 		else
 			read();
 	}
@@ -42,7 +48,9 @@ public class GenericDatabase<K extends Object,T extends Object> {
 		try {
 			File f = new File(save);
 			Files.delete(f.toPath());
-			f.createNewFile();
+			boolean failed = !f.createNewFile();
+			if(failed)
+				DLogger.warn("Failed to write data to disk! " + f.getName());
 			Output out = new Output(new FileOutputStream(save));
 			GlobalData.kryo.writeObject(out, data);
 			out.flush();

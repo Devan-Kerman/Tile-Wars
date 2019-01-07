@@ -1,7 +1,6 @@
 package util.datamanagement;
 
 import generators.chunk.Chunk;
-import it.unimi.dsi.fastutil.longs.Long2ObjectLinkedOpenHashMap;
 
 /**
  * Stores chunks in memory for faster access

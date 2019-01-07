@@ -38,7 +38,7 @@ public class Generator {
 		t.gems = t.oil;
 		if (t.elevation < -25)
 			t.wildlife = 50;
-		else if (t.elevation < 25 && t.elevation >= -25)
+		else if (t.elevation < 25)
 			t.wildlife = 15;
 		else {
 			t.wildlife = (byte) Math.abs(HG.genPoint(x, y) * 25);

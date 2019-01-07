@@ -27,7 +27,7 @@ public abstract class Improvement implements Serializable {
 	public static Improvement getImprovement(int id) {
 		if (id == 0)
 			return new WoodCutter();
-		return null;
+		return new WoodCutter();
 	}
 
 	/**

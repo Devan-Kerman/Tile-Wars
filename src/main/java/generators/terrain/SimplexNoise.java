@@ -47,7 +47,7 @@ public class SimplexNoise {
 	 * 		an elevation
 	 */
 	public static double noise(final double xin, final double yin) {
-		double n0, n1, n2 = 0;
+		double n0, n1, n2;
 		double s = (xin + yin) * F2;
 		int i = fastfloor(xin + s);
 		int j = fastfloor(yin + s);

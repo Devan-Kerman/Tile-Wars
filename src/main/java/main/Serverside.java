@@ -37,37 +37,53 @@ public class Serverside {
 	public static void cmds() {
 		Scanner s = new Scanner(System.in);
 		Scanner t;
+		label:
 		while (true) {
 			try {
-			t = new Scanner(s.nextLine());
-			String temp = t.next();
-			if (temp.equals("close") || temp.equals("Exit")) {
-				break;
-			} else if (temp.equals("help")) {
-				help();
-			} else if (temp.equals("render")) {
-				render(t.nextInt(), t.nextInt());
-			} else if (temp.equals("export")) {
-				export(t.nextInt(), t.nextInt());
-			} else if (temp.equals("generate")) {
-				generate(t.nextInt(), t.nextInt());
-			} else if (temp.equals("create")) {
-				createNation();
-			} else if (temp.equals("addresources")) {
-				addResources(t.next(), t.nextInt(), t.nextInt());
-			} else if (temp.equals("addimprovement")) {
-				addImprove(new TilePoint(t.nextInt(), t.nextInt(), t.nextByte(), t.nextByte()), t.nextInt(), t.nextInt());
-			} else if (temp.equals("execnation")) {
-				execNation(t.nextInt());
-			} else if (temp.equals("displaystats")) {
-				display(t.nextInt());
-			} else if (temp.equals("testser")) {
-				getN(t.nextInt());
-			} else if(temp.equals("EXIT")) {
-				DLogger.warn("Writing all chunks in cache to disk...");
-				ChunkManager.writeAll();
-			} else
-				DLogger.info("invalid command, try \"help\" for a list of avilable commands");
+				t = new Scanner(s.nextLine());
+				String temp = t.next();
+				switch (temp) {
+					case "close":
+					case "Exit":
+						break label;
+					case "help":
+						help();
+						break;
+					case "render":
+						render(t.nextInt(), t.nextInt());
+						break;
+					case "export":
+						export(t.nextInt(), t.nextInt());
+						break;
+					case "generate":
+						generate(t.nextInt(), t.nextInt());
+						break;
+					case "create":
+						createNation();
+						break;
+					case "addresources":
+						addResources(t.next(), t.nextInt(), t.nextInt());
+						break;
+					case "addimprovement":
+						addImprove(new TilePoint(t.nextInt(), t.nextInt(), t.nextByte(), t.nextByte()), t.nextInt(), t.nextInt());
+						break;
+					case "execnation":
+						execNation(t.nextInt());
+						break;
+					case "displaystats":
+						display(t.nextInt());
+						break;
+					case "testser":
+						getN(t.nextInt());
+						break;
+					case "EXIT":
+						DLogger.warn("Writing all chunks in cache to disk...");
+						ChunkManager.writeAll();
+						break;
+					default:
+						DLogger.info("invalid command, try \"help\" for a list of avilable commands");
+						break;
+				}
 			} catch (Exception e) {
 				e.printStackTrace();
 				DLogger.warn(e.getMessage());

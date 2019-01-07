@@ -11,12 +11,12 @@ import util.datamanagement.ChunkManager;
 import util.datamanagement.GenericDatabase;
 
 public class ClientCommands {
-	private static Kryo k = GlobalData.kryo;
+	private static final Kryo k = GlobalData.kryo;
 	private Input ois;
 	private Output oos;
 	int renderdistance = 1;
 	private Client c;
-	private static GenericDatabase<Integer, String> passdb;
+	private static final GenericDatabase<Integer, String> passdb;
 	static {
 		passdb = new GenericDatabase<>("pass.dnt");
 	}

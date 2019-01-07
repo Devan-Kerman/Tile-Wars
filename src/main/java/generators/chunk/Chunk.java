@@ -9,7 +9,7 @@ import util.datamanagement.ChunkManager;
 
 public class Chunk implements Serializable {
 	private static final long serialVersionUID = 7297134163391801440L;
-	public Tile[][] data;
+	public final Tile[][] data;
 	public int x, y;
 	
 	/**
@@ -37,10 +37,7 @@ public class Chunk implements Serializable {
 		super();
 		data = new Tile[GlobalData.CHUNKSIZE][GlobalData.CHUNKSIZE];
 	}
-	
-	public void save() {
-		ChunkManager.write(this);
-	}
+
 }
 
 

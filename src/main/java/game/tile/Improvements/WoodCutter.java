@@ -15,7 +15,7 @@ import main.DLogger;
  */
 public class WoodCutter extends Improvement {
 	private static final long serialVersionUID = 2756588653745585335L;
-	private static ItemStack[][] upgradeCosts = new ItemStack[][] {
+	private static final ItemStack[][] upgradeCosts = new ItemStack[][] {
 			new ItemStack[] { new ItemStack(Resource.MONEY, 1000) },
 			new ItemStack[] { new ItemStack(Resource.MONEY, 2500), new ItemStack(Resource.RAWWOOD, 250) },
 			new ItemStack[] { new ItemStack(Resource.MONEY, 5000), new ItemStack(Resource.STONE, 250) },

@@ -3,6 +3,7 @@ package game.nation;
 import java.io.File;
 import java.util.Map;
 
+import main.DLogger;
 import util.datamanagement.MaxMap;
 
 /**
@@ -13,7 +14,7 @@ import util.datamanagement.MaxMap;
  */
 public class NationCache {
 
-	static Map<Integer, Nation> nations;
+	static final Map<Integer, Nation> nations;
 	static {
 		nations = new MaxMap<Integer, Nation>(100) {
 			private static final long serialVersionUID = -2803494642119520703L;
@@ -50,7 +51,8 @@ public class NationCache {
 	 */
 	public static int[] allNations() {
 		File[] files = new File("NationData/").listFiles();
-		int[] ids = new int[files.length];
+		int[] ids = new int[files==null?files.length:0];
+		if(ids.length==0) DLogger.warn("there are no nations in the NationData directory, did you make sure to delete pass.dnt?");
 		for (int c = 0; c < ids.length; c++) {
 			String name = files[c].getName();
 			ids[c] = Integer.parseInt(name.substring(0, name.indexOf('.')));
