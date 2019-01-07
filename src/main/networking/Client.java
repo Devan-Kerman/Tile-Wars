@@ -51,7 +51,7 @@ public class Client implements Runnable {
 	public void run() {
 		try {
 			while (true) {
-				Integer opcode = GlobalData.kryo.readObject(ois, Integer.class);
+				Integer opcode = (Integer)GlobalData.kryo.readClassAndObject(ois);
 				if (opcode == 0 && loggedin) {
 					cc.getChunks();
 				} else if (opcode == 1 && loggedin) {
@@ -65,7 +65,7 @@ public class Client implements Runnable {
 				} else if(opcode == 5) {
 					cc.login();
 				} else {
-					DLogger.warn("Connection Aborted!");
+					DLogger.warn("Connection Aborted! with exit code " + opcode);
 					return;
 				}
 			}

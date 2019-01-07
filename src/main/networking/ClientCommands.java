@@ -35,7 +35,7 @@ public class ClientCommands {
 	public void register() {
 		c.n = NationCache.newNation();
 		String salt = PasswordUtils.getSalt(30);
-		passdb.put(c.n.id, PasswordUtils.generateSecurePassword(k.readObject(ois, String.class), salt) + ":" + salt);
+		passdb.put(c.n.id, PasswordUtils.generateSecurePassword((String)k.readClassAndObject(ois), salt) + ":" + salt);
 		c.loggedin = true;
 		write(c.n.id);
 	}
@@ -69,7 +69,7 @@ public class ClientCommands {
 	}
 	
 	public void changeRender() {
-		int in = k.readObject(ois, Integer.class);
+		int in = (int)k.readClassAndObject(ois);
 		if(in < 3) {
 			renderdistance = in;
 			write(0);
