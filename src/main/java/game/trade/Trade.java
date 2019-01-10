@@ -14,13 +14,13 @@ public class Trade {
 	public Trade(final Resource resource, final int nationID, final int price, final int amount) {
 		this.resource = resource;
 		this.nationID = nationID;
-		if(price < 0) {
+		if(price < 0)
 			throw new IllegalArgumentException("Price must be greater than or equal to zero");
-		}
+		
 		this.price = price;
-		if(amount <= 0) {
+		if(amount <= 0) 
 			throw new IllegalArgumentException("Amount must be greater than zero");
-		}
+		
 		this.amount = amount;
 	}
 	
@@ -29,9 +29,9 @@ public class Trade {
 	}
 	
 	public void setAmount(final int amount) {
-		if(amount < 0) {
+		if(amount < 0) 
 			throw new IllegalArgumentException("Amount must be greater than or equal to zero");
-		}
+		
 		
 		this.amount = amount;
 	}
@@ -41,9 +41,9 @@ public class Trade {
 	}
 
 	public void setPrice(int price) {
-		if(price < 0) {
+		if(price < 0) 
 			throw new IllegalArgumentException("Price must be greater than or equal to zero");
-		}
+		
 		this.price = price;
 	}
 

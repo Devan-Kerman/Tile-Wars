@@ -15,7 +15,7 @@ import main.DLogger;
  */
 public class Network implements Runnable {
 	private ServerSocket ss;
-	private final List<Client> clients;
+	public final List<Client> clients;
 	
 	/**
 	 * Creates a new network on the specified port

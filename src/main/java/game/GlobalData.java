@@ -1,7 +1,6 @@
 package game;
 
 import java.io.DataInputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
@@ -16,7 +15,6 @@ import game.tile.Improvement;
 import game.tile.Tile;
 import game.tile.TileEntity;
 import generators.chunk.Chunk;
-import main.DLogger;
 import main.networking.TileUpdate;
 
 /**
@@ -25,6 +23,7 @@ import main.networking.TileUpdate;
  * @author devan
  *
  */
+@SuppressWarnings("rawtypes")
 public class GlobalData {
 
 	public static final int CHUNKSIZE = 100;
@@ -64,12 +63,7 @@ public class GlobalData {
 		try {
 			URL upackage = cl.getResource(pack);
 			DataInputStream dis;
-			try {
-				dis = new DataInputStream((InputStream) upackage.getContent());
-			} catch (Exception e) {
-				DLogger.error(e.getLocalizedMessage());
-				dis = new DataInputStream(new InputStream() {@Override public int read() {return 0;}});
-			}
+			dis = new DataInputStream((InputStream) upackage.getContent());
 			String line;
 			while ((line = dis.readLine()) != null) {
 				if (line.endsWith(".class")) {

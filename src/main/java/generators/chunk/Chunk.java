@@ -27,7 +27,7 @@ public class Chunk implements Serializable {
 		this.data = new Tile[GlobalData.CHUNKSIZE][GlobalData.CHUNKSIZE];
 		for (int r = 0; r < GlobalData.CHUNKSIZE; r++)
 			for (int c = 0; c < GlobalData.CHUNKSIZE; c++)
-				data[r][c] = Generator.generate(cx * GlobalData.CHUNKSIZE + (long)r, cy * GlobalData.CHUNKSIZE + (long)c);
+				data[c][r] = Generator.generate(cx * GlobalData.CHUNKSIZE + (long)c, cy * GlobalData.CHUNKSIZE + (long)r);
 	}
 	
 	/**
