@@ -3,6 +3,7 @@ package play.ai.devtech.core.api.bytes;
 import java.awt.Point;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectOutputStream;
+import java.nio.charset.Charset;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -95,6 +96,12 @@ public class Packer implements Packetable, Assembable {
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public void packString(String strn, Charset charset) {
+		byte[] to = strn.getBytes(charset);
+		packInt(to.length);
+		packAll(to);
 	}
 
 	public void packInt(int i) {

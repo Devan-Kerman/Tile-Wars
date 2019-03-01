@@ -8,10 +8,11 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.function.Function;
+import java.util.function.BiFunction;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 
+import play.ai.devtech.core.nation.Nation;
 import play.ai.devtech.core.util.DLogger;
 import play.ai.devtech.core.util.math.Bytes;
 
@@ -19,10 +20,11 @@ public class Client {
 
 	private InputStream input;
 	private OutputStream output;
+	public Nation player;
 
 	private boolean connected;
 
-	private Map<Integer, Function<byte[], byte[]>> executors = new ConcurrentHashMap<>();
+	private Map<Integer, BiFunction<byte[], Client, byte[]>> executors = new ConcurrentHashMap<>();
 	private ExecutorService service = Executors.newSingleThreadExecutor();
 
 	private Runnable kill;
@@ -31,20 +33,22 @@ public class Client {
 		this.kill = kill;
 	}
 
-	public void queue(int opcode, Function<byte[], byte[]> executor) {
+	public void queue(int opcode, BiFunction<byte[], Client, byte[]> executor) {
 		executors.put(opcode, executor);
 	}
 
 	public Client(Socket connection) {
+		connected = true;
 		Operations.loadOperations(this);
 		try {
 			if (connection.isClosed() || !connection.isConnected())
 				throw new IOException("Closed connection");
-			output = new GZIPOutputStream(connection.getOutputStream(), 4096);
+
+			output = new GZIPOutputStream(connection.getOutputStream(), 4096, true);
 			output.flush();
-			InputStream is = connection.getInputStream();
-			input = new GZIPInputStream(is, 4096);
-			DLogger.debug("Established");	
+			DLogger.debug("Creating connection...");
+			input = new GZIPInputStream(connection.getInputStream(), 4096);
+			DLogger.debug("Established");
 		} catch (Exception e) {
 			connected = false;
 			DLogger.warn("Client failed to connect!");
@@ -68,15 +72,24 @@ public class Client {
 						int ret = input.read(alloc);
 						if (ret != len)
 							throw new IOException("Packet loss!");
-						byte[] send = executors.get(code).apply(alloc);
+						byte[] send = executors.get(code).apply(alloc, this);
+						DLogger.debug("Send len: " + send.length);
 						output.write(Bytes.fromInt(send.length));
 						output.write(send);
+						output.flush();
 					} catch (IOException e) {
 						connected = false;
-						e.printStackTrace();
+						DLogger.info("Client disconnected: " + e.getMessage());
+						try {
+							output.close();
+							connection.close();
+						} catch (IOException e1) {
+							e1.printStackTrace();
+						}
 					}
 				} else {
-					kill.run();
+					if (kill != null)
+						kill.run();
 					service.shutdown();
 					return;
 				}

@@ -9,6 +9,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import javax.imageio.ImageIO;
 
@@ -25,6 +27,7 @@ import play.ai.devtech.core.util.StopWatch;
 import play.ai.devtech.core.world.chunk.Chunk;
 import play.ai.devtech.core.world.chunk.ChunkManager;
 import play.ai.devtech.core.world.tile.TileEntity;
+import play.ai.devtech.network.Network;
 import play.ai.devtech.runtime.Game;
 import play.ai.devtech.runtime.improves.tes.population.ThatchHut;
 
@@ -38,6 +41,7 @@ public class Serverside {
 
 	public static Registry<TileEntity> teRegister;
 	public static Game game;
+	private static ExecutorService service = Executors.newSingleThreadExecutor();
 	public static void main(String[] args) {
 		DLogger.info("Starting game...");
 		game = new Game();
@@ -46,7 +50,9 @@ public class Serverside {
 		DLogger.info("Starting TileEntity pools...");
 		teRegister = new Registry<>();
 		teRegister.put(0, ThatchHut.class);
-		
+		DLogger.info("Starting network...");
+		Network n = new Network(3456);
+		service.execute(() -> {while(true) n.acceptClient();});
 		DLogger.relief("Booted");
 		cmds();
 	}

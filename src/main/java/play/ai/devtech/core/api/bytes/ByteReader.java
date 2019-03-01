@@ -4,6 +4,7 @@ import java.awt.Point;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.nio.charset.Charset;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
@@ -53,6 +54,11 @@ public class ByteReader {
 	
 	public boolean hasNext() {
 		return index < data.length;
+	}
+	
+	public String readString(Charset charset) {
+		int ln = readInt();
+		return new String(read(ln), charset);
 	}
 	
 	public int readInt() {

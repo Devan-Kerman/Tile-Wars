@@ -1,18 +1,16 @@
 package play.ai.devtech.network.ops;
 
-import java.util.function.Function;
-
 import play.ai.devtech.core.util.math.Bytes;
+import play.ai.devtech.network.Client;
 
 /**
  * Pings the client
  * @author devan
  *
  */
-public class Ping implements Function<byte[], byte[]> {
-
-	@Override
-	public byte[] apply(byte[] t) {
+public class Ping {
+	
+	public static byte[] apply(byte[] t, Client c) {
 		return Bytes.fromInt(80085);
 	} // Hehe
 

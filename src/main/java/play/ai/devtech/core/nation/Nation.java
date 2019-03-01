@@ -96,7 +96,7 @@ public class Nation implements Packetable, Assembable {
 		}
 		do {
 			id = r.nextInt();
-		} while (new File("NationData/" + id + ".nation").exists());
+		} while (id == 0 || new File("NationData/" + id + ".nation").exists());
 		boolean b;
 		try {
 			b = new File("NationData/" + id + ".nation").createNewFile();
