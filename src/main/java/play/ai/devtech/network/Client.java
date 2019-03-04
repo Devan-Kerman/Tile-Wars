@@ -73,18 +73,18 @@ public class Client {
 						if (ret != len)
 							throw new IOException("Packet loss!");
 						byte[] send = executors.get(code).apply(alloc, this);
-						DLogger.debug("Send len: " + send.length);
 						output.write(Bytes.fromInt(send.length));
 						output.write(send);
 						output.flush();
 					} catch (IOException e) {
 						connected = false;
 						DLogger.info("Client disconnected: " + e.getMessage());
+						DLogger.writeError(e);
 						try {
 							output.close();
 							connection.close();
 						} catch (IOException e1) {
-							e1.printStackTrace();
+							DLogger.writeError(e1);
 						}
 					}
 				} else {

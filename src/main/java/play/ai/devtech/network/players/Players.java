@@ -14,27 +14,24 @@ import play.ai.devtech.core.api.io.Output;
 import play.ai.devtech.core.api.io.Wrapper;
 
 public class Players {
-	public static Map<String, String> logins;
 	public static Map<Login, Integer> nations;
 	
 	private static Supplier<Wrapper<Set<String>>> userwrappers;
 	static {
-		logins = new HashMap<>();
 		nations = new HashMap<>();
 		userwrappers = () -> new Wrapper<>(obj -> {
 			Packer packer = new Packer();
-			packer.packInt(logins.size());
-			logins.forEach((s1, s2) -> {
-				packer.packString(s1, StandardCharsets.US_ASCII);
-				packer.packString(s2, StandardCharsets.US_ASCII);
-				packer.packInt(nations.get(new Login(s1, s2)));
+			packer.packInt(nations.size());
+			nations.forEach((s1, s2) -> {
+				packer.packString(s1.username, StandardCharsets.US_ASCII);
+				packer.packString(s1.password, StandardCharsets.US_ASCII);
+				packer.packInt(nations.get(new Login(s1.username, s1.password)));
 			});
 			return packer.unpack();
 		}, bar -> {
 			int len = bar.readInt();
 			for (int x = 0; x < len; x++) {
 				Login log = new Login(bar.readString(StandardCharsets.US_ASCII), bar.readString(StandardCharsets.US_ASCII));
-				logins.put(log.username, log.password);
 				nations.put(log, bar.readInt());
 			}
 			return null;

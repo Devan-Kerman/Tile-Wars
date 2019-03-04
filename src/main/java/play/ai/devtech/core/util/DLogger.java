@@ -1,5 +1,9 @@
 package play.ai.devtech.core.util;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
@@ -18,16 +22,19 @@ public class DLogger {
 	private DLogger() {}
 
 	private static final Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
-	private static Object[] params() {
-		StackTraceElement ste = Thread.currentThread().getStackTrace()[3];
-		String[] args = ste.toString().split("\\.");
-		StringBuilder s = new StringBuilder();
-		for(int x = args.length-4; x < args.length; x++) {
-			s.append(args[x]);
-			s.append('.');
+	private static PrintWriter errout;
+	
+	public static void writeError(Exception e) {
+		e.printStackTrace(errout);
+		errout.flush();
+	}
+	static {
+		try {
+			errout = new PrintWriter(new BufferedWriter(new FileWriter("errors.txt")));
+		} catch (IOException e) {
+			errout = null;
+			e.printStackTrace();
 		}
-		s.deleteCharAt(s.length()-1);
-		return new Object[] {s};//new Object[]{ste.getFileName(), ste.getLineNumber()};
 	}
 	
 	/**
@@ -65,7 +72,7 @@ public class DLogger {
 	 * @param info
 	 */
 	public static void error(String info) {
-		LOGGER.log(Level.SEVERE, info, params());
+		LOGGER.log(Level.SEVERE, info, Thread.currentThread().getStackTrace()[2]);
 	}
 
 	/**
@@ -73,7 +80,7 @@ public class DLogger {
 	 * @param info
 	 */
 	public static void warn(String info) {
-		LOGGER.log(Level.WARNING, info, params());
+		LOGGER.log(Level.WARNING, info, Thread.currentThread().getStackTrace()[2]);
 	}
 
 	/**
@@ -81,7 +88,7 @@ public class DLogger {
 	 * @param info
 	 */
 	public static void info(String info) {
-		LOGGER.log(Level.INFO, info, params());
+		LOGGER.log(Level.INFO, info, Thread.currentThread().getStackTrace()[2]);
 	}
 
 	/**
@@ -89,7 +96,7 @@ public class DLogger {
 	 * @param info
 	 */
 	public static void debug(String info) {
-		LOGGER.log(Level.CONFIG, info, params());
+		LOGGER.log(Level.CONFIG, info, Thread.currentThread().getStackTrace()[2]);
 	}
 
 	/**
@@ -97,7 +104,7 @@ public class DLogger {
 	 * @param info
 	 */
 	public static void relief(String info) {
-		LOGGER.log(Level.FINE, info, params());
+		LOGGER.log(Level.FINE, info, Thread.currentThread().getStackTrace()[2]);
 	}
 
 }

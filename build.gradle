@@ -12,6 +12,7 @@ dependencies {
 	compile group: 'org.slf4j', name:'slf4j-simple', version: '1.7.2'
 	compile group: 'com.google.guava', name: 'guava', version: '23.5-jre'
     compile 'it.unimi.dsi:fastutil:8.2.2'
+    implementation 'org.cache2k:cache2k-core:1.2.0.Final'
 	
     testCompile 'junit:junit:4.12'
     

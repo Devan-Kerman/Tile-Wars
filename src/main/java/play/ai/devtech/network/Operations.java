@@ -1,9 +1,6 @@
 package play.ai.devtech.network;
 
-import play.ai.devtech.network.ops.AttLogin;
-import play.ai.devtech.network.ops.GetChunk;
-import play.ai.devtech.network.ops.Ping;
-import play.ai.devtech.network.ops.Register;
+import play.ai.devtech.network.ops.*;
 
 public class Operations {
 	
@@ -12,6 +9,7 @@ public class Operations {
 		k.queue(1, Register::apply);
 		k.queue(2, GetChunk::apply);
 		k.queue(3, AttLogin::apply);
+		k.queue(4, Claim::claim);
 	}
 	
 	private Operations() {/*no.*/}

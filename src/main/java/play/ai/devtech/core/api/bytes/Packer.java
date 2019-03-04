@@ -2,6 +2,8 @@ package play.ai.devtech.core.api.bytes;
 
 import java.awt.Point;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.ObjectOutputStream;
 import java.nio.charset.Charset;
 import java.util.Arrays;
@@ -43,6 +45,37 @@ public class Packer implements Packetable, Assembable {
 		System.arraycopy(arr, 0, ner, 0, arr.length);
 		System.arraycopy(c, 0, ner, last, c.length);
 		last+=c.length;
+		arr = ner;
+	}
+	
+	public void read(InputStream stream, int len) {
+		allocate(len);
+		int alloc = len/1024;
+		byte[] buffer = new byte[alloc];
+		while(true) {
+			try {
+				int read = stream.read(buffer);
+				if(read == -1)
+					break;
+				packLen(buffer, read);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	private void packLen(byte[] c, int len) {
+		if(allocated >= len) {
+			System.arraycopy(c, 0, arr, last, len);
+			allocated -= len;
+			last += len;
+			return;
+		}
+		allocated = 0;
+		byte[] ner = new byte[arr.length + len];
+		System.arraycopy(arr, 0, ner, 0, arr.length);
+		System.arraycopy(c, 0, ner, last, len);
+		last+=len;
 		arr = ner;
 	}
 	

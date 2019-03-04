@@ -4,6 +4,8 @@ import java.nio.charset.StandardCharsets;
 
 import play.ai.devtech.core.api.bytes.ByteReader;
 import play.ai.devtech.core.api.bytes.Packer;
+import play.ai.devtech.core.nation.NationCache;
+import play.ai.devtech.core.util.DLogger;
 import play.ai.devtech.network.Client;
 import play.ai.devtech.network.players.Login;
 import play.ai.devtech.network.players.Players;
@@ -17,10 +19,14 @@ public class AttLogin {
 		Login login = new Login(user, pass);
 		Packer p = new Packer();
 		Integer n = Players.nations.get(login);
-		if(n == null || n == 0)
+		if(n == null || n == 0) {
 			p.packInt(0);
-		else
+			DLogger.debug("Invalid login! \nUsername: " + user + "\nPassword: " + pass);
+		} else {
+			DLogger.debug("Login success! \nUsername: " + user + "\nPassword: " + pass);
 			p.packInt(n);
+		}
+		u.player = NationCache.getNation(n);
 		return p.unpack();
 	}
 

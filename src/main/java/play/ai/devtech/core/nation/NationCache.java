@@ -7,12 +7,13 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.util.Map;
+
+import org.cache2k.Cache2kBuilder;
+import org.cache2k.IntCache;
 
 import play.ai.devtech.core.api.io.Input;
 import play.ai.devtech.core.api.io.Output;
 import play.ai.devtech.core.util.DLogger;
-import play.ai.devtech.core.util.MaxMap;
 
 /**
  * Used as a cache for nations, holds a buffer of 100 nations, and automatically
@@ -23,18 +24,13 @@ import play.ai.devtech.core.util.MaxMap;
  */
 public class NationCache {
 
-	static final Map<Integer, Nation> nations;
+	static IntCache<Nation> cache;
+	
 	static {
-		nations = new MaxMap<Integer, Nation>(100) {
-			private static final long serialVersionUID = -2803494642119520703L;
-
-			@Override
-			protected boolean removeEldestEntry(Map.Entry<Integer, Nation> eldest) {
-				if (size() > getMaxSize())
-					save(eldest.getValue());
-				return super.removeEldestEntry(eldest);
-			}
-		};
+		Cache2kBuilder<Integer, Nation> builder = new Cache2kBuilder<Integer, Nation>() {};
+		builder.loader(i -> new Input(new BufferedInputStream(new FileInputStream(new File("NationData/" + i + ".nation")))).read(Nation.class));
+		builder.entryCapacity(1000);
+		cache = builder.buildForIntKey();
 	}
 
 	/**
@@ -45,19 +41,7 @@ public class NationCache {
 	 * @return The Nation Object
 	 */
 	public static Nation getNation(int id) {
-		if (!nations.containsKey(id))
-			try {
-				Input in = new Input(
-						new BufferedInputStream(new FileInputStream(new File("NationData/" + id + ".nation"))));
-				Nation n = in.read(Nation.class);
-				nations.put(id, n);
-				return n;
-			} catch (IOException e) {
-				e.printStackTrace();
-				return null;
-			}
-		else
-			return nations.get(id);
+		return cache.get(id);
 	}
 
 	/**
@@ -89,7 +73,7 @@ public class NationCache {
 	 */
 	public static Nation newNation() {
 		Nation n = new Nation(true);
-		nations.put(n.id, n);
+		cache.put(n.id, n);
 		return n;
 	}
 
@@ -112,6 +96,10 @@ public class NationCache {
 			e.printStackTrace();
 		}
 		return n;
+	}
+	
+	public static void saveAll() {
+		cache.asMap().forEach((i, n) -> save(n));
 	}
 	
 }

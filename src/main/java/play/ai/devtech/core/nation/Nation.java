@@ -152,6 +152,12 @@ public class Nation implements Packetable, Assembable {
 	public void addTilePoint(TilePoint p) {
 		tiles.add(p);
 	}
+	
+	@Override
+	protected void finalize() throws Throwable {
+		NationCache.save(this);
+		super.finalize();
+	}
 
 	
 }

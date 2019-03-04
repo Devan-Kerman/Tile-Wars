@@ -12,7 +12,7 @@ public class Login {
 	
 	@Override
 	public boolean equals(Object obj) {
-		return obj instanceof Login && ((Login)obj).password.equals(password) && ((Login)obj).username.equals(username);
+		return obj instanceof Login && (((Login)obj).password.equals(password) && ((Login)obj).username.equals(username));
 	}
 	
 	@Override
@@ -23,6 +23,6 @@ public class Login {
 	public Login(String user, String pass) {
 		username = user;
 		password = pass;
-		hash = username.hashCode()+password.hashCode();
+		hash = username.hashCode()^password.hashCode();
 	}
 }

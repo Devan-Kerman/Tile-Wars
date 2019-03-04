@@ -6,7 +6,13 @@ import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.nio.file.FileVisitResult;
+import java.nio.file.FileVisitor;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.attribute.BasicFileAttributes;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.concurrent.ExecutorService;
@@ -28,6 +34,7 @@ import play.ai.devtech.core.world.chunk.Chunk;
 import play.ai.devtech.core.world.chunk.ChunkManager;
 import play.ai.devtech.core.world.tile.TileEntity;
 import play.ai.devtech.network.Network;
+import play.ai.devtech.network.players.Players;
 import play.ai.devtech.runtime.Game;
 import play.ai.devtech.runtime.improves.tes.population.ThatchHut;
 
@@ -71,6 +78,22 @@ public class Serverside {
 		DLogger.info("displaystats <Nation ID> - shows the resources and stats this nation has");
 		DLogger.info("testser <Nation ID> - tests nation serialization");
 	}
+	
+	public static void shutdown() {
+		try {
+			Players.save();
+			ChunkManager.writeAll();
+			NationCache.saveAll();
+			System.exit(0);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public static void wipe() throws IOException {
+		Files.walkFileTree(new File("NationData/").toPath(), deletor);
+		Files.walkFileTree(new File("ChunkData/").toPath(), deletor);
+	}
 
 	/**
 	 * Commands and shit
@@ -78,19 +101,24 @@ public class Serverside {
 	public static void cmds() {
 		Scanner s = new Scanner(System.in);
 		Scanner t;
-		label: while (true) {
+		while (true) {
 			try {
 				t = new Scanner(s.nextLine());
 				String temp = t.next();
 				switch (temp) {
 				case "close":
-					DLogger.warn("Writing all chunks in cache to disk...");
-					break label;
+					s.close();
+					shutdown();
+					break;
 				case "Exit":
-					DLogger.warn("Writing all chunks in cache to disk...");
-					break label;
+					s.close();
+					shutdown();
+					break;
 				case "help":
 					help();
+					break;
+				case "wipe":
+					wipe();
 					break;
 				case "export":
 					export(t.nextInt(), t.nextInt());
@@ -111,8 +139,7 @@ public class Serverside {
 					getN(t.nextInt());
 					break;
 				case "EXIT":
-					DLogger.warn("Writing all chunks in cache to disk...");
-					ChunkManager.writeAll();
+					shutdown();
 					break;
 				case "setImp":
 					Improvements.improve(new BPoint(t.nextByte(), t.nextByte()), ChunkManager.safeChunk(t.nextInt(), t.nextInt()), t.nextInt());
@@ -134,13 +161,12 @@ public class Serverside {
 					DLogger.info("invalid command, try \"help\" for a list of avilable commands");
 					break;
 				}
+				t.close();
 			} catch (Exception e) {
 				e.printStackTrace();
 				DLogger.warn(e.getMessage());
 			}
 		}
-		t.close();
-		s.close();
 	}
 
 	/**
@@ -260,4 +286,25 @@ public class Serverside {
 		DLogger.error("Invalid Elevation! " + temp);
 		return Color.BLACK;
 	}
+	
+	public static FileVisitor<Path> deletor = new FileVisitor<Path>() {
+		@Override
+		public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) throws IOException {
+			return FileVisitResult.CONTINUE;
+		}
+		@Override
+		public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
+			Files.deleteIfExists(file);
+			return FileVisitResult.SKIP_SIBLINGS;
+		}
+		@Override
+		public FileVisitResult visitFileFailed(Path file, IOException exc) throws IOException {
+			Files.deleteIfExists(file);
+			return FileVisitResult.CONTINUE;
+		}
+		@Override
+		public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {
+			return FileVisitResult.CONTINUE;
+		}
+	};
 }
