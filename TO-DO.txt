@@ -1,3 +1,1 @@
-Add tile entity class as child to tile, remove improvements from regular tile to conserve memory.
-
-Add tile entity log for game cycle, store the long x, long y
+hell yea. progress, Complete module system, finish networking, think about how the fuck you're gonna implement tile invasions, more reorganizing, and make sure no one sees all my shitty code, AKA make the module system pretty.
