@@ -9,14 +9,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-import play.ai.devtech.core.api.bytes.Assembable;
-import play.ai.devtech.core.api.bytes.ByteReader;
-import play.ai.devtech.core.api.bytes.Packer;
-import play.ai.devtech.core.api.bytes.Packetable;
+import play.ai.devtech.core.api.interfaces.Assembable;
+import play.ai.devtech.core.api.interfaces.Packetable;
+import play.ai.devtech.core.api.io.ByteReader;
+import play.ai.devtech.core.api.io.Packer;
 import play.ai.devtech.core.nation.resources.Inventory;
 import play.ai.devtech.core.nation.resources.ItemStack;
 import play.ai.devtech.core.nation.resources.Resource;
-import play.ai.devtech.core.util.DLogger;
+import play.ai.devtech.tilewars.DLogger;
 
 /**
  * Any new values/data added to this class will not be saved unless you edit the
@@ -151,6 +151,10 @@ public class Nation implements Packetable, Assembable {
 	 */
 	public void addTilePoint(TilePoint p) {
 		tiles.add(p);
+	}
+	
+	public void removeTilePoint(TilePoint p) {
+		tiles.remove(p);
 	}
 	
 	@Override

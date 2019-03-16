@@ -5,12 +5,12 @@ import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 
-import play.ai.devtech.core.api.bytes.Assembable;
-import play.ai.devtech.core.api.bytes.ByteReader;
-import play.ai.devtech.core.api.bytes.Packer;
-import play.ai.devtech.core.api.bytes.Packetable;
+import play.ai.devtech.core.api.interfaces.Assembable;
+import play.ai.devtech.core.api.interfaces.Packetable;
+import play.ai.devtech.core.api.io.ByteReader;
+import play.ai.devtech.core.api.io.Bytes;
+import play.ai.devtech.core.api.io.Packer;
 import play.ai.devtech.core.errors.NotEnoughResourcesException;
-import play.ai.devtech.core.util.math.Bytes;
 
 public class Inventory implements Packetable, Assembable {
 

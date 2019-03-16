@@ -2,10 +2,8 @@ package play.ai.devtech.core.api.io;
 
 import java.util.function.Function;
 
-import play.ai.devtech.core.api.bytes.Assembable;
-import play.ai.devtech.core.api.bytes.ByteReader;
-import play.ai.devtech.core.api.bytes.Packer;
-import play.ai.devtech.core.api.bytes.Packetable;
+import play.ai.devtech.core.api.interfaces.Assembable;
+import play.ai.devtech.core.api.interfaces.Packetable;
 
 public class Wrapper<T> implements Assembable, Packetable {
 	

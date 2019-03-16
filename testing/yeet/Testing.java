@@ -5,9 +5,9 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-import play.ai.devtech.core.api.ArrayBuilder;
-import play.ai.devtech.core.api.bytes.ByteReader;
-import play.ai.devtech.core.api.bytes.Packer;
+import play.ai.devtech.core.api.io.ByteReader;
+import play.ai.devtech.core.api.io.Packer;
+import play.ai.devtech.core.api.structures.ArrayBuilder;
 import play.ai.devtech.core.world.chunk.Chunk;
 import play.ai.devtech.core.world.chunk.ChunkManager;
 

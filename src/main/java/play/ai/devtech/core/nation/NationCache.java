@@ -13,7 +13,7 @@ import org.cache2k.IntCache;
 
 import play.ai.devtech.core.api.io.Input;
 import play.ai.devtech.core.api.io.Output;
-import play.ai.devtech.core.util.DLogger;
+import play.ai.devtech.tilewars.DLogger;
 
 /**
  * Used as a cache for nations, holds a buffer of 100 nations, and automatically

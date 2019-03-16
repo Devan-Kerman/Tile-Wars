@@ -3,9 +3,8 @@ package play.ai.devtech.core.api.io;
 import java.io.IOException;
 import java.io.OutputStream;
 
-import play.ai.devtech.core.api.bytes.Packer;
-import play.ai.devtech.core.api.bytes.Packetable;
-import play.ai.devtech.core.util.DLogger;
+import play.ai.devtech.core.api.interfaces.Packetable;
+import play.ai.devtech.tilewars.DLogger;
 
 public class Output {
 

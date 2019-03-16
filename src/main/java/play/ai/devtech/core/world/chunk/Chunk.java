@@ -1,12 +1,12 @@
 package play.ai.devtech.core.world.chunk;
 
-import play.ai.devtech.core.api.area.BPoint;
-import play.ai.devtech.core.api.area.SpaceMap;
-import play.ai.devtech.core.api.bytes.Assembable;
-import play.ai.devtech.core.api.bytes.ByteReader;
-import play.ai.devtech.core.api.bytes.Packer;
-import play.ai.devtech.core.api.bytes.Packetable;
+import play.ai.devtech.core.api.interfaces.Assembable;
+import play.ai.devtech.core.api.interfaces.Packetable;
+import play.ai.devtech.core.api.io.ByteReader;
+import play.ai.devtech.core.api.io.Packer;
+import play.ai.devtech.core.world.chunk.generation.Generator;
 import play.ai.devtech.core.world.entity.Entity;
+import play.ai.devtech.core.world.tile.LocalPoint;
 import play.ai.devtech.core.world.tile.Tile;
 import play.ai.devtech.core.world.tile.TileEntity;
 
@@ -18,8 +18,8 @@ public class Chunk implements Packetable, Assembable {
 
 	public final Tile[][] tiles;
 
-	public SpaceMap<TileEntity> tileEnts;
-	public SpaceMap<Entity> entities;
+	public ObjectMap<TileEntity> tileEnts;
+	public ObjectMap<Entity> entities;
 
 	public int cx, cy;
 
@@ -45,8 +45,8 @@ public class Chunk implements Packetable, Assembable {
 	 */
 	public Chunk() {
 		tiles = new Tile[CHUNKSIZE][CHUNKSIZE];
-		entities = new SpaceMap<>(Entity.class);
-		tileEnts = new SpaceMap<>(TileEntity.class);
+		entities = new ObjectMap<>(Entity.class);
+		tileEnts = new ObjectMap<>(TileEntity.class);
 	}
 
 	@Override
@@ -70,7 +70,7 @@ public class Chunk implements Packetable, Assembable {
 		return tiles[x][y];
 	}
 	
-	public Tile get(BPoint b) {
+	public Tile get(LocalPoint b) {
 		return tiles[b.x][b.y];
 	}
 }

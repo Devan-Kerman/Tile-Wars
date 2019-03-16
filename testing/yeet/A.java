@@ -1,9 +1,9 @@
 package yeet;
 
-import play.ai.devtech.core.api.bytes.Assembable;
-import play.ai.devtech.core.api.bytes.ByteReader;
-import play.ai.devtech.core.api.bytes.Packer;
-import play.ai.devtech.core.api.bytes.Packetable;
+import play.ai.devtech.core.api.interfaces.Assembable;
+import play.ai.devtech.core.api.interfaces.Packetable;
+import play.ai.devtech.core.api.io.ByteReader;
+import play.ai.devtech.core.api.io.Packer;
 
 public class A implements Packetable, Assembable {
 

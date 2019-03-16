@@ -4,9 +4,10 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-import play.ai.devtech.core.api.bytes.Assembable;
-import play.ai.devtech.core.api.bytes.ByteReader;
-import play.ai.devtech.core.util.DLogger;
+import play.ai.devtech.core.api.interfaces.Assembable;
+import play.ai.devtech.core.api.testing.Bencher;
+import play.ai.devtech.core.api.testing.Benchmark;
+import play.ai.devtech.tilewars.DLogger;
 
 /**
  * Only for single time operations like file reading (no networking)
@@ -22,10 +23,16 @@ public class Input {
 		this.is = is;
 	}
 
+	public static Bencher deSerializationBencher = new Bencher("benchmarks/Deserialization.txt");
 	public <T extends Assembable> T read(Class<T> clas) throws IOException {
 		try {
 			T t = clas.newInstance();
-			t.from(new ByteReader(readAll()));
+			byte[] read = readAll();
+			Benchmark benchmark = deSerializationBencher.getBenchmarker();
+			benchmark.start();
+			t.from(new ByteReader(read));
+			benchmark.stop();
+			benchmark.submit();
 			return t;
 		} catch (InstantiationException | IllegalAccessException e) {
 			DLogger.error("No. " + clas);

@@ -23,20 +23,18 @@ import javax.imageio.ImageIO;
 import play.ai.devtech.control.Claims;
 import play.ai.devtech.control.Improvements;
 import play.ai.devtech.control.Tiles;
-import play.ai.devtech.core.api.area.BPoint;
-import play.ai.devtech.core.api.objects.registries.Registry;
+import play.ai.devtech.core.api.testing.Bencher;
+import play.ai.devtech.core.api.testing.Benchmark;
 import play.ai.devtech.core.nation.Nation;
 import play.ai.devtech.core.nation.NationCache;
+import play.ai.devtech.core.nation.TilePoint;
 import play.ai.devtech.core.nation.resources.Resource;
-import play.ai.devtech.core.util.DLogger;
-import play.ai.devtech.core.util.StopWatch;
 import play.ai.devtech.core.world.chunk.Chunk;
 import play.ai.devtech.core.world.chunk.ChunkManager;
-import play.ai.devtech.core.world.tile.TileEntity;
-import play.ai.devtech.network.Network;
-import play.ai.devtech.network.players.Players;
+import play.ai.devtech.core.world.tile.LocalPoint;
 import play.ai.devtech.runtime.Game;
-import play.ai.devtech.runtime.improves.tes.population.ThatchHut;
+import server.network.Network;
+import server.network.players.Players;
 
 /**
  * Main class of the game
@@ -46,7 +44,6 @@ import play.ai.devtech.runtime.improves.tes.population.ThatchHut;
  */
 public class Serverside {
 
-	public static Registry<TileEntity> teRegister;
 	public static Game game;
 	private static ExecutorService service = Executors.newSingleThreadExecutor();
 	public static void main(String[] args) {
@@ -54,9 +51,15 @@ public class Serverside {
 		game = new Game();
 		DLogger.info("Booting...");
 		Boot.boot();
-		DLogger.info("Starting TileEntity pools...");
-		teRegister = new Registry<>();
-		teRegister.put(0, ThatchHut.class);
+		DLogger.info("Loading mods...");
+		Boot.load(game);
+		game.print();
+		DLogger.info("Initializing mods...");
+		game.initMods();
+		DLogger.info("Initializing tile entities...");
+		game.registerTiles();
+		DLogger.info("Initializing entities...");
+		game.registerEntities();
 		DLogger.info("Starting network...");
 		Network n = new Network(3456);
 		service.execute(() -> {while(true) n.acceptClient();});
@@ -142,11 +145,11 @@ public class Serverside {
 					shutdown();
 					break;
 				case "setImp":
-					Improvements.improve(new BPoint(t.nextByte(), t.nextByte()), ChunkManager.safeChunk(t.nextInt(), t.nextInt()), t.nextInt());
+					Improvements.improve(new TilePoint(t.nextInt(), t.nextInt(), t.nextByte(), t.nextByte()), game, t.nextInt());
 					DLogger.relief("Placed!");
 					break;
 				case "claim":
-					Claims.claim(new Point(t.nextInt(), t.nextInt()), new BPoint(t.nextByte(), t.nextByte()), t.nextInt());
+					Claims.claim(new Point(t.nextInt(), t.nextInt()), new LocalPoint(t.nextByte(), t.nextByte()), t.nextInt());
 					DLogger.relief("Claimed!");
 					break;
 				case "run":
@@ -155,7 +158,7 @@ public class Serverside {
 					break;
 				case "view":
 					DLogger.debug("\n");
-					DLogger.info(Tiles.toString(ChunkManager.safeChunk(t.nextInt(), t.nextInt()), new BPoint(t.nextByte(), t.nextByte())));
+					DLogger.info(Tiles.toString(ChunkManager.safeChunk(t.nextInt(), t.nextInt()), new LocalPoint(t.nextByte(), t.nextByte())));
 					break;
 				default:
 					DLogger.info("invalid command, try \"help\" for a list of avilable commands");
@@ -212,6 +215,7 @@ public class Serverside {
 		NationCache.save(n);
 	}
 
+	public static Bencher bencher = new Bencher("benchmarks/chunkgen.txt");
 	/**
 	 * Generates/Reads a new chunk
 	 * 
@@ -219,10 +223,12 @@ public class Serverside {
 	 * @param y chunk y int
 	 */
 	public static void generate(int x, int y) {
-		StopWatch.start();
+		Benchmark benc = bencher.getBenchmarker();
+		benc.start();
 		ChunkManager.safeChunk(x, y);
-		long duration = StopWatch.stop();
-		DLogger.info("MS: " + duration);
+		benc.stop();
+		benc.submit();
+		DLogger.info("Benchmark logged in benchmarks/chunkgen.txt");
 	}
 
 	/**
