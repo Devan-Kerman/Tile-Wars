@@ -1,12 +1,12 @@
 package server.network.ops;
 
-import play.ai.devtech.control.Improvements;
-import play.ai.devtech.core.api.io.ByteReader;
-import play.ai.devtech.core.api.io.Packer;
-import play.ai.devtech.core.errors.ClaimException;
-import play.ai.devtech.core.errors.NotEnoughResourcesException;
-import play.ai.devtech.core.nation.TilePoint;
-import play.ai.devtech.runtime.Game;
+import ai.play.devtech.control.Improvements;
+import ai.play.devtech.core.api.io.ByteReader;
+import ai.play.devtech.core.api.io.Packer;
+import ai.play.devtech.core.errors.ClaimException;
+import ai.play.devtech.core.errors.NotEnoughResourcesException;
+import ai.play.devtech.core.nation.TilePoint;
+import ai.play.devtech.runtime.Game;
 import server.network.Client;
 
 public class Improve {

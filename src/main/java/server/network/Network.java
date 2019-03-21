@@ -1,12 +1,11 @@
 package server.network;
 
+import ai.play.devtech.core.api.structures.AtomicArrayList;
+import ai.play.devtech.tilewars.DLogger;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.List;
-
-import play.ai.devtech.core.api.structures.AtomicArrayList;
-import play.ai.devtech.tilewars.DLogger;
 
 public class Network {
 

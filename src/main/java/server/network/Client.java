@@ -1,5 +1,9 @@
 package server.network;
 
+import ai.play.devtech.core.api.io.Bytes;
+import ai.play.devtech.core.nation.Nation;
+import ai.play.devtech.runtime.Game;
+import ai.play.devtech.tilewars.DLogger;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -11,11 +15,6 @@ import java.util.concurrent.Executors;
 import java.util.function.BiFunction;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
-
-import play.ai.devtech.core.api.io.Bytes;
-import play.ai.devtech.core.nation.Nation;
-import play.ai.devtech.runtime.Game;
-import play.ai.devtech.tilewars.DLogger;
 
 public class Client {
 

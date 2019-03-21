@@ -1,15 +1,14 @@
 package server.network.ops;
 
-import java.nio.charset.StandardCharsets;
-
-import play.ai.devtech.core.api.io.ByteReader;
-import play.ai.devtech.core.api.io.Bytes;
-import play.ai.devtech.core.nation.Nation;
-import play.ai.devtech.core.nation.NationCache;
-import play.ai.devtech.tilewars.DLogger;
+import ai.play.devtech.core.api.io.ByteReader;
+import ai.play.devtech.core.api.io.Bytes;
+import ai.play.devtech.core.nation.Nation;
+import ai.play.devtech.core.nation.NationCache;
+import ai.play.devtech.tilewars.DLogger;
 import server.network.Client;
 import server.network.players.Login;
 import server.network.players.Players;
+import java.nio.charset.StandardCharsets;
 
 public class Register {
 	public static byte[] apply(byte[] t, Client k) {

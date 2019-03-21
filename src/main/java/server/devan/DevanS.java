@@ -1,11 +1,11 @@
 package server.devan;
 
-import play.ai.devtech.core.api.modules.Mod;
-import play.ai.devtech.core.api.modules.Module;
-import play.ai.devtech.core.api.objects.Registry;
-import play.ai.devtech.core.world.entity.Entity;
-import play.ai.devtech.core.world.tile.TileEntity;
-import play.ai.devtech.tilewars.DLogger;
+import ai.play.devtech.core.api.modules.Mod;
+import ai.play.devtech.core.api.modules.Module;
+import ai.play.devtech.core.api.objects.Registry;
+import ai.play.devtech.core.world.entity.Entity;
+import ai.play.devtech.core.world.tile.TileEntity;
+import ai.play.devtech.tilewars.DLogger;
 import server.devan.example.ThatchHut;
 import server.network.Opcode;
 

@@ -1,9 +1,9 @@
 package server.network.ops;
 
-import play.ai.devtech.core.api.io.ByteReader;
-import play.ai.devtech.core.world.chunk.ChunkManager;
-import play.ai.devtech.core.world.tile.LocalPoint;
-import play.ai.devtech.core.world.tile.Tile;
+import ai.play.devtech.core.api.io.ByteReader;
+import ai.play.devtech.core.world.chunk.ChunkManager;
+import ai.play.devtech.core.world.tile.LocalPoint;
+import ai.play.devtech.core.world.tile.Tile;
 import server.network.Client;
 
 public class Claim {

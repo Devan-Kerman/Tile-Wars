@@ -1,6 +1,6 @@
 package server.network.ops;
 
-import play.ai.devtech.core.api.io.Packer;
+import ai.play.devtech.core.api.io.Packer;
 import server.network.Client;
 
 public class GetMe {

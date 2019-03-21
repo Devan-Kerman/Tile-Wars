@@ -1,13 +1,6 @@
 package server.network;
 
-import server.network.ops.AttLogin;
-import server.network.ops.Claim;
-import server.network.ops.Delet;
-import server.network.ops.GetChunk;
-import server.network.ops.GetMe;
-import server.network.ops.Improve;
-import server.network.ops.Ping;
-import server.network.ops.Register;
+import server.network.ops.*;
 
 public class Operations {
 	

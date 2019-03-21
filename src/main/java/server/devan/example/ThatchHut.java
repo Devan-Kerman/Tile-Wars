@@ -1,16 +1,16 @@
 package server.devan.example;
 
-import play.ai.devtech.core.api.interfaces.Assembable;
-import play.ai.devtech.core.api.interfaces.Packetable;
-import play.ai.devtech.core.api.io.ByteReader;
-import play.ai.devtech.core.api.io.Packer;
-import play.ai.devtech.core.errors.NotEnoughResourcesException;
-import play.ai.devtech.core.nation.Nation;
-import play.ai.devtech.core.nation.resources.Inventory;
-import play.ai.devtech.core.nation.resources.ItemStack;
-import play.ai.devtech.core.nation.resources.Resource;
-import play.ai.devtech.core.world.tile.TileEntity;
-import play.ai.devtech.runtime.Game;
+import ai.play.devtech.core.api.interfaces.Assembable;
+import ai.play.devtech.core.api.interfaces.Packetable;
+import ai.play.devtech.core.api.io.ByteReader;
+import ai.play.devtech.core.api.io.Packer;
+import ai.play.devtech.core.errors.NotEnoughResourcesException;
+import ai.play.devtech.core.nation.Nation;
+import ai.play.devtech.core.nation.resources.Inventory;
+import ai.play.devtech.core.nation.resources.ItemStack;
+import ai.play.devtech.core.nation.resources.Resource;
+import ai.play.devtech.core.world.tile.TileEntity;
+import ai.play.devtech.runtime.Game;
 
 public class ThatchHut extends TileEntity {
 	private Data data;

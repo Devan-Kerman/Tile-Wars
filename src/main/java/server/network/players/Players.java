@@ -1,5 +1,8 @@
 package server.network.players;
 
+import ai.play.devtech.core.api.io.Output;
+import ai.play.devtech.core.api.io.Packer;
+import ai.play.devtech.core.api.io.Wrapper;
 import java.io.BufferedOutputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -8,10 +11,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.Supplier;
-
-import play.ai.devtech.core.api.io.Output;
-import play.ai.devtech.core.api.io.Packer;
-import play.ai.devtech.core.api.io.Wrapper;
 
 public class Players {
 	public static Map<Login, Integer> nations;
