@@ -3,7 +3,7 @@
 *.nation
 .idea/
 testing/
-gradlew
+gradlew/
 gradlew.bat
 gradle/
 
